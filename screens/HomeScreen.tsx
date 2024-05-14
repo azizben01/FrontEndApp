@@ -6,8 +6,46 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomepageScreen() {
+
+
+
+    const [transaction, setTransaction] = useState([]); //<transaction[]>
+    const handleTransaction = async () => {
+        try {
+            const response = await fetch("http://localhost:1010/transactions", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.ok) {
+                const data = await response.json(); // Parse the JSON response
+                setTransaction(data)
+                console.log("Transactions retrieved successfully:", data);
+                navigation.navigate('TransactionList')
+            } else {
+                console.error("Failed to retrieve transactions");
+            }
+        } catch (error) {
+            console.error("Error fetching transactions:", error);
+            // Handle network errors or other unexpected errors
+        }
+    };
+    useEffect(() => {
+        handleTransaction()
+    }, [])
+
+
+
+
+
+
+
+
+
+
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-    const navigateToForm =() => {
+    const navigateToForm = () => {
         navigation.navigate("TransactionForm")
     }
     const TransactionListScreen = () => {
@@ -18,14 +56,14 @@ function HomepageScreen() {
             <View style={styles.pagecontainer}>
 
                 <Button
-                title="View all transactions"
-                onPress={TransactionListScreen}
+                    title="View all transactions"
+                    onPress={handleTransaction}
                 />
             </View>
             <TouchableOpacity
-            onPress={navigateToForm}
-            style = {styles.transactionButton}>
-                <Text style = { styles.TransactionbuttonText}>Add transaction</Text>
+                onPress={navigateToForm}
+                style={styles.transactionButton}>
+                <Text style={styles.TransactionbuttonText}>Add transaction</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
     );
@@ -67,7 +105,7 @@ const styles = StyleSheet.create({
         color: "#333",
     },
 
-    viewposition:{
+    viewposition: {
         justifyContent: 'flex-end',
         marginBottom: 10,
         backgroundColor: 'blue',
@@ -75,43 +113,43 @@ const styles = StyleSheet.create({
 
     },
 
-    view:{
-      backgroundColor: 'yellow'
+    view: {
+        backgroundColor: 'yellow'
 
     },
 
-pagecontainer: {
-    borderWidth: 1,
-    justifyContent: 'flex-end',
-    color: 'red',
-    paddingHorizontal: '25%',
-    paddingVertical:'65%',
-    borderRadius: 60,
-    marginBottom: 'auto',
-    marginTop: '30%',
-    borderBottomWidth: 10,
-    backgroundColor: 'white'
+    pagecontainer: {
+        borderWidth: 1,
+        justifyContent: 'flex-end',
+        color: 'red',
+        paddingHorizontal: '25%',
+        paddingVertical: '65%',
+        borderRadius: 60,
+        marginBottom: 'auto',
+        marginTop: '30%',
+        borderBottomWidth: 10,
+        backgroundColor: 'white'
 
-},
+    },
 
-transactionButton:{
-alignItems: "center",
-marginBottom: 10, // Adjust spacing as needed
-marginTop: 10,
-backgroundColor: "#f0f0f0", // Optional background color for the Add button
-padding: 10, // Optional padding for the Add button
-borderWidth: 2,
-borderColor:"#0782F9",
-width:110,
-borderRadius: 30,
-alignContent: 'center'
-},
+    transactionButton: {
+        alignItems: "center",
+        marginBottom: 10, // Adjust spacing as needed
+        marginTop: 10,
+        backgroundColor: "#f0f0f0", // Optional background color for the Add button
+        padding: 10, // Optional padding for the Add button
+        borderWidth: 2,
+        borderColor: "#0782F9",
+        width: 110,
+        borderRadius: 30,
+        alignContent: 'center'
+    },
 
-TransactionbuttonText:{
-color:'#0782F9',
-fontSize: 15,
-fontWeight: '500',
-},
+    TransactionbuttonText: {
+        color: '#0782F9',
+        fontSize: 15,
+        fontWeight: '500',
+    },
 
 
 });
