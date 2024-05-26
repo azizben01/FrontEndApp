@@ -3,66 +3,24 @@ import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Button,
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomepageScreen() {
 
-
-
-    const [transaction, setTransaction] = useState([]); //<transaction[]>
-    const handleTransaction = async () => {
-        try {
-            const response = await fetch("http://localhost:1010/transactions", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (response.ok) {
-                const data = await response.json(); // Parse the JSON response
-                setTransaction(data)
-                console.log("Transactions retrieved successfully:", data);
-                navigation.navigate('TransactionList')
-            } else {
-                console.error("Failed to retrieve transactions");
-            }
-        } catch (error) {
-            console.error("Error fetching transactions:", error);
-            // Handle network errors or other unexpected errors
-        }
-    };
-    useEffect(() => {
-        handleTransaction()
-    }, [])
-
-
-
-
-
-
-
-
-
-
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     const navigateToForm = () => {
-        navigation.navigate("TransactionForm")
+        navigation.navigate("Transaction Form")
     }
     const TransactionListScreen = () => {
         navigation.navigate("TransactionList")
     }
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <View style={styles.pagecontainer}>
 
-                <Button
-                    title="View all transactions"
-                    onPress={handleTransaction}
-                />
-            </View>
+            <Text style={styles.transactionView}>Press the button bellow to perform {'\n'}               new a transactions.👇🏾</Text>
+
             <TouchableOpacity
                 onPress={navigateToForm}
-                style={styles.transactionButton}>
+                style={styles.addTransactionButton}>
                 <Text style={styles.TransactionbuttonText}>Add transaction</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
@@ -78,75 +36,24 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#B0C4DE",
     },
-    content: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        borderColor: 'blue',
-    },
-    footer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        width: "100%",
-        paddingVertical: 10,
-        borderTopWidth: 1,
-        borderTopColor: "#ccc",
-        marginTop: 10,
-        marginBottom: 0
-    },
-    button: {
-        alignItems: "center",
-        marginBottom: 20
-    },
-    buttonText: {
-        marginTop: 5,
-        fontSize: 14,
-        color: "#333",
-    },
-
-    viewposition: {
-        justifyContent: 'flex-end',
-        marginBottom: 10,
-        backgroundColor: 'blue',
-        marginTop: 'auto'
+    transactionView: {
+        color: '#663399',
+        fontSize: 24,
+        fontWeight: '400',
+        marginBottom: 120
 
     },
 
-    view: {
-        backgroundColor: 'yellow'
-
-    },
-
-    pagecontainer: {
-        borderWidth: 1,
-        justifyContent: 'flex-end',
-        color: 'red',
-        paddingHorizontal: '25%',
-        paddingVertical: '65%',
-        borderRadius: 60,
-        marginBottom: 'auto',
-        marginTop: '30%',
-        borderBottomWidth: 10,
-        backgroundColor: 'white'
-
-    },
-
-    transactionButton: {
-        alignItems: "center",
-        marginBottom: 10, // Adjust spacing as needed
-        marginTop: 10,
-        backgroundColor: "#f0f0f0", // Optional background color for the Add button
-        padding: 10, // Optional padding for the Add button
-        borderWidth: 2,
-        borderColor: "#0782F9",
-        width: 110,
-        borderRadius: 30,
-        alignContent: 'center'
+    addTransactionButton: {
+        backgroundColor: '#5b5f97',
+        width: '40%',
+        padding: 15,
+        borderRadius: 20,
+        alignItems: 'center'
     },
 
     TransactionbuttonText: {
-        color: '#0782F9',
+        color: 'white',
         fontSize: 15,
         fontWeight: '500',
     },

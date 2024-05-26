@@ -121,7 +121,6 @@ function SignupScreen() {
 
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
-          {/* <FontAwesome5 name="key" size={20} color="black" /> */}
           <AntDesign name="lock" size={18} color="black" />
         </View>
         <TextInput
@@ -151,7 +150,8 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
   iconContainer1: {
-    marginLeft: 5,
+    marginLeft: 8,
+    paddingTop: 5
   },
 
   loginButton: {
@@ -205,11 +205,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: '400',
     height: 50,
-    marginHorizontal: 'auto'
+    paddingLeft: 15
   },
-
-  // the logo and the text input are not at the same hight. fix am
-
   buttonContainer: {
     backgroundColor: "#5b5f97",
     width: "90%",

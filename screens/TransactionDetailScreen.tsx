@@ -8,21 +8,15 @@ import { Menu, MenuProvider, MenuOptions, MenuOption, MenuTrigger } from 'react-
 
 const TransactionScreen = () => {
 
-
     return (
-              <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
 
-              <TouchableOpacity  style={styles.footer} >
-                    <Icon name ="reorder-three" size={30} color = "#333"/>
-                </TouchableOpacity>
+            <Text style={styles.title} >
+                Here is the user profile
+            </Text>
+        </KeyboardAvoidingView>
 
-            <View style={styles.content}>
-                <Text>Welcome to your Transactions!</Text>
-            </View>
-
-              </KeyboardAvoidingView>
-
-          );
+    );
 };
 
 export default TransactionScreen;
@@ -30,39 +24,13 @@ export default TransactionScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: '#B0C4DE',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    content: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#663399'
     },
-    footer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        width: "100%",
-        paddingVertical: 10,
-        borderTopWidth: 1,
-        borderTopColor: "#ccc",
-    },
-    button: {
-        alignItems: "center",
-        marginBottom: 20
-    },
-
-    buttonText: {
-        marginTop: 5,
-        fontSize: 14,
-        color: "#333",
-    },
-
-    option:{
-         position: 'absolute',
-        bottom: 770, // Adjust top for desired position
-        right: 150, // Adjust left for desired position
-        padding: 10, // Optional padding around the button
-     }
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button } from "react-native";
 import { Alert } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -74,55 +74,67 @@ function TransactionFormScreen() {
   return (
     <KeyboardAvoidingView style={styles.container}>
 
+      <Text style={styles.sentence} >
+        Fill the form bellow {'\n'}to perform a transaction
+      </Text>
+
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Enter Amount"
-          style={styles.input}
-          value={Amount}
-          onChangeText={setAmount}
-        />
-        <TextInput
-          placeholder="Choose amount currency"
-          style={styles.input}
-          value={Currency}
-          onChangeText={setCurrency}
-        />
-
-        <TextInput
-          placeholder="Enter sender phone"
-          style={styles.input}
-          value={Sender_Phone}
-          onChangeText={setSenderPhone}
-        />
-        <TextInput
-          placeholder="Enter recipient name"
-          style={styles.input}
-          value={Recipient_name}
-          onChangeText={setRecipientName}
-        />
-        <TextInput
-          placeholder="Enter recipient phone"
-          style={styles.input}
-          value={Recipient_phone}
-          onChangeText={setRecipientPhone}
-        />
-        <TextInput
-          placeholder="Enter transaction type"
-          style={styles.input}
-          value={Transaction_Type}
-          onChangeText={setTransactionType}
-        />
-        <TextInput
-          placeholder="Enter userID"
-          style={styles.input}
+          placeholder="UserID"
+          style={styles.inputText}
           value={UserID}
-          onChangeText={setUserID}
-        />
+          onChangeText={setUserID} />
       </View>
-      <Button
-        title="DONE"
-        onPress={handleAlert}
-      />
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Amount"
+          style={styles.inputText}
+          value={Amount}
+          onChangeText={setAmount} />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Currency"
+          style={styles.inputText}
+          value={Currency}
+          onChangeText={setCurrency} />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Sender phone"
+          style={styles.inputText}
+          value={Sender_Phone}
+          onChangeText={setSenderPhone} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Recipient name"
+          style={styles.inputText}
+          value={Recipient_name}
+          onChangeText={setRecipientName} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Recipient phone"
+          style={styles.inputText}
+          value={Recipient_phone}
+          onChangeText={setRecipientPhone} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Transaction type"
+          style={styles.inputText}
+          value={Transaction_Type}
+          onChangeText={setTransactionType} />
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleAlert}>
+        <Text style={styles.buttonText}>DONE</Text>
+
+      </TouchableOpacity>
 
     </KeyboardAvoidingView>
   );
@@ -133,32 +145,51 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingTop: 40,
     backgroundColor: '#B0C4DE'
   },
-
-  inputContainer: {
-    width: '80%',
-    padding: 5
+  sentence: {
+    paddingBottom: 30,
+    fontSize: 17,
+    marginLeft: 10
   },
-  input: {
-    backgroundColor: '#ecf5ff',
-    paddingVertical: 15,
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    height: 50,
+    marginBottom: 10,
+    borderRadius: 20,
+    marginLeft: 30,
+    backgroundColor: '#f2f2f2',
+  },
+  inputText: {
+    backgroundColor: 'transparent',
+    paddingVertical: 10,
     paddingHorizontal: 10,
     marginTop: 5,
     borderRadius: 10,
     fontWeight: '400',
-  },
-  buttonContainer: {
-    backgroundColor: '#0782F9',
-    width: '50%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 40
+    height: 45,
+    marginLeft: 10,
+    paddingLeft: 10
   },
   button: {
+    backgroundColor: '#5b5f97',
+    marginHorizontal: 140,
+    marginTop: 20,
+    borderRadius: 20,
+    width: '30%',
+    height: '5%',
+    justifyContent: 'center',
   },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Verdana'
 
+  }
 })

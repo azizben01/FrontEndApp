@@ -56,7 +56,6 @@ function LoginScreen() {
             <View style={styles.inputContainer}>
                 <View style={styles.iconContainer1}>
                     <Fontisto name="email" size={18} color="black" />
-
                 </View>
                 <TextInput
                     placeholder="Email"
@@ -68,7 +67,6 @@ function LoginScreen() {
 
             <View style={styles.inputContainer}>
                 <View style={styles.iconContainer1}>
-                    {/* <FontAwesome5 name="key" size={18} color="black" /> */}
                     <AntDesign name="lock" size={18} color="black" />
                 </View>
                 <TextInput
@@ -76,7 +74,7 @@ function LoginScreen() {
                     style={styles.input}
                     value={password}
                     onChangeText={setPassword}
-                    secureTextEntry
+                // secureTextEntry
                 />
             </View>
 
@@ -109,7 +107,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
     iconContainer1: {
         marginLeft: 10,
-        marginHorizontal: 'auto'
+        paddingTop: 5
 
     },
 
@@ -147,7 +145,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         fontWeight: '400',
         height: 45,
-        marginHorizontal: 'auto'
     },
 
     buttonContainer: {

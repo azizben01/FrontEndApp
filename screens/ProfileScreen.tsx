@@ -1,52 +1,33 @@
-import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from "react-native";
-import { NavigationProp } from '@react-navigation/native';
+
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, Button, } from 'react-native';
 
 
-
-function ProfileScreen  () {
-
-
+function AccountScreen() {
     return (
-            <View style={styles.content}>
-                <Text>Welcome to profiel page!</Text>
-            </View>
-    );
-};
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>Here is the profile</Text>
 
-export default ProfileScreen;
+
+        </SafeAreaView>
+
+    );
+}
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#B0C4DE",
+        backgroundColor: '#B0C4DE',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    content: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor:'#B0C4DE'
-    },
-    footer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        width: "100%",
-        paddingVertical: 10,
-        borderTopWidth: 1,
-        borderTopColor: "#ccc",
-    },
-    button: {
-        alignItems: "center",
-        marginBottom: 20
-    },
-
-
-    buttonText: {
-        marginTop: 5,
-        fontSize: 14,
-        color: "#333",
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#663399'
     },
 });
+
+export default AccountScreen;
+

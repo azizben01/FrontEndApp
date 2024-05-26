@@ -4,15 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import StackNavigator from './Navigation/StackNavigation';
 
-
-
-
 function App() {
 
-  return(
+  return (
     <NavigationContainer>
-    <StackNavigator/>
-  </NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   )
 
 }
