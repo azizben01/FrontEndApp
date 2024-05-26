@@ -3,6 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, FlatList, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFocusEffect } from '@react-navigation/native';
 
 // icon
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -45,39 +46,45 @@ function TransactionListScreen() {
       // Handle network errors or other unexpected errors
     }
   };
-  useEffect(() => {
-    handleTransaction()
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      // Run effect every time HomeScreen is focused (displayed)
+      handleTransaction()
+      // Add your effect code here
+      // For example, fetching data or updating state
+      return () => {
+        // Cleanup code (optional)
+      };
+    }, [])
+  );
 
-  // do so that when you perform a transaction and press "DONE" it takes you to a page that says: you have successfuly send "amount" to employee "userID"
+  // do so that when you perform a transaction and press "DONE" it takes you to a page that says: you have successfuly sent "amount" to employee "userID"
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <SafeAreaView style={styles.containerSafe}>
-        <ScrollView>
-          <Text style={styles.sentence1}>Your transactions</Text>
-          <Text style={styles.sentence2}>Here you can see the summary of your recent transactions.</Text>
-          <Text style={styles.sentence3}>Press on any transaction to see the details of the transaction.</Text>
+        <Text style={styles.sentence1}>Your transactions</Text>
+        <Text style={styles.sentence2}>Here you can see the summary of your recent transactions.</Text>
+        <Text style={styles.sentence3}>Press on any transaction to see the details of the transaction.</Text>
 
-          <View style={styles.ContainerView}>
-            {
-              transaction.length ?
-                <FlatList
-                  data={transaction}
-                  renderItem={({ item }) =>
-                    <TouchableOpacity style={styles.touchableTransaction} onPress={HandleTransactionDetails}>
-                      <Text style={styles.content}>UserId:{item.userid}   to</Text>
-                      <Text style={styles.content}>Recipient:{item.recipient_name}</Text>
-                      <Text style={styles.content}>{item.amount}</Text>
-                      <Text style={styles.content}>{item.currency}</Text>
-                      <View style={styles.iconContainer}>
-                        <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
-                      </View>
-                    </TouchableOpacity>}
-                />
-                : null
-            }
-          </View>
-        </ScrollView>
+        <View style={styles.ContainerView}>
+          {
+            transaction.length ?
+              <FlatList
+                data={transaction}
+                renderItem={({ item }) =>
+                  <TouchableOpacity style={styles.touchableTransaction} onPress={HandleTransactionDetails}>
+                    <Text style={styles.content}>UserId:{item.userid}   to</Text>
+                    <Text style={styles.content}>Recipient:{item.recipient_name}</Text>
+                    <Text style={styles.content}>{item.amount}</Text>
+                    <Text style={styles.content}>{item.currency}</Text>
+                    <View style={styles.iconContainer}>
+                      <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
+                    </View>
+                  </TouchableOpacity>}
+              />
+              : null
+          }
+        </View>
 
       </SafeAreaView>
     </KeyboardAvoidingView>

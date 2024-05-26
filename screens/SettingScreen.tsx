@@ -7,7 +7,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
-
 function SettingsScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
