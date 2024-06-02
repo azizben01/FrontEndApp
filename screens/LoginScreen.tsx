@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Alert } from "react-native";
+import * as SplashScreen from 'expo-splash-screen';
+
 // icons 
-import AntDesign from '@expo/vector-icons/AntDesign';
 import Fontisto from '@expo/vector-icons/Fontisto';
-
-
-
-
-
-
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFonts } from "expo-font";
 
 function LoginScreen() {
+    const [showPassword, setShowPassword] = useState(false);
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
     const handleSignup = () => {
@@ -34,6 +31,7 @@ function LoginScreen() {
                 if (email === storedEmail && password === storedPassword) {
                     // Login successful
                     Alert.alert('Success', 'Logged in successfully!');
+                    setEmail(''), setPassword('');
                     navigation.navigate("tabs")
                 } else {
                     // Incorrect email or password
@@ -49,13 +47,18 @@ function LoginScreen() {
         }
     };
 
+    const toggleShowingPassword = () => {
+        setShowPassword(!showPassword);
+    };
     return (
         <KeyboardAvoidingView
             style={styles.container}
             behavior="padding">
+            <Text style={styles.topsentence}>Log in to Your Account</Text>
+
             <View style={styles.inputContainer}>
                 <View style={styles.iconContainer1}>
-                    <Fontisto name="email" size={18} color="black" />
+                    <Fontisto name="email" size={16} color="#3a5e7a" />
                 </View>
                 <TextInput
                     placeholder="Email"
@@ -67,15 +70,19 @@ function LoginScreen() {
 
             <View style={styles.inputContainer}>
                 <View style={styles.iconContainer1}>
-                    <AntDesign name="lock" size={18} color="black" />
+                    <Ionicons name="lock-open-outline" size={17} color="#3a5e7a" />
                 </View>
                 <TextInput
                     placeholder="Password"
                     style={styles.input}
                     value={password}
                     onChangeText={setPassword}
-                // secureTextEntry
+                    secureTextEntry={!showPassword}
+
                 />
+                <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
+                    <Ionicons name={showPassword ? "eye-off-outline" : 'eye-outline'} size={19} color="#3a5e7a" />
+                </TouchableOpacity>
             </View>
 
             <View style={styles.buttonContainer}>
@@ -93,7 +100,7 @@ function LoginScreen() {
                     style={styles.signButton}
                     onPress={handleSignup}
                 >
-                    <Text style={styles.signButtonText}>Sign up</Text>
+                    <Text style={styles.signButtonText}>Sign up.</Text>
                 </TouchableOpacity>
             </View>
 
@@ -107,33 +114,36 @@ export default LoginScreen;
 const styles = StyleSheet.create({
     iconContainer1: {
         marginLeft: 10,
-        paddingTop: 5
-
+        padding: 5
     },
-
+    topsentence: {
+        paddingBottom: 50,
+        fontSize: 20,
+        fontWeight: '700',
+        color: '#3a5e7a',
+        fontFamily: 'NotoSerifDisplay-Italic'
+    },
     text2: {
+        display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
-        paddingTop: 5
-
+        paddingTop: 5,
     },
 
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#B0C4DE'
+        backgroundColor: '#cfcece4a'
 
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '80%',
-        height: 50,
         marginBottom: 10,
-        padding: 2,
-        borderRadius: 20,
-        backgroundColor: '#f2f2f2',
+        paddingLeft: 5,
+        borderRadius: 25,
+        backgroundColor: '#cfcece4a',
 
     },
     input: {
@@ -151,41 +161,42 @@ const styles = StyleSheet.create({
         width: '60%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40
+        marginTop: 10
 
     },
 
     Logbutton: {
-        backgroundColor: '#5b5f97', //0782F9
-        width: '150%',
+        backgroundColor: '#3a5e7a',
+        width: '130%',
         padding: 15,
-        borderRadius: 20,
-        alignItems: 'center'
-
+        borderRadius: 25,
+        alignItems: 'center',
     },
 
     LogButtonText: {
         color: 'white',
-        fontSize: 15,
-
+        fontSize: 12,
+        fontWeight: '700',
+        textTransform: 'uppercase',
     },
 
     signButton: {
-        marginTop: 5, // distance between the 2 buttons
-
+        marginTop: 5,
     },
 
     signButtonText: {
-        color: 'black',
-        fontSize: 17,
+        color: '#3a5e7a',
+        fontSize: 13,
         fontWeight: '500',
-        textDecorationLine: 'underline'
-
     },
 
     accountSentence: {
-        color: '#26344f',
-        fontSize: 15,
+        color: 'black',
+        fontSize: 13,
         marginTop: 5,
+    },
+
+    eyebutton: {
+        padding: 10,
     }
 })

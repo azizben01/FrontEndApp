@@ -1,23 +1,17 @@
-import React, { useState } from "react";
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import * as SplashScreen from 'expo-splash-screen';
 
 //icons
 
 import Feather from '@expo/vector-icons/Feather';
 import Fontisto from '@expo/vector-icons/Fontisto';
-import AntDesign from '@expo/vector-icons/AntDesign';
-
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFonts } from "expo-font";
 
 function SignupScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -26,6 +20,7 @@ function SignupScreen() {
   const [phone_number, setPhone_number] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     navigation.navigate("Login");
@@ -68,11 +63,15 @@ function SignupScreen() {
     }
   };
 
+  const toggleShowingPassword = () => {
+    setShowPassword(!showPassword)
+  };
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <Text style={styles.topsentence}>Create Your Acccount</Text>
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
-          <Feather name="user" size={18} color="black" />
+          <Feather name="user" size={17} color="#3a5e7a" />
         </View>
         <TextInput
           placeholder="UserID"
@@ -84,7 +83,7 @@ function SignupScreen() {
 
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
-          <Fontisto name="email" size={18} color="black" />
+          <Fontisto name="email" size={17} color="#3a5e7a" />
         </View>
         <TextInput
           placeholder="Email"
@@ -96,7 +95,7 @@ function SignupScreen() {
 
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
-          <Feather name="phone" size={18} color="black" />
+          <Feather name="phone" size={17} color="#3a5e7a" />
         </View>
         <TextInput
           placeholder="Phone Number"
@@ -108,28 +107,34 @@ function SignupScreen() {
 
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
-          <AntDesign name="lock" size={18} color="black" />
+          <Ionicons name="lock-open-outline" size={17} color="#3a5e7a" />
         </View>
         <TextInput
           placeholder="Password"
           style={styles.input}
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
+          secureTextEntry={!showPassword}
         />
+        <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
+          <Ionicons name={showPassword ? "eye-off-outline" : 'eye-outline'} size={19} color="#3a5e7a" />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
-          <AntDesign name="lock" size={18} color="black" />
+          <Ionicons name="lock-open-outline" size={17} color="#3a5e7a" />
         </View>
         <TextInput
           placeholder="Confirm Password"
           style={styles.input}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          secureTextEntry
+          secureTextEntry={!showPassword}
         />
+        <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
+          <Ionicons name={showPassword ? "eye-off-outline" : 'eye-outline'} size={19} color="#3a5e7a" />
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.buttonContainer} onPress={handleSignup}>
@@ -139,7 +144,7 @@ function SignupScreen() {
       <View style={styles.text1}>
         <Text style={styles.accountSentence}>Have an account already?</Text>
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.LogButtonText}> Log in</Text>
+          <Text style={styles.LogButtonText}> Log in.</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -153,6 +158,13 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     paddingTop: 5
   },
+  topsentence: {
+    paddingBottom: 50,
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#3a5e7a',
+    fontFamily: 'NotoSerifDisplayBlack'
+  },
 
   loginButton: {
     marginTop: 5,
@@ -165,21 +177,8 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 
-  accountSentence: {
-    color: "#26344f",
-    marginTop: 5,
-    fontSize: 15
-  },
-
-  LogButtonText: {
-    color: "black",
-    fontWeight: "500",
-    fontSize: 17,
-    textDecorationLine: "underline",
-  },
-
   container: {
-    backgroundColor: "#B0C4DE",
+    backgroundColor: "#cfcece4a",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -190,12 +189,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "80%",
     marginBottom: 10,
-    padding: 2,
-    borderRadius: 20,
-    backgroundColor: "white",
+    paddingLeft: 10,
+    borderRadius: 25,
+    backgroundColor: "#cfcece4a",
     height: 45,
   },
-
   input: {
     flex: 1,
     backgroundColor: 'transparent',
@@ -208,16 +206,31 @@ const styles = StyleSheet.create({
     paddingLeft: 15
   },
   buttonContainer: {
-    backgroundColor: "#5b5f97",
-    width: "90%",
+    backgroundColor: "#3a5e7a",
+    width: "80%",
     padding: 15,
-    borderRadius: 20,
+    borderRadius: 25,
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 10,
   },
 
   Signbutton: {
     color: "white",
-    fontSize: 15
+    fontSize: 13,
+    textTransform: 'uppercase',
   },
+
+  accountSentence: {
+    color: "black",
+    marginTop: 5,
+    fontSize: 13
+  },
+  LogButtonText: {
+    color: "#3a5e7a",
+    fontWeight: "500",
+    fontSize: 13,
+  },
+  eyebutton: {
+    padding: 10
+  }
 });

@@ -12,15 +12,15 @@ const LaunchScreen = () => {
         const timeoutId = setTimeout(() => {
             setIsVisible(false);
             navigation.navigate('Login'); // Replace with your destination screen
-        }, 1500); // Change 3000 to your desired delay in milliseconds
+        }, 3000); // Change 3000 to your desired delay in milliseconds
 
         return () => clearTimeout(timeoutId); // Cleanup function to avoid memory leaks
     }, []);
 
     return (
         isVisible && (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#B0C4DE' }}>
-                <Text style={{ fontSize: 20, color: '#26344f', fontWeight: 'bold' }}>Welcom to SwiftPay 😁</Text>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#3a5e7a' }}>
+                <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>Welcome to SwiftPay 😁</Text>
             </View>
         )
     );

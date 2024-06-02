@@ -62,9 +62,10 @@ function TransactionListScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <SafeAreaView style={styles.containerSafe}>
-        <Text style={styles.sentence1}>Your transactions</Text>
-        <Text style={styles.sentence2}>Here you can see the summary of your recent transactions.</Text>
-        <Text style={styles.sentence3}>Press on any transaction to see the details of the transaction.</Text>
+        <View style={{}}>
+          <Text style={styles.sentence1}>Your transactions</Text>
+          <Text style={styles.sentence2}>Here you can see the summary of your recent transactions. {'\n'}Press on any transaction to see the details of the transaction.</Text>
+        </View>
 
         <View style={styles.ContainerView}>
           {
@@ -73,19 +74,14 @@ function TransactionListScreen() {
                 data={transaction}
                 renderItem={({ item }) =>
                   <TouchableOpacity style={styles.touchableTransaction} onPress={HandleTransactionDetails}>
-                    <Text style={styles.content}>UserId:{item.userid}   to</Text>
-                    <Text style={styles.content}>Recipient:{item.recipient_name}</Text>
-                    <Text style={styles.content}>{item.amount}</Text>
-                    <Text style={styles.content}>{item.currency}</Text>
-                    <View style={styles.iconContainer}>
-                      <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
-                    </View>
+                    <Text style={styles.content}>               {item.amount}</Text>
+                    <Text style={styles.content}>{item.currency} sent to</Text>
+                    <Text style={styles.content}>{item.recipient_name}.</Text>
                   </TouchableOpacity>}
               />
               : null
           }
         </View>
-
       </SafeAreaView>
     </KeyboardAvoidingView>
 
@@ -94,18 +90,19 @@ function TransactionListScreen() {
 export default TransactionListScreen;
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    backgroundColor: "#B0C4DE",
+    flex: 1,
+    backgroundColor: "#cfcece4a",
   },
   containerSafe: {
+    flex: 1,
+    marginBottom: -34
   },
 
   touchableTransaction: {
     padding: 10,
     borderWidth: 1,
     flexDirection: 'row',
-    backgroundColor: '#99B3D3',
+    backgroundColor: '#3a5e7a',
     borderRadius: 15,
     marginTop: 10,
     width: 350,
@@ -113,12 +110,14 @@ const styles = StyleSheet.create({
   },
 
   ContainerView: {
+    flex: 1,
     marginLeft: 15,
 
   },
   content: {
     marginLeft: 10,
-    paddingTop: 5
+    paddingTop: 5,
+    color: 'white'
   },
   iconContainer: {
     paddingTop: 5,
@@ -128,16 +127,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 5,
     fontSize: 25,
-    marginTop: -30,
-    fontWeight: '500'
+    fontWeight: '700',
+    color: '#3a5e7a'
   },
   sentence2: {
     fontSize: 15,
-    marginLeft: 10
-  },
-  sentence3: {
-    fontSize: 13,
     marginLeft: 10,
-    marginBottom: 20
-  }
+  },
 })

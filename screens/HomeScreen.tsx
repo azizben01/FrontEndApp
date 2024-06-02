@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Button, Alert, FlatList, ActivityIndicator } from "react-native";
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 function HomepageScreen() {
+
+    // Also add statistics in this page. eg: number of transa, how much in total, and so 
 
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     const navigateToForm = () => {
@@ -34,22 +35,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#B0C4DE",
+        backgroundColor: "#cfcece4a",
     },
     transactionView: {
-        color: '#663399',
+        color: 'black',
         fontSize: 24,
         fontWeight: '400',
-        marginBottom: 120
+        marginBottom: 15
 
     },
 
     addTransactionButton: {
-        backgroundColor: '#5b5f97',
+        backgroundColor: '#3a5e7a',
         width: '40%',
         padding: 15,
-        borderRadius: 20,
-        alignItems: 'center'
+        borderRadius: 25,
     },
 
     TransactionbuttonText: {

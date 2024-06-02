@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, Button, } from 'react-native';
 import { ParamListBase, useNavigation } from '@react-navigation/native'; // Navigation hook
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 //icons
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Entypo } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 function SettingsScreen() {
@@ -17,7 +21,7 @@ function SettingsScreen() {
     };
 
     const handleAccount = (): void => {
-        navigation.navigate('Your account');
+        navigation.navigate('');
     };
 
     return (
@@ -26,15 +30,31 @@ function SettingsScreen() {
             <Text style={styles.title}>Settings</Text>
 
             <TouchableOpacity style={styles.settingButton} onPress={handleHelp}>
+                <View style={styles.lefticon}><Feather name="help-circle" size={18} color="white" /></View>
                 <Text style={styles.settingText}>Help</Text>
-                <View style={styles.iconContainer1}>
-                    <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
+                <View style={styles.RightIcon1}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
-                <Text style={styles.settingText}> Your account</Text>
-                <View style={styles.iconContainer2}>
-                    <MaterialIcons name="arrow-forward-ios" size={20} color="black" />
+                <View style={styles.lefticon}><FontAwesome name="language" size={18} color="white" /></View>
+                <Text style={styles.settingText}> Language Preference</Text>
+                <View style={styles.RightIcon2}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
+                <View style={styles.lefticon}><Ionicons name="invert-mode" size={18} color="white" /></View>
+                <Text style={styles.settingText}> App Theme</Text>
+                <View style={styles.RightIcon3}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
+                <View style={styles.lefticon}><Entypo name="notification" size={18} color="white" /></View>
+                <Text style={styles.settingText}> Notifications </Text>
+                <View style={styles.RightIcon4}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
                 </View>
             </TouchableOpacity>
         </SafeAreaView>
@@ -47,36 +67,46 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        backgroundColor: '#B0C4DE'
+        backgroundColor: '#cfcece4a'
     },
     title: {
         marginLeft: 20,
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 26,
+        fontWeight: '700',
         marginBottom: 20,
+        color: '#3a5e7a'
     },
     settingButton: {
-        marginLeft: 20,
+        marginLeft: 15,
         padding: 10,
         margin: 5,
-        backgroundColor: '#99B3D3',
-        borderRadius: 15,
-        width: 340,
+        backgroundColor: '#3a5e7a',
+        borderRadius: 30,
+        width: 350,
         flexDirection: 'row',
         borderWidth: 1,
     },
     settingText: {
         fontSize: 18,
-        color: 'black'
+        color: 'white',
+        padding: 4
     },
-    iconContainer1: {
-        paddingLeft: 253
 
+    RightIcon1: {
+        paddingLeft: 270
     },
-    iconContainer2: {
-        paddingLeft: 180
-
+    RightIcon2: {
+        paddingLeft: 130
     },
+    RightIcon3: {
+        paddingLeft: 210
+    },
+    RightIcon4: {
+        paddingLeft: 195
+    },
+    lefticon: {
+        padding: 5
+    }
 });
 
 export default SettingsScreen;

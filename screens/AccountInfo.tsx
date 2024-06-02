@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, Button, } from 'react-native';
 
 
+//icons
+
+// This was used and replaced in the profile tab. Get rid of it later in the process.
+
 function AccountInfoScreen() {
 
     return (
@@ -20,6 +24,7 @@ function AccountInfoScreen() {
                 <Text style={styles.text1}>Email</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
+
                 <Text style={styles.text1}>Country</Text>
             </TouchableOpacity>
 

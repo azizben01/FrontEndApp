@@ -1,7 +1,7 @@
 
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView } from 'react-native';
 
 // icons
@@ -11,24 +11,12 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 function AccountScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-    const HandleLogout = () => {
-        Alert.alert(
-            "",
-            "Are you sure you want to log out?",
-            [
-                { text: "cancel", onPress: () => console.log("Log out failed"), style: "cancel" },
-                { text: "Log out", onPress: () => (navigation.navigate('Login')) }
-            ]
-        )
-    }
-    const HandleAccountInfo = () => {
-        navigation.navigate('Account Information')
-    }
+
     return (
         <SafeAreaView style={styles.container}>
             {/* <Text style={styles.title}>Account</Text> */}
 
-            <TouchableOpacity style={styles.button} onPress={HandleAccountInfo}>
+            <TouchableOpacity style={styles.button} >
                 <View style={styles.iconContainer} >
                     <Feather name="user" size={24} color="black" />
                 </View>
@@ -56,10 +44,6 @@ function AccountScreen() {
                 <Text style={styles.text1}>Delete My Account</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.logButton} onPress={HandleLogout}>
-                <Text style={styles.logText}>Log Out</Text>
-            </TouchableOpacity>
-
         </SafeAreaView>
 
     );
@@ -69,7 +53,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#B0C4DE',
+        backgroundColor: '#cfcece4a',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },

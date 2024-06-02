@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, SafeAreaView } from "react-native";
 import { Alert } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from '@react-navigation/native';
@@ -51,6 +51,7 @@ function TransactionFormScreen() {
         // Signup successful, navigate to login screen and show user's details
         await AsyncStorage.setItem('transactionDetail', JSON.stringify(transactionInput))
         console.log(transactionInput, "created successfuly")
+        Alert.alert('Success', 'See your performed transactions in "Transactions" ')
         navigation.navigate({
           name: 'Homepage',
           params: { post: Amount }
@@ -73,69 +74,71 @@ function TransactionFormScreen() {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <SafeAreaView style={styles.safeview}>
 
-      <Text style={styles.sentence} >
-        Fill the form bellow {'\n'}to perform a transaction
-      </Text>
+        <Text style={styles.sentence} >
+          Fill the form bellow to perform a transaction
+        </Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="UserID"
-          style={styles.inputText}
-          value={UserID}
-          onChangeText={setUserID} />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="UserID"
+            style={styles.inputText}
+            value={UserID}
+            onChangeText={setUserID} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Amount"
-          style={styles.inputText}
-          value={Amount}
-          onChangeText={setAmount} />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Currency"
-          style={styles.inputText}
-          value={Currency}
-          onChangeText={setCurrency} />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Sender phone"
-          style={styles.inputText}
-          value={Sender_Phone}
-          onChangeText={setSenderPhone} />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Amount"
+            style={styles.inputText}
+            value={Amount}
+            onChangeText={setAmount} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Currency"
+            style={styles.inputText}
+            value={Currency}
+            onChangeText={setCurrency} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Sender phone"
+            style={styles.inputText}
+            value={Sender_Phone}
+            onChangeText={setSenderPhone} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Recipient name"
-          style={styles.inputText}
-          value={Recipient_name}
-          onChangeText={setRecipientName} />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Recipient name"
+            style={styles.inputText}
+            value={Recipient_name}
+            onChangeText={setRecipientName} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Recipient phone"
-          style={styles.inputText}
-          value={Recipient_phone}
-          onChangeText={setRecipientPhone} />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Recipient phone"
+            style={styles.inputText}
+            value={Recipient_phone}
+            onChangeText={setRecipientPhone} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Transaction type"
-          style={styles.inputText}
-          value={Transaction_Type}
-          onChangeText={setTransactionType} />
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handleAlert}>
-        <Text style={styles.buttonText}>DONE</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Transaction type"
+            style={styles.inputText}
+            value={Transaction_Type}
+            onChangeText={setTransactionType} />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleAlert}>
+          <Text style={styles.buttonText}>DONE</Text>
 
-      </TouchableOpacity>
+        </TouchableOpacity>
 
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
@@ -145,51 +148,52 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    paddingTop: 40,
-    backgroundColor: '#B0C4DE'
+    backgroundColor: '#cfcece4a',
   },
+  safeview: {
+    height: '100%',
+    display: 'flex',
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   sentence: {
-    paddingBottom: 30,
-    fontSize: 17,
-    marginLeft: 10
+    marginBottom: 30,
+    fontSize: 20,
+    fontWeight: '700'
+
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '80%',
-    height: 50,
+    backgroundColor: '#cfcece4a',
+    borderRadius: 25,
     marginBottom: 10,
-    borderRadius: 20,
-    marginLeft: 30,
-    backgroundColor: '#f2f2f2',
+    paddingLeft: 5,
+    width: '80%'
+
   },
   inputText: {
-    backgroundColor: 'transparent',
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginTop: 5,
-    borderRadius: 10,
-    fontWeight: '400',
-    height: 45,
-    marginLeft: 10,
-    paddingLeft: 10
+    padding: 12
+
   },
   button: {
-    backgroundColor: '#5b5f97',
-    marginHorizontal: 140,
-    marginTop: 20,
-    borderRadius: 20,
+    backgroundColor: '#3a5e7a',
     width: '30%',
-    height: '5%',
-    justifyContent: 'center',
+    borderRadius: 25,
+    alignItems: 'center',
+    marginTop: 25
+
   },
   buttonText: {
-    fontSize: 18,
     color: 'white',
-    textAlign: 'center',
-    fontFamily: 'Verdana'
+    padding: 12,
+  },
+  item: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 
   }
+
 })
+
