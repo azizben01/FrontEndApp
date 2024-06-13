@@ -8,7 +8,6 @@ import { useFocusEffect } from '@react-navigation/native';
 // icon
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-
 type transaction = {
   amount: number
   currency: string
@@ -16,14 +15,15 @@ type transaction = {
   transactionid: number
   recipient_name: string
 }
+
 function TransactionListScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const HandleTransactionDetails = () => {
     navigation.navigate('TransactionDetail')
   }
-  const [transaction, setTransaction] = useState<transaction[]>([]);
 
+  const [transactions, setTransactions] = useState<transaction[]>([]);
 
   const handleTransaction = async () => {
     try {
@@ -35,9 +35,8 @@ function TransactionListScreen() {
       });
       if (response.ok) {
         const data = await response.json(); // Parse the JSON response
-        setTransaction(data)
+        setTransactions(data);
         console.log("Transactions retrieved successfully:", data);
-        // navigation.navigate('TransactionList')
       } else {
         console.error("Failed to retrieve transactions");
       }
@@ -46,10 +45,11 @@ function TransactionListScreen() {
       // Handle network errors or other unexpected errors
     }
   };
+
   useFocusEffect(
     React.useCallback(() => {
       // Run effect every time HomeScreen is focused (displayed)
-      handleTransaction()
+      handleTransaction();
       // Add your effect code here
       // For example, fetching data or updating state
       return () => {
@@ -58,7 +58,6 @@ function TransactionListScreen() {
     }, [])
   );
 
-  // do so that when you perform a transaction and press "DONE" it takes you to a page that says: you have successfuly sent "amount" to employee "userID"
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <SafeAreaView style={styles.containerSafe}>
@@ -69,25 +68,27 @@ function TransactionListScreen() {
 
         <View style={styles.ContainerView}>
           {
-            transaction.length ?
+            transactions.length > 0 ?
               <FlatList
-                data={transaction}
+                data={transactions}
                 renderItem={({ item }) =>
                   <TouchableOpacity style={styles.touchableTransaction} onPress={HandleTransactionDetails}>
-                    <Text style={styles.content}>               {item.amount}</Text>
+                    <Text style={styles.content}>{item.amount}</Text>
                     <Text style={styles.content}>{item.currency} sent to</Text>
                     <Text style={styles.content}>{item.recipient_name}.</Text>
-                  </TouchableOpacity>}
+                  </TouchableOpacity>
+                }
               />
               : null
           }
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
-
-  )
+  );
 }
+
 export default TransactionListScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: -34
   },
-
   touchableTransaction: {
     padding: 10,
     borderWidth: 1,
@@ -106,13 +106,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
     width: 350,
-
   },
-
   ContainerView: {
     flex: 1,
     marginLeft: 15,
-
   },
   content: {
     marginLeft: 10,
@@ -134,4 +131,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 10,
   },
-})
+  noTransactionsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noTransactionsText: {
+    fontSize: 18,
+    color: 'gray',
+  },
+});

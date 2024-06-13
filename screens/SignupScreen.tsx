@@ -4,18 +4,16 @@ import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import * as SplashScreen from 'expo-splash-screen';
 
 //icons
 
 import Feather from '@expo/vector-icons/Feather';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts } from "expo-font";
 
 function SignupScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const [name, setName] = useState("");
+  const [userName, setuserName] = useState("");
   const [email, setEmail] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +30,7 @@ function SignupScreen() {
       return; // Prevent sending request if passwords don't match
     }
     const userData = {
-      name,
+      userName,
       email,
       phone_number,
       password,
@@ -74,10 +72,10 @@ function SignupScreen() {
           <Feather name="user" size={17} color="#3a5e7a" />
         </View>
         <TextInput
-          placeholder="UserID"
+          placeholder="User Name"
           style={styles.input}
-          value={name}
-          onChangeText={setName} //whenever the text changes, the setName function is called and updates the name to that new input
+          value={userName}
+          onChangeText={setuserName} //whenever the text changes, the setName function is called and updates the name to that new input
         />
       </View>
 
@@ -137,7 +135,7 @@ function SignupScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleSignup}>
+      <TouchableOpacity style={[styles.buttonContainer, styles.buttonShadow]} onPress={handleSignup}>
         <Text style={styles.Signbutton}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -160,10 +158,10 @@ const styles = StyleSheet.create({
   },
   topsentence: {
     paddingBottom: 50,
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: 'bold',
     color: '#3a5e7a',
-    fontFamily: 'NotoSerifDisplayBlack'
+    fontFamily: 'NotoMusic-Regular'
   },
 
   loginButton: {
@@ -232,5 +230,11 @@ const styles = StyleSheet.create({
   },
   eyebutton: {
     padding: 10
-  }
+  },
+  buttonShadow: {
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+  },
 });

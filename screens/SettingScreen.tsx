@@ -5,8 +5,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 //icons
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome6 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -51,8 +51,13 @@ function SettingsScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
-                <View style={styles.lefticon}><Entypo name="notification" size={18} color="white" /></View>
+                <View style={styles.lefticon}>
+                    <FontAwesome name="bell-o" size={18} color="white" />
+                </View>
                 <Text style={styles.settingText}> Notifications </Text>
+                {/* <TouchableOpacity>
+                    <FontAwesome6 name="toggle-off" size={20} color="white" />
+                </TouchableOpacity> */}
                 <View style={styles.RightIcon4}>
                     <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
                 </View>

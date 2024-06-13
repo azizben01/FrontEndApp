@@ -7,9 +7,7 @@ import LaunchScreen from './screens/LaunchScreen';
 
 function App() {
   const [fontsLoaded] = useFonts({
-    'NotoSerifDisplayBlack': require('./assets/fonts/NotoSerifDisplayBlack.ttf'),
-    'NotoSerifDisplay_CondensedBlack': require('./assets/fonts/NotoSerifDisplay_CondensedBlack.ttf'),
-    'NotoSerifDisplay-Italic': require('./assets/fonts/NotoSerifDisplay-Italic.ttf'),
+    'NotoMusic-Regular': require('./assets/fonts/NotoMusic-Regular.ttf'),
   });
 
   if (!fontsLoaded) {

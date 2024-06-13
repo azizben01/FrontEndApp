@@ -87,10 +87,16 @@ function LoginScreen() {
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    style={styles.Logbutton}
+                    style={[styles.Logbutton, styles.buttonShadow]}
                     onPress={handleLogin}
                 >
                     <Text style={styles.LogButtonText}>Login</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.recoverContainer}>
+                <TouchableOpacity style={styles.recoverButton}>
+                    <Text style={styles.passwordRecover}>Forgot Password ?</Text>
                 </TouchableOpacity>
             </View>
 
@@ -112,21 +118,23 @@ function LoginScreen() {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+
     iconContainer1: {
         marginLeft: 10,
         padding: 5
     },
     topsentence: {
         paddingBottom: 50,
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: '700',
         color: '#3a5e7a',
-        fontFamily: 'NotoSerifDisplay-Italic'
+        fontFamily: 'NotoMusic-Regular'
     },
     text2: {
         display: 'flex',
         flexDirection: 'row',
         paddingTop: 5,
+        justifyContent: 'flex-end'
     },
 
     container: {
@@ -188,15 +196,32 @@ const styles = StyleSheet.create({
         color: '#3a5e7a',
         fontSize: 13,
         fontWeight: '500',
+        fontFamily: 'NotoMusic-Regular'
     },
 
     accountSentence: {
         color: 'black',
         fontSize: 13,
         marginTop: 5,
+        fontFamily: 'NotoMusic-Regular'
     },
 
     eyebutton: {
         padding: 10,
-    }
+    },
+    passwordRecover: {
+        color: '#3a5e7a',
+        fontFamily: 'NotoMusic-Regular',
+        fontSize: 13
+    },
+    recoverContainer: {},
+    recoverButton: {
+        padding: 20
+    },
+    buttonShadow: {
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+    },
 })

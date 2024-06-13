@@ -11,7 +11,7 @@ function TransactionFormScreen() {
   const [Amount, setAmount] = useState("");
   const [Currency, setCurrency] = useState("");
   const [Sender_Phone, setSenderPhone] = useState("");
-  const [UserID, setUserID] = useState("");
+  const [UsernName, setUsernName] = useState("");
   const [Recipient_name, setRecipientName] = useState("");
   const [Recipient_phone, setRecipientPhone] = useState("");
   const [Transaction_Type, setTransactionType] = useState("");
@@ -36,7 +36,7 @@ function TransactionFormScreen() {
       Recipient_phone,
       Recipient_name,
       Transaction_Type,
-      UserID: Number(UserID)
+      UsernName: Number(UsernName)
     }
 
     try {
@@ -82,10 +82,10 @@ function TransactionFormScreen() {
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="UserID"
+            placeholder="User Name"
             style={styles.inputText}
-            value={UserID}
-            onChangeText={setUserID} />
+            value={UsernName}
+            onChangeText={setUsernName} />
         </View>
 
         <View style={styles.inputContainer}>
