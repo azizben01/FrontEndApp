@@ -36,7 +36,7 @@ function SignupScreen() {
       password,
     };
     try {
-      const response = await fetch("http://localhost:1010/user", {
+      const response = await fetch("http://192.168.1.87:1010/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // tells the server that the data being sent in the request body is in JSON format
@@ -65,7 +65,7 @@ function SignupScreen() {
     setShowPassword(!showPassword)
   };
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.topsentence}>Create Your Acccount</Text>
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>

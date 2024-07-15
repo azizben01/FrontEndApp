@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Alert } from "react-native";
-import * as SplashScreen from 'expo-splash-screen';
 
 // icons 
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts } from "expo-font";
 
 function LoginScreen() {
     const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +16,6 @@ function LoginScreen() {
     const handleSignup = () => {
         navigation.navigate("Signup")
     }
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -46,6 +43,7 @@ function LoginScreen() {
             Alert.alert('Error', 'Failed to log in. Please try again later.');
         }
     };
+
 
     const toggleShowingPassword = () => {
         setShowPassword(!showPassword);

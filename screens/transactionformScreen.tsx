@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, SafeAreaView } from "react-native";
-import { Alert } from "react-native"
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 function TransactionFormScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -21,63 +21,64 @@ function TransactionFormScreen() {
       "",
       "Do you wish to complete the following transaction?",
       [
-        { text: "cancel", onPress: () => console.log("Transaction cancelled"), style: "cancel" },
-        { text: "Yes", onPress: () => (handleTransaction()) }
+        { text: "Cancel", onPress: () => console.log("Transaction cancelled"), style: "cancel" },
+        { text: "Yes", onPress: handleTransaction }
       ]
     );
-
   }
-  const handleTransaction = async () => {
-    const transactionInput = {
 
+  const handleTransaction = async () => {
+
+    const transactionInput = {
+      UsernName: Number(UsernName),
       Amount: Number(Amount),
-      Currency,
+      Currency: String(Currency),
       Sender_Phone,
       Recipient_phone,
       Recipient_name,
       Transaction_Type,
-      UsernName: Number(UsernName)
-    }
+     
+    };
 
     try {
-      const response = await fetch("http://localhost:1010/transaction", {
+      const response = await fetch("http://192.168.1.3:1010/transaction", {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(transactionInput)
       });
+
       if (response.ok) {
-        // Signup successful, navigate to login screen and show user's details
-        await AsyncStorage.setItem('transactionDetail', JSON.stringify(transactionInput))
-        console.log(transactionInput, "created successfuly")
-        Alert.alert('Success', 'See your performed transactions in "Transactions" ')
-        navigation.navigate({
-          name: 'Homepage',
-          params: { post: Amount }
-        })
+        await AsyncStorage.setItem('transactionDetail', JSON.stringify(transactionInput));
+
+        console.log(transactionInput, "created successfully");
+
+        Alert.alert('Success', 'See your performed transactions in "Transactions" ');
+
+        navigation.navigate('Homepage', { post: Amount });
 
       } else {
-        console.log("Transaction failed")
-        // Signup failed, handle error
+        console.log("Transaction failed");
         const errorMessage = await response.text();
         Alert.alert("Transaction failed", errorMessage);
       }
-    }
-    catch (error) {
-      // Network error or other unexpected error
+    } catch (error) {
       console.error(error);
-      Alert.alert("Error", "there was a problem performing the transaction . Please try again later.");
+      Alert.alert("Error", "There was a problem performing the transaction. Please try again later.");
     }
-  }
-
+  };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={true}
+    >
       <SafeAreaView style={styles.safeview}>
-
-        <Text style={styles.sentence} >
-          Fill the form bellow to perform a transaction
+        <Text style={styles.sentence}>
+          Fill the form below to perform a transaction
         </Text>
 
         <View style={styles.inputContainer}>
@@ -85,7 +86,8 @@ function TransactionFormScreen() {
             placeholder="User Name"
             style={styles.inputText}
             value={UsernName}
-            onChangeText={setUsernName} />
+            onChangeText={setUsernName}
+          />
         </View>
 
         <View style={styles.inputContainer}>
@@ -93,107 +95,106 @@ function TransactionFormScreen() {
             placeholder="Amount"
             style={styles.inputText}
             value={Amount}
-            onChangeText={setAmount} />
+            onChangeText={setAmount}
+            keyboardType="numeric"
+          />
         </View>
+
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Currency"
             style={styles.inputText}
             value={Currency}
-            onChangeText={setCurrency} />
+            onChangeText={setCurrency}
+          />
         </View>
+
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Sender phone"
+            placeholder="Sender Phone"
             style={styles.inputText}
             value={Sender_Phone}
-            onChangeText={setSenderPhone} />
+            onChangeText={setSenderPhone}
+            keyboardType="phone-pad"
+          />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Recipient name"
+            placeholder="Recipient Name"
             style={styles.inputText}
             value={Recipient_name}
-            onChangeText={setRecipientName} />
+            onChangeText={setRecipientName}
+          />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Recipient phone"
+            placeholder="Recipient Phone"
             style={styles.inputText}
             value={Recipient_phone}
-            onChangeText={setRecipientPhone} />
+            onChangeText={setRecipientPhone}
+            keyboardType="phone-pad"
+          />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Transaction type"
+            placeholder="Transaction Type"
             style={styles.inputText}
             value={Transaction_Type}
-            onChangeText={setTransactionType} />
+            onChangeText={setTransactionType}
+          />
         </View>
+
         <TouchableOpacity style={styles.button} onPress={handleAlert}>
           <Text style={styles.buttonText}>DONE</Text>
-
         </TouchableOpacity>
-
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
-export default TransactionFormScreen
+
+export default TransactionFormScreen;
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#cfcece4a',
   },
-  safeview: {
-    height: '100%',
-    display: 'flex',
-    marginTop: 20,
+  contentContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  safeview: {
+    width: '100%',
+    alignItems: 'center',
+  },
   sentence: {
     marginBottom: 30,
     fontSize: 20,
-    fontWeight: '700'
-
+    fontWeight: '700',
   },
   inputContainer: {
     backgroundColor: '#cfcece4a',
     borderRadius: 25,
     marginBottom: 10,
     paddingLeft: 5,
-    width: '80%'
-
+    width: '80%',
   },
   inputText: {
-    padding: 12
-
+    padding: 12,
   },
   button: {
     backgroundColor: '#3a5e7a',
     width: '30%',
     borderRadius: 25,
     alignItems: 'center',
-    marginTop: 25
-
+    marginTop: 25,
   },
   buttonText: {
     color: 'white',
     padding: 12,
   },
-  item: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-  }
-
-})
-
+});

@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         gap: 3,
-        marginTop: 10
+        marginTop: 10,
     },
     TextOnFocus: { // text
         color: "#3a5e7a",
