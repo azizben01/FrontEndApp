@@ -20,30 +20,33 @@ function LoginScreen() {
     const [password, setPassword] = useState("");
 
     const handleLogin = async () => {
-        // Retrieve user information from AsyncStorage
         try {
-            const userData = await AsyncStorage.getItem('userData');
-            if (userData) {
-                const { email: storedEmail, password: storedPassword } = JSON.parse(userData);
-                if (email === storedEmail && password === storedPassword) {
-                    // Login successful
-                    Alert.alert('Success', 'Logged in successfully!');
-                    setEmail(''), setPassword('');
-                    navigation.navigate("tabs")
-                } else {
-                    // Incorrect email or password
-                    Alert.alert('Error', 'Invalid email or password.');
-                }
+            const response = await fetch('http://192.168.1.87:1010/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+            console.log('Login response:', result); // Debug log
+            if (response.ok) {
+                // Store user data in AsyncStorage
+                await AsyncStorage.setItem('userData', JSON.stringify(result));
+                console.log('User data saved to AsyncStorage', result); // Debug log
+                Alert.alert('Success', 'Logged in successfully!');
+                setEmail('');
+                setPassword('');
+                navigation.navigate("tabs");
             } else {
-                // No user data found
-                Alert.alert('Error', 'No user found. Please sign up first.');
+                Alert.alert('Error', result.error || 'Invalid email or password');
             }
         } catch (error) {
             console.error('Error logging in:', error);
             Alert.alert('Error', 'Failed to log in. Please try again later.');
         }
     };
-
 
     const toggleShowingPassword = () => {
         setShowPassword(!showPassword);
