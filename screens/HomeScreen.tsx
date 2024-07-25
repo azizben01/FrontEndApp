@@ -42,21 +42,22 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: '400',
         marginBottom: 15
-
     },
 
     addTransactionButton: {
         backgroundColor: '#3a5e7a',
         width: '40%',
-        padding: 15,
+        padding: 18,
         borderRadius: 25,
+        alignItems: 'center'
     },
 
     TransactionbuttonText: {
         color: 'white',
         fontSize: 15,
         fontWeight: '500',
-    },
+
+  },
 
 
 });

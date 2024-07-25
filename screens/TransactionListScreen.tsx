@@ -8,26 +8,28 @@ import { useFocusEffect } from '@react-navigation/native';
 // icon
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-type transaction = {
+type Transactions = {
+  Username: string
   amount: number
   currency: string
   userid: number
   transactionid: number
   recipient_name: string
+  created: string
 }
 
 function TransactionListScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-
-  const HandleTransactionDetails = () => {
-    navigation.navigate('TransactionDetail')
+  
+  const HandleTransactionDetails = (transaction: Transactions) => {
+    navigation.navigate('TransactionDetail', { transaction });
   }
 
-  const [transactions, setTransactions] = useState<transaction[]>([]);
+  const [transactions, setTransactions] = useState<Transactions[]>([]);
 
   const handleTransaction = async () => {
     try {
-      const response = await fetch("http://localhost:1010/transactions", {
+      const response = await fetch("http://192.168.1.87:1010/transactions", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +50,7 @@ function TransactionListScreen() {
 
   useFocusEffect(
     React.useCallback(() => {
-      // Run effect every time HomeScreen is focused (displayed)
+      // Run effect every time HomeScreen is focused
       handleTransaction();
       // Add your effect code here
       // For example, fetching data or updating state
@@ -62,8 +64,8 @@ function TransactionListScreen() {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <SafeAreaView style={styles.containerSafe}>
         <View style={{}}>
-          <Text style={styles.sentence1}>Your transactions</Text>
-          <Text style={styles.sentence2}>Here you can see the summary of your recent transactions. {'\n'}Press on any transaction to see the details of the transaction.</Text>
+          <Text style={styles.sentence1}>Your Transactions</Text>
+          <Text style={styles.sentence2}>Press on any transaction to see complete informations about this transaction.</Text>
         </View>
 
         <View style={styles.ContainerView}>
@@ -72,10 +74,11 @@ function TransactionListScreen() {
               <FlatList
                 data={transactions}
                 renderItem={({ item }) =>
-                  <TouchableOpacity style={styles.touchableTransaction} onPress={HandleTransactionDetails}>
-                    <Text style={styles.content}>{item.amount}</Text>
-                    <Text style={styles.content}>{item.currency} sent to</Text>
-                    <Text style={styles.content}>{item.recipient_name}.</Text>
+                  <TouchableOpacity style={styles.touchableTransaction} onPress={() => HandleTransactionDetails(item)}>
+                    <Text style={styles.content}>{item.amount} </Text> 
+                    <Text style={styles.content}>{item.currency} have been successfully transfered to </Text>
+                    <Text style={styles.content}>{item.recipient_name} on </Text>
+                    <Text style={styles.content}>{item.created}</Text>
                   </TouchableOpacity>
                 }
               />
@@ -96,48 +99,47 @@ const styles = StyleSheet.create({
   },
   containerSafe: {
     flex: 1,
-    marginBottom: -34
   },
   touchableTransaction: {
-    padding: 10,
-    borderWidth: 1,
-    flexDirection: 'row',
-    backgroundColor: '#3a5e7a',
-    borderRadius: 15,
-    marginTop: 10,
-    width: 350,
+  padding: 12,
+  marginVertical: 10,
+  backgroundColor: '#3a5e7a',
+  borderRadius: 20,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.5,
+  shadowRadius: 2,
+  elevation: 4,
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start'
   },
   ContainerView: {
     flex: 1,
-    marginLeft: 15,
-  },
+  paddingHorizontal: 20
+   },
   content: {
-    marginLeft: 10,
-    paddingTop: 5,
-    color: 'white'
+    fontSize: 15,
+    fontWeight: 'bold',
+    flexWrap: 'wrap',
+    flexShrink: 1, // Allow items to shrink to avoid overflow
+    color: 'white',
+    marginBottom: 5,  // Add some spacing between items
+    flexBasis: 'auto', // Allow items to take only as much space as needed
   },
-  iconContainer: {
-    paddingTop: 5,
-    paddingLeft: 15
-  },
+ 
   sentence1: {
     marginLeft: 10,
     marginBottom: 5,
     fontSize: 25,
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: '#3a5e7a'
   },
   sentence2: {
-    fontSize: 15,
-    marginLeft: 10,
-  },
-  noTransactionsContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  noTransactionsText: {
     fontSize: 18,
-    color: 'gray',
+    paddingLeft: 15,
+    marginBottom: 20,
+
   },
+
 });

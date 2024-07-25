@@ -8,40 +8,58 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView } from 'r
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 function AccountScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+    const handleChangeNumber = () => {
+        navigation.navigate('Change number')
+    }
+    const handleChangePassword = () => {
+        navigation.navigate('Change password')
+    }
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* <Text style={styles.title}>Account</Text> */}
 
             <TouchableOpacity style={styles.button} >
                 <View style={styles.iconContainer} >
-                    <Feather name="user" size={24} color="black" />
+                    <Feather name="user" size={24} color="#fff" />
                 </View>
                 <Text style={styles.text1}>Account Information</Text>
+                <View style={styles.arrowContainer}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+                </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
                 <View style={styles.iconContainer}>
-                    <Ionicons name="key-outline" size={24} color="black" />
+                    <Ionicons name="key-outline" size={24} color="#fff" />
                 </View>
                 <Text style={styles.Passwordtext1}>Change Password</Text>
+                <View style={styles.arrowContainer}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+                </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleChangeNumber}>
                 <View style={styles.iconContainer}>
-                    <Feather name="smartphone" size={24} color="black" />
+                    <Feather name="smartphone" size={24} color="white" />
                 </View>
                 <Text style={styles.text1}>Change Number</Text>
+                <View style={styles.arrowContainer}>
+                    <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+                </View>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button}>
                 <View style={styles.iconContainer}>
-                    <MaterialCommunityIcons name="heart-broken-outline" size={24} color="black" />
+                    <MaterialCommunityIcons name="heart-broken-outline" size={24} color="#fff" />
                 </View>
                 <Text style={styles.text1}>Delete My Account</Text>
+                <View style={styles.arrowContainer}>
+                    <MaterialIcons name="keyboard-arrow-right" size={24} color="white" />
+                </View>
             </TouchableOpacity>
 
         </SafeAreaView>
@@ -52,67 +70,54 @@ function AccountScreen() {
 const styles = StyleSheet.create({
 
     container: {
+        marginTop: 10,
         flex: 1,
         backgroundColor: '#cfcece4a',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },
+
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginLeft: 20,
         marginBottom: 10
     },
+
     button: {
-        backgroundColor: 'transparent',
+        backgroundColor: '#3a5e7a',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 30,
         marginLeft: 20,
         marginBottom: 15,
         width: '90%',
         borderWidth: 1,
-        borderTopColor: 'transparent',
-        borderLeftColor: 'transparent',
-        borderRightColor: 'transparent',
-        borderBottomColor: 'black',
         flexDirection: 'row',
-        alignItems: 'baseline',
-        paddingBottom: -10
+        alignItems: 'center',
+       justifyContent: 'space-between'
     },
+
     text1: {
         fontSize: 16,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
-        width: '100%',
-        borderTopColor: 'black',
-        // paddingBottom: 5
+        flex: 1
     },
+
     Passwordtext1: {
         fontSize: 16,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
-        width: '100%',
-        borderTopColor: 'black',
-        paddingBottom: 5
-
+       flex: 1
     },
-    logText: {
-        color: '#B22222',
-        marginTop: 20,
-        fontSize: 17,
-        fontFamily: 'Verdana',
-
-    },
-
-    logButton: {
-        paddingHorizontal: '40%'
-
-    },
+    
     iconContainer: {
         paddingRight: 10,
-        paddingBottom: 5
+        paddingBottom: 5,
+     },
 
-    }
+    arrowContainer: {
+    },
 });
 
 export default AccountScreen;

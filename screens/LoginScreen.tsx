@@ -14,7 +14,7 @@ function LoginScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
     const handleSignup = () => {
-        navigation.navigate("Signup")
+        navigation.navigate("Signup") 
     }
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,11 +30,11 @@ function LoginScreen() {
             });
 
             const result = await response.json();
-            console.log('Login response:', result); // Debug log
+            console.log('Login response:', result);
             if (response.ok) {
                 // Store user data in AsyncStorage
                 await AsyncStorage.setItem('userData', JSON.stringify(result));
-                console.log('User data saved to AsyncStorage', result); // Debug log
+                console.log('User data saved to AsyncStorage', result);
                 Alert.alert('Success', 'Logged in successfully!');
                 setEmail('');
                 setPassword('');
@@ -47,7 +47,6 @@ function LoginScreen() {
             Alert.alert('Error', 'Failed to log in. Please try again later.');
         }
     };
-
     const toggleShowingPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -79,7 +78,6 @@ function LoginScreen() {
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={!showPassword}
-
                 />
                 <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
                     <Ionicons name={showPassword ? "eye-off-outline" : 'eye-outline'} size={19} color="#3a5e7a" />
@@ -97,7 +95,7 @@ function LoginScreen() {
 
             <View style={styles.recoverContainer}>
                 <TouchableOpacity style={styles.recoverButton}>
-                    <Text style={styles.passwordRecover}>Forgot Password ?</Text>
+                    <Text style={styles.passwordRecover}>Forgot your Password ?</Text>
                 </TouchableOpacity>
             </View>
 
@@ -112,7 +110,6 @@ function LoginScreen() {
             </View>
 
         </KeyboardAvoidingView>
-
     )
 }
 
@@ -124,6 +121,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         padding: 5
     },
+
     topsentence: {
         paddingBottom: 50,
         fontSize: 22,
@@ -131,6 +129,7 @@ const styles = StyleSheet.create({
         color: '#3a5e7a',
         fontFamily: 'NotoMusic-Regular'
     },
+
     text2: {
         display: 'flex',
         flexDirection: 'row',
@@ -171,7 +170,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10
-
     },
 
     Logbutton: {
@@ -210,15 +208,18 @@ const styles = StyleSheet.create({
     eyebutton: {
         padding: 10,
     },
+
     passwordRecover: {
         color: '#3a5e7a',
         fontFamily: 'NotoMusic-Regular',
         fontSize: 13
     },
+
     recoverContainer: {},
     recoverButton: {
         padding: 20
     },
+    
     buttonShadow: {
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 3 },

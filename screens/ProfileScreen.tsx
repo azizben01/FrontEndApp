@@ -1,44 +1,41 @@
 import { ParamListBase, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, FlatList } from 'react-native';
-
-//icons
-// import { Ionicons } from '@expo/vector-icons';
-// import Fontisto from '@expo/vector-icons/Fontisto';
-// import Feather from '@expo/vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type UserProfile = {
-    username: string
-    phone_number: string
-    email: string
+    username: string;
+    phone_number: string;
+    email: string;
+    // add a part for the full name
 }
 
 function ProfileScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     
-    // const [editProfile, setEditProfile] = useState<Edit[]>([]);
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
     const HandleLogout = async () => {
         try {
-            await AsyncStorage.removeItem('userData');
             Alert.alert(
                 "",
                 "Are you sure you want to log out?",
                 [
                     { text: "Cancel", onPress: () => console.log("Log out canceled"), style: "cancel" },
-                    { text: "Log out", onPress: () => (navigation.navigate('Login')) }
+                    { text: "Log out", onPress: async () => {
+                        
+                        await AsyncStorage.removeItem('userData');
+                        navigation.navigate('Login') }}
                 ],
-            )
-          } catch (error) {
+            );
+        } catch (error) {
             console.error('Error logging out:', error);
-          }
+        }
     }
 
     const handleEditProfile = () => {
-        navigation.navigate('Account')
+        navigation.navigate('Account');
     }
 
     const fetchUserData = async () => {
@@ -46,11 +43,9 @@ function ProfileScreen() {
             const userData = await AsyncStorage.getItem('userData');
             if (userData) {
                 const parsedUserData = JSON.parse(userData);
-                console.log('Parsed user data:', parsedUserData); // Debug log
                 setUserProfile(parsedUserData);
-                console.log('Fetched user email from AsyncStorage:', parsedUserData.email); // Debug log
             } else {
-                console.log('No user data found in AsyncStorage'); // Debug log
+                console.log('No user data found in AsyncStorage');
             }
         } catch (error) {
             console.error("Error fetching user data from AsyncStorage:", error);
@@ -58,9 +53,8 @@ function ProfileScreen() {
     }
 
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             fetchUserData();
-            return () => { };
         }, [])
     );
 
@@ -72,17 +66,17 @@ function ProfileScreen() {
 
             {userProfile ? (
                 <View style={styles.profileContainer}>
-                    <View style={styles.usernameView}>
-                        <Text style={styles.labelText}>USERNAME: </Text>
-                        <Text style={styles.usernameText}>{userProfile.username}</Text>
+                    <View style={styles.profileView}>
+                        <Text style={styles.labelText}>Username: </Text>
+                        <Text style={styles.value}>{userProfile.username}</Text>
                     </View>
-                    <View style={styles.phoneView}>
-                        <Text style={styles.labelText}>PHONE NUMBER: </Text>
-                        <Text style={styles.phoneText}>{userProfile.phone_number}</Text>
+                    <View style={styles.profileView}>
+                        <Text style={styles.labelText}>Mobile Number: </Text>
+                        <Text style={styles.value}>{userProfile.phone_number}</Text>
                     </View>
-                    <View style={styles.emailView}>
-                        <Text style={styles.labelText}>EMAIL ADDRESS: </Text>
-                        <Text style={styles.emailText}>{userProfile.email}</Text>
+                    <View style={styles.profileView}>
+                        <Text style={styles.labelText}>Email: </Text>
+                        <Text style={styles.value}>{userProfile.email}</Text>
                     </View>
                 </View>
             ) : (
@@ -91,7 +85,6 @@ function ProfileScreen() {
                 </View>
             )}
 
-            {/* Container for buttons placed at the bottom */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
                     <Text style={styles.editText}>Edit profile</Text>
@@ -107,18 +100,20 @@ function ProfileScreen() {
 const styles = StyleSheet.create({
     containerSafe: {
         flex: 1,
+   
     },
     listView: {
         flex: 1,
         marginLeft: 15,
     },
     profileContainer: {
-        padding: 10,
+        padding: 20,
         flexDirection: 'column',
-        // backgroundColor: '#3a5e7a',
         borderRadius: 15,
         marginTop: 10,
+        marginLeft: 20,
         width: 350,
+        backgroundColor: '#cfcece4a'
     },
     content: {
         marginLeft: 10,
@@ -168,7 +163,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginBottom: 10,
     },
-    // New styles for button container
+  
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -177,12 +172,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
     },
 
-    usernameView: {
-        display: 'flex',
+    profileView: {
         flexDirection: 'row',
-        marginBottom: 10,
+        marginBottom: 16,
         borderBottomWidth: 1,
-        
     },
 
     labelText:{
@@ -190,29 +183,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#3a5e7a'
     },
-    usernameText:{
-
-    },
-    phoneView:{
-        display: 'flex',
-        flexDirection: 'row',
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        
-    },
-    phoneText:{
-
-    },
-    emailView:{
-        display: 'flex',
-        flexDirection: 'row',
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        
-    },
-    emailText:{
-
-    },
+  
+    value: {
+        textAlign: 'center',
+        fontSize: 16,
+        paddingHorizontal: 12
+    }
+  
 });
 
 export default ProfileScreen;

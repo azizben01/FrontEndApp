@@ -98,16 +98,16 @@ const styles = StyleSheet.create({
     },
 
     RightIcon1: {
-        paddingLeft: 270
+        paddingLeft: 230
     },
     RightIcon2: {
-        paddingLeft: 130
+        paddingLeft: 96
     },
     RightIcon3: {
-        paddingLeft: 210
+        paddingLeft: 174
     },
     RightIcon4: {
-        paddingLeft: 195
+        paddingLeft: 163
     },
     lefticon: {
         padding: 5

@@ -8,6 +8,8 @@ import TransactionFormScreen from '../screens/TransactionFormScreen';
 import AccountScreen from '../screens/AccountScreen';
 import AccountInfoScreen from '../screens/AccountInfo';
 import LaunchScreen from '../screens/LaunchScreen';
+import ChangeNumber from '../screens/ChangeNumber';
+import ChangePassword from '../screens/ChangePassword';
 import { TextStyle } from 'react-native';
 
 interface CustomHeaderStyle extends TextStyle {
@@ -37,10 +39,12 @@ function StackNavigator() {
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Transaction Form" component={TransactionFormScreen} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false }} />
-      <Stack.Screen name="TransactionDetail" component={TransactionScreen} options={{ ...customHeaderOptions, }} />
+      <Stack.Screen name="TransactionDetail" component={TransactionScreen} options={{ ...customHeaderOptions, headerBackTitleVisible: false }} />
       <Stack.Screen name="tabs" component={TabNavigator} options={{ headerShown: false, gestureEnabled: false }} />
       <Stack.Screen name="Account" component={AccountScreen} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false }} />
       <Stack.Screen name="Account Information" component={AccountInfoScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Change number" component={ChangeNumber} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false}} />
+      <Stack.Screen name="Change password" component={ChangePassword} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false}} />
     </Stack.Navigator>
   );
 }

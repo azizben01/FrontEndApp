@@ -11,7 +11,7 @@ function TransactionFormScreen() {
   const [Amount, setAmount] = useState("");
   const [Currency, setCurrency] = useState("");
   const [Sender_Phone, setSenderPhone] = useState("");
-  const [UsernName, setUsernName] = useState("");
+  const [UserName, setUserName] = useState("");
   const [Recipient_name, setRecipientName] = useState("");
   const [Recipient_phone, setRecipientPhone] = useState("");
   const [Transaction_Type, setTransactionType] = useState("");
@@ -30,7 +30,7 @@ function TransactionFormScreen() {
   const handleTransaction = async () => {
 
     const transactionInput = {
-      UsernName: Number(UsernName),
+      UserName: String(UserName),
       Amount: Number(Amount),
       Currency: String(Currency),
       Sender_Phone,
@@ -41,7 +41,7 @@ function TransactionFormScreen() {
     };
 
     try {
-      const response = await fetch("http://192.168.1.3:1010/transaction", {
+      const response = await fetch("http://192.168.1.87:1010/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -54,7 +54,7 @@ function TransactionFormScreen() {
 
         console.log(transactionInput, "created successfully");
 
-        Alert.alert('Success', 'See your performed transactions in "Transactions" ');
+        Alert.alert('Success', 'See your list of transactions in "Transactions" at the bottom page');
 
         navigation.navigate('Homepage', { post: Amount });
 
@@ -85,8 +85,8 @@ function TransactionFormScreen() {
           <TextInput
             placeholder="User Name"
             style={styles.inputText}
-            value={UsernName}
-            onChangeText={setUsernName}
+            value={UserName}
+            onChangeText={setUserName}
           />
         </View>
 
@@ -96,7 +96,7 @@ function TransactionFormScreen() {
             style={styles.inputText}
             value={Amount}
             onChangeText={setAmount}
-            keyboardType="numeric"
+            keyboardType="numeric" // gives the numerical keyboard with only dot and no symbols
           />
         </View>
 
@@ -115,7 +115,7 @@ function TransactionFormScreen() {
             style={styles.inputText}
             value={Sender_Phone}
             onChangeText={setSenderPhone}
-            keyboardType="phone-pad"
+            keyboardType="phone-pad" // gives the numerical keyboard with the symbols
           />
         </View>
 
