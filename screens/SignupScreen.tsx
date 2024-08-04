@@ -15,7 +15,7 @@ function SignupScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [userName, setuserName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone_number, setPhone_number] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +32,7 @@ function SignupScreen() {
     const userData = {
       userName,
       email,
-      phone_number,
+      phonenumber,
       password,
     };
     try {
@@ -88,6 +88,7 @@ function SignupScreen() {
           style={styles.input}
           value={email}
           onChangeText={setEmail}
+          keyboardType='email-address'
         />
       </View>
 
@@ -98,8 +99,9 @@ function SignupScreen() {
         <TextInput
           placeholder="Phone Number"
           style={styles.input}
-          value={phone_number}
-          onChangeText={setPhone_number}
+          value={phonenumber}
+          onChangeText={setPhonenumber}
+          keyboardType="phone-pad"
         />
       </View>
 

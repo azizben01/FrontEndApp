@@ -37,7 +37,7 @@ function TransactionListScreen() {
       });
       if (response.ok) {
         const data = await response.json(); // Parse the JSON response
-        setTransactions(data);
+        setTransactions(data || []);
         console.log("Transactions retrieved successfully:", data);
       } else {
         console.error("Failed to retrieve transactions");
@@ -82,7 +82,13 @@ function TransactionListScreen() {
                   </TouchableOpacity>
                 }
               />
-              : null
+              :
+              <View style = {styles.noTransactionsView}>
+              <Text style={styles.noTransactionsText}>
+              No available transaction.
+            </Text>
+            </View>
+          
           }
         </View>
       </SafeAreaView>
@@ -139,7 +145,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 15,
     marginBottom: 20,
-
   },
+
+  noTransactionsText: {
+    color: '#3a5e7a',
+    fontSize: 17,
+    textAlign: 'center'
+  },
+  noTransactionsView: {
+    flex: 1, // display first in flex before justifying.
+    justifyContent: 'center' // to move the whole text at the center of the page.
+  }
 
 });

@@ -10,11 +10,11 @@ function TransactionFormScreen() {
 
   const [Amount, setAmount] = useState("");
   const [Currency, setCurrency] = useState("");
-  const [Sender_Phone, setSenderPhone] = useState("");
-  const [UserName, setUserName] = useState("");
-  const [Recipient_name, setRecipientName] = useState("");
-  const [Recipient_phone, setRecipientPhone] = useState("");
-  const [Transaction_Type, setTransactionType] = useState("");
+  const [Senderphone, setSenderhone] = useState("");
+  const [Username, setUsername] = useState("");
+  const [Recipientname, setRecipientname] = useState("");
+  const [Recipientphone, setRecipientPhone] = useState("");
+  const [Transactiontype, setTransactiontype] = useState("");
 
   const handleAlert = () => {
     Alert.alert(
@@ -30,13 +30,13 @@ function TransactionFormScreen() {
   const handleTransaction = async () => {
 
     const transactionInput = {
-      UserName: String(UserName),
+      UserName: String(Username),
       Amount: Number(Amount),
       Currency: String(Currency),
-      Sender_Phone,
-      Recipient_phone,
-      Recipient_name,
-      Transaction_Type,
+      Senderphone,
+      Recipientphone,
+      Recipientname,
+      Transactiontype,
      
     };
 
@@ -85,8 +85,8 @@ function TransactionFormScreen() {
           <TextInput
             placeholder="User Name"
             style={styles.inputText}
-            value={UserName}
-            onChangeText={setUserName}
+            value={Username}
+            onChangeText={setUsername}
           />
         </View>
 
@@ -113,8 +113,8 @@ function TransactionFormScreen() {
           <TextInput
             placeholder="Sender Phone"
             style={styles.inputText}
-            value={Sender_Phone}
-            onChangeText={setSenderPhone}
+            value={Senderphone}
+            onChangeText={setSenderhone}
             keyboardType="phone-pad" // gives the numerical keyboard with the symbols
           />
         </View>
@@ -123,8 +123,8 @@ function TransactionFormScreen() {
           <TextInput
             placeholder="Recipient Name"
             style={styles.inputText}
-            value={Recipient_name}
-            onChangeText={setRecipientName}
+            value={Recipientname}
+            onChangeText={setRecipientname}
           />
         </View>
 
@@ -132,7 +132,7 @@ function TransactionFormScreen() {
           <TextInput
             placeholder="Recipient Phone"
             style={styles.inputText}
-            value={Recipient_phone}
+            value={Recipientphone}
             onChangeText={setRecipientPhone}
             keyboardType="phone-pad"
           />
@@ -142,8 +142,8 @@ function TransactionFormScreen() {
           <TextInput
             placeholder="Transaction Type"
             style={styles.inputText}
-            value={Transaction_Type}
-            onChangeText={setTransactionType}
+            value={Transactiontype}
+            onChangeText={setTransactiontype}
           />
         </View>
 

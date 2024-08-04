@@ -10,14 +10,18 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 function LoginScreen() {
-    const [showPassword, setShowPassword] = useState(false);
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSignup = () => {
         navigation.navigate("Signup") 
     }
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const handleForgotPassword = () =>{
+        navigation.navigate('RequestPasswordReset')
+    }
+    
 
     const handleLogin = async () => {
         try {
@@ -65,6 +69,7 @@ function LoginScreen() {
                     style={styles.input}
                     value={email}
                     onChangeText={setEmail}
+                    keyboardType='email-address'
                 />
             </View>
 
@@ -94,7 +99,7 @@ function LoginScreen() {
             </View>
 
             <View style={styles.recoverContainer}>
-                <TouchableOpacity style={styles.recoverButton}>
+                <TouchableOpacity style={styles.recoverButton} onPress={handleForgotPassword}>
                     <Text style={styles.passwordRecover}>Forgot your Password ?</Text>
                 </TouchableOpacity>
             </View>

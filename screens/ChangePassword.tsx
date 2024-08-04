@@ -1,12 +1,47 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ChangePassword = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
     const toggleShowingPassword = () => {
         setShowPassword(!showPassword);
+    };
+
+    const handleUpdate = async () => {
+        try {
+            const response = await fetch('http://192.168.1.87:1010/changePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, oldPassword, newPassword }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Ensure that 'data' contains updated user data
+                await AsyncStorage.setItem('userData', JSON.stringify(data));
+                console.log('Updated userData:', data);
+
+                Alert.alert('Success', 'Password updated successfully.');
+                navigation.navigate('Login'); // Navigate back to the profile screen
+            } else {
+                Alert.alert('Error', data.error || 'Failed to update password');
+            }
+        } catch (error) {
+            Alert.alert('Error', 'An error occurred. Please try again later.');
+        }
     };
 
     return (
@@ -20,6 +55,21 @@ const ChangePassword = () => {
 
             <View style={styles.inputView}>
                 <View style={styles.labelView}>
+                    <Text style={styles.labelText}>Enter user name</Text>
+                </View>
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        placeholder='User name'
+                        style={styles.InputValue}
+                        value={username}
+                        onChangeText={setUsername}
+                        keyboardType='default'
+                    />
+                </View>
+            </View>
+
+            <View style={styles.inputView}>
+                <View style={styles.labelView}>
                     <Text style={styles.labelText}>Your current password</Text>
                 </View>
                 <View style={styles.passwordContainer}>
@@ -27,6 +77,8 @@ const ChangePassword = () => {
                         placeholder='old password'
                         style={styles.InputValue}
                         secureTextEntry={!showPassword}
+                        value={oldPassword}
+                        onChangeText={setOldPassword}
                         keyboardType='default'
                     />
                     <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
@@ -44,6 +96,8 @@ const ChangePassword = () => {
                         placeholder='new password'
                         style={styles.InputValue}
                         secureTextEntry={!showPassword}
+                        value={newPassword}
+                        onChangeText={setNewPassword}
                         keyboardType='default'
                     />
                     <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
@@ -52,7 +106,7 @@ const ChangePassword = () => {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleUpdate}>
                 <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
 
@@ -101,7 +155,6 @@ const styles = StyleSheet.create({
     passwordContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        //  borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
         padding: 5,

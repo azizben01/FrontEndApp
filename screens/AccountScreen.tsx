@@ -19,6 +19,10 @@ function AccountScreen() {
         navigation.navigate('Change password')
     }
 
+    const handleDeleteAccount = () => {
+        navigation.navigate('Delete')
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -52,7 +56,7 @@ function AccountScreen() {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleDeleteAccount}>
                 <View style={styles.iconContainer}>
                     <MaterialCommunityIcons name="heart-broken-outline" size={24} color="#fff" />
                 </View>
