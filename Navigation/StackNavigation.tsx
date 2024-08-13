@@ -14,24 +14,24 @@ import { TextStyle } from 'react-native';
 import DeleteAccount from '../screens/DeleteAccount';
 import RequestReset from '../screens/RequestReset';
 
-interface CustomHeaderStyle extends TextStyle {
-  color?: string; // Explicitly define the optional 'color' property
-}
+// interface CustomHeaderStyle extends TextStyle {
+//   color?: string; // Explicitly define the optional 'color' property
+// }
 
 const Stack = createNativeStackNavigator();
 
 const customHeaderOptions: {
   headerStyle: { backgroundColor: string };
   headerTintColor: string;
-  headerTitleStyle: CustomHeaderStyle;
+  // headerTitleStyle: CustomHeaderStyle;
 } = {
   headerStyle: {
     backgroundColor: '#cfcece4a',
   },
   headerTintColor: '',
-  headerTitleStyle: {
-    fontWeight: 'bold', // You can add other text styles here (e.g., fontSize)
-  },
+  // headerTitleStyle: {
+  //   fontWeight: 'bold', // You can add other text styles here (e.g., fontSize)
+  // },
 };
 
 function StackNavigator() {

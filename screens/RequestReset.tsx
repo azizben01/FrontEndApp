@@ -6,7 +6,7 @@ const RequestReset = () => {
 
     const handleRequestReset = async () => {
         try {
-            const response = await fetch('http://192.168.1.87:1010/requestsEmail', {
+            const response = await fetch('http://192.168.1.87:1010/RequestReset', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
