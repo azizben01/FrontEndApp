@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, Button, } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, Button, KeyboardAvoidingView, } from 'react-native';
 import { ParamListBase, useNavigation } from '@react-navigation/native'; // Navigation hook
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -25,9 +25,13 @@ function SettingsScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-
+        <KeyboardAvoidingView style={styles.container}>
+        <SafeAreaView style={styles.containerSafe}>
+            
+            <View  style={styles.titleView}>
             <Text style={styles.title}>Settings</Text>
+            </View>
+           
 
             <TouchableOpacity style={styles.settingButton} onPress={handleHelp}>
                 <View style={styles.lefticon}><Feather name="help-circle" size={18} color="white" /></View>
@@ -63,6 +67,7 @@ function SettingsScreen() {
                 </View>
             </TouchableOpacity>
         </SafeAreaView>
+        </KeyboardAvoidingView>
 
     );
 }
@@ -70,9 +75,13 @@ function SettingsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
         backgroundColor: '#cfcece4a'
+    },
+    containerSafe: {
+        flex: 1,
+        // justifyContent: 'flex-start',
+        // alignItems: 'flex-start',
+       
     },
     title: {
         marginLeft: 20,
@@ -81,13 +90,17 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: '#3a5e7a'
     },
+    titleView: {
+        padding: 25
+
+    },
     settingButton: {
-        marginLeft: 15,
+        // marginLeft: 15,
         padding: 10,
         margin: 5,
         backgroundColor: '#3a5e7a',
         borderRadius: 30,
-        width: 350,
+        width: '90%',
         flexDirection: 'row',
         borderWidth: 1,
     },
@@ -98,16 +111,19 @@ const styles = StyleSheet.create({
     },
 
     RightIcon1: {
-        paddingLeft: 230
+        paddingLeft: '70%'
     },
     RightIcon2: {
-        paddingLeft: 96
+        // paddingLeft: 96
+         paddingLeft: '20%'
     },
     RightIcon3: {
-        paddingLeft: 174
+        // paddingLeft: 174
+         paddingLeft: '50%'
     },
     RightIcon4: {
-        paddingLeft: 163
+        // paddingLeft: 163
+         paddingLeft: '40%'
     },
     lefticon: {
         padding: 5

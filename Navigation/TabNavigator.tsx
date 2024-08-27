@@ -18,11 +18,12 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
     return (
+        
         <Tab.Navigator initialRouteName='Homepage' screenOptions={
             {
                 headerShown: false,
                 tabBarShowLabel: false,
-                tabBarStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
+                tabBarStyle: { backgroundColor: 'white', elevation: 5 },
             }
         }>
             <Tab.Screen name="Homepage" component={HomeScreen} options={{
@@ -75,6 +76,7 @@ function TabNavigator() {
                 }}
             />
         </Tab.Navigator>
+       
     );
 }
 

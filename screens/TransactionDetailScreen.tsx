@@ -8,11 +8,11 @@ type Transaction = {
   currency: string
   userid: number
   transactionid: number
-  recipient_name: string
+  recipientname: string
   created: string
-  recipient_phone: string
-  sender_phone: string
-  transaction_type: string
+  recipientphone: string
+  senderphone: string
+  transactiontype: string
 
 };
 
@@ -35,7 +35,7 @@ const TransactionDetailScreen = () => {
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Sender Phone:</Text>
-        <Text style={styles.value}>{transaction.sender_phone}</Text>
+        <Text style={styles.value}>{transaction.senderphone}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Transactionid:</Text>
@@ -51,15 +51,15 @@ const TransactionDetailScreen = () => {
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Recipient Name:</Text>
-        <Text style={styles.value}>{transaction.recipient_name}</Text>
+        <Text style={styles.value}>{transaction.recipientname}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Recipient Phone:</Text>
-        <Text style={styles.value}>{transaction.recipient_phone}</Text>
+        <Text style={styles.value}>{transaction.recipientphone}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Type of Transaction:</Text>
-        <Text style={styles.value}>{transaction.transaction_type}</Text>
+        <Text style={styles.value}>{transaction.transactiontype}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Date Created:</Text>

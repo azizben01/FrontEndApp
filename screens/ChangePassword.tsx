@@ -13,6 +13,10 @@ const ChangePassword = () => {
     const [username, setUsername] = useState('');
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
+    const handleForgotPassword = () => {
+        navigation.navigate('RequestPasswordReset')
+    }
+
     const toggleShowingPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -42,6 +46,7 @@ const ChangePassword = () => {
         } catch (error) {
             Alert.alert('Error', 'An error occurred. Please try again later.');
         }
+
     };
 
     return (
@@ -110,7 +115,7 @@ const ChangePassword = () => {
                 <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.recoverButton}>
+            <TouchableOpacity style={styles.recoverButton} onPress={handleForgotPassword}>
                 <Text style={styles.passwordRecover}>Forgot your Password?</Text>
             </TouchableOpacity>
         </SafeAreaView>

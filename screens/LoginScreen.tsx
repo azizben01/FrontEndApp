@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -25,7 +25,8 @@ function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://192.168.1.87:1010/login', {
+            const response = await fetch('http://192.168.1.3:1010/login', {
+            // const response = await fetch('http://192.168.1.87:1010/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,10 +55,9 @@ function LoginScreen() {
     const toggleShowingPassword = () => {
         setShowPassword(!showPassword);
     };
+
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding">
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text style={styles.topsentence}>Log in to Your Account</Text>
 
             <View style={styles.inputContainer}>
@@ -113,7 +113,6 @@ function LoginScreen() {
                     <Text style={styles.signButtonText}>Sign up.</Text>
                 </TouchableOpacity>
             </View>
-
         </KeyboardAvoidingView>
     )
 }
@@ -121,6 +120,14 @@ function LoginScreen() {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+    
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#cfcece4a'
+
+    },
 
     iconContainer1: {
         marginLeft: 10,
@@ -142,13 +149,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
 
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#cfcece4a'
-
-    },
+  
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -157,6 +158,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         borderRadius: 25,
         backgroundColor: '#cfcece4a',
+       height: 45
 
     },
     input: {

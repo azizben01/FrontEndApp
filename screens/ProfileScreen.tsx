@@ -22,8 +22,8 @@ function ProfileScreen() {
                 "",
                 "Are you sure you want to log out?",
                 [
-                    { text: "Cancel", onPress: () => console.log("Log out canceled"), style: "cancel" },
-                    { text: "Log out", onPress: async () => {
+                    { text: "Cancel", style: "cancel",  onPress: () => console.log("Log out canceled"), },
+                    { text: "Log out",style: "destructive", onPress: async () => {
                         
                         await AsyncStorage.removeItem('userData');
                         navigation.navigate('Login') }}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginTop: 10,
         marginLeft: 20,
-        width: 350,
+        width: "87%",
         backgroundColor: '#cfcece4a'
     },
     content: {

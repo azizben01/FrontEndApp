@@ -1,7 +1,7 @@
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, FlatList, ScrollView } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, FlatList, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -14,22 +14,26 @@ type Transactions = {
   currency: string
   userid: number
   transactionid: number
-  recipient_name: string
+  recipientname: string
   created: string
+  isDeleted: boolean
 }
 
 function TransactionListScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   
+   // Function to navigate to the transaction detail screen
   const HandleTransactionDetails = (transaction: Transactions) => {
     navigation.navigate('TransactionDetail', { transaction });
   }
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
 
+  // Function to fetch transactions from the backend
   const handleTransaction = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/transactions", {
+      const response = await fetch("http://192.168.1.3:1010/transactions", {
+        // const response = await fetch("http://192.168.1.87:1010/transactions", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +51,52 @@ function TransactionListScreen() {
       // Handle network errors or other unexpected errors
     }
   };
+
+  // Function to soft delete a transaction (modification)
+  const deleteTransaction = async (transactionId: number) => {
+    try {
+        const response = await fetch(`http://192.168.1.3:1010/deletetransactions/${transactionId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            // Remove the transaction from the frontend state after soft deletion
+            setTransactions(prevTransactions =>
+                prevTransactions.filter(transaction => transaction.transactionid !== transactionId)
+            );
+            console.log("Transaction soft deleted successfully");
+        } else {
+            console.error("Failed to delete transaction");
+        }
+    } catch (error) {
+        console.error("Error deleting transaction:", error);
+        // Handle network errors or other unexpected errors
+    }
+};
+
+// handleLongPress function 
+const handleLongPress = (transactionId: number) => {
+  Alert.alert(
+      "Delete Transaction",
+      "Are you sure you want to delete this transaction?",
+      [
+          {
+              text: "Cancel",
+              style: "cancel",
+          },
+          {
+              text: "Delete",
+              style: "destructive",
+              onPress: () => deleteTransaction(transactionId),
+          },
+      ]
+  );
+};
+
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -74,10 +124,14 @@ function TransactionListScreen() {
               <FlatList
                 data={transactions}
                 renderItem={({ item }) =>
-                  <TouchableOpacity style={styles.touchableTransaction} onPress={() => HandleTransactionDetails(item)}>
+                  <TouchableOpacity 
+                  style={styles.touchableTransaction}
+                  onPress={() => HandleTransactionDetails(item)} 
+                  onLongPress={() =>handleLongPress(item.transactionid)}>
+              
                     <Text style={styles.content}>{item.amount} </Text> 
                     <Text style={styles.content}>{item.currency} have been successfully transfered to </Text>
-                    <Text style={styles.content}>{item.recipient_name} on </Text>
+                    <Text style={styles.content}>{item.recipientname} on </Text>
                     <Text style={styles.content}>{item.created}</Text>
                   </TouchableOpacity>
                 }

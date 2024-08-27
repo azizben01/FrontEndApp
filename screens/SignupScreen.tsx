@@ -64,9 +64,11 @@ function SignupScreen() {
   const toggleShowingPassword = () => {
     setShowPassword(!showPassword)
   };
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.topsentence}>Create Your Acccount</Text>
+
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
           <Feather name="user" size={17} color="#3a5e7a" />

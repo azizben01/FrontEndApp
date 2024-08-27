@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+const currencies = ["RWF"]; // List of currencies
 
 function TransactionFormScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -15,6 +17,19 @@ function TransactionFormScreen() {
   const [Recipientname, setRecipientname] = useState("");
   const [Recipientphone, setRecipientPhone] = useState("");
   const [Transactiontype, setTransactiontype] = useState("");
+
+  // currency handlers 
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+
+  const handleCurrencySelect = (selectedCurrency: string) => {
+    setCurrency(selectedCurrency);
+    setShowCurrencyDropdown(false);
+  };
+
+  const handleCurrencyFieldPress = () => {
+    setShowCurrencyDropdown(!showCurrencyDropdown);
+  };
+//end of currency handlers 
 
   const handleAlert = () => {
     Alert.alert(
@@ -41,7 +56,8 @@ function TransactionFormScreen() {
     };
 
     try {
-      const response = await fetch("http://192.168.1.87:1010/transaction", {
+      const response = await fetch("http://192.168.1.3:1010/transaction", {
+      // const response = await fetch("http://192.168.1.87:1010/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -100,13 +116,31 @@ function TransactionFormScreen() {
           />
         </View>
 
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <TextInput
             placeholder="Currency"
             style={styles.inputText}
             value={Currency}
             onChangeText={setCurrency}
           />
+        </View> */}
+         <View style={styles.inputContainer}>
+          <TouchableOpacity onPress={handleCurrencyFieldPress} style={styles.inputText}>
+               <Text>{Currency || "Currency"}</Text>
+          </TouchableOpacity>
+          {showCurrencyDropdown && (
+            <View style={styles.currencyDropdown}>
+            {currencies.map((item) => (
+              <TouchableOpacity
+                key={item}
+                style={styles.currencyItem}
+                onPress={() => handleCurrencySelect(item)}
+              >
+                <Text style={styles.currencyItemText}>{item}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          )}
         </View>
 
         <View style={styles.inputContainer}>
@@ -196,5 +230,21 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     padding: 12,
+  },
+
+  // currency styles 
+
+  currencyDropdown: {
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    maxHeight: 100,
+  },
+  currencyItem: {
+    padding: 10,
+  },
+  currencyItemText: {
+    fontSize: 16,
   },
 });
