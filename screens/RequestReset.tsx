@@ -1,12 +1,16 @@
 import { Alert, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const RequestReset = () => {
+    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     const [email, setEmail] = useState('');
 
     const handleRequestReset = async () => {
         try {
-            const response = await fetch('http://192.168.1.87:1010/RequestReset', {
+            // const response = await fetch('http://192.168.1.87:1010/RequestReset', {
+            const response = await fetch('http://192.168.1.2:1010/RequestReset', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -18,11 +22,13 @@ const RequestReset = () => {
 
             if (response.ok) {
                 Alert.alert('Success', 'Password reset link sent to your email.');
+                navigation.navigate('VerifyCode')
             } else {
                 Alert.alert('Error', data.error || 'Failed to send password reset link');
             }
         } catch (error) {
             Alert.alert('Error', 'An error occurred. Please try again later.');
+            console.log(error)
         }
     };
 

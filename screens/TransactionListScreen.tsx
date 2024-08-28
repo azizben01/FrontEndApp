@@ -32,7 +32,7 @@ function TransactionListScreen() {
   // Function to fetch transactions from the backend
   const handleTransaction = async () => {
     try {
-      const response = await fetch("http://192.168.1.3:1010/transactions", {
+      const response = await fetch("http://192.168.1.2:1010/transactions", {
         // const response = await fetch("http://192.168.1.87:1010/transactions", {
         method: "GET",
         headers: {
@@ -55,7 +55,7 @@ function TransactionListScreen() {
   // Function to soft delete a transaction (modification)
   const deleteTransaction = async (transactionId: number) => {
     try {
-        const response = await fetch(`http://192.168.1.3:1010/deletetransactions/${transactionId}`, {
+        const response = await fetch(`http://192.168.1.2:1010/deletetransactions/${transactionId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

@@ -25,7 +25,7 @@ function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://192.168.1.3:1010/login', {
+            const response = await fetch('http://192.168.1.2:1010/login', {
             // const response = await fetch('http://192.168.1.87:1010/login', {
                 method: 'POST',
                 headers: {

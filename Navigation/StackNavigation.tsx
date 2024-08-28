@@ -13,6 +13,7 @@ import ChangePassword from '../screens/ChangePassword';
 import { TextStyle } from 'react-native';
 import DeleteAccount from '../screens/DeleteAccount';
 import RequestReset from '../screens/RequestReset';
+import VerifyCodeScreen from '../screens/VerifyCode';
 
 // interface CustomHeaderStyle extends TextStyle {
 //   color?: string; // Explicitly define the optional 'color' property
@@ -49,6 +50,7 @@ function StackNavigator() {
       <Stack.Screen name="Change password" component={ChangePassword} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false}} />
       <Stack.Screen name="Delete" component={DeleteAccount} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false}} />
       <Stack.Screen name="RequestPasswordReset" component={RequestReset} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false}} />
+      <Stack.Screen name="VerifyCode" component={VerifyCodeScreen} options={{ ...customHeaderOptions, headerBackTitle: 'Back', headerBackTitleVisible: false}} />
     </Stack.Navigator>
   );
 }
