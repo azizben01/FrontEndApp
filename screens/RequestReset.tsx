@@ -2,6 +2,7 @@ import { Alert, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput,
 import React, { useState } from 'react'
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RequestReset = () => {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -9,8 +10,8 @@ const RequestReset = () => {
 
     const handleRequestReset = async () => {
         try {
-            // const response = await fetch('http://192.168.1.87:1010/RequestReset', {
-            const response = await fetch('http://192.168.1.2:1010/RequestReset', {
+             const response = await fetch('http://192.168.1.87:1010/RequestReset', {
+           // const response = await fetch('http://192.168.1.2:1010/RequestReset', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,6 +22,7 @@ const RequestReset = () => {
             const data = await response.json();
 
             if (response.ok) {
+                await AsyncStorage.setItem('resetEmail', email);  // Store email in AsyncStorage
                 Alert.alert('Success', 'Password reset link sent to your email.');
                 navigation.navigate('VerifyCode')
             } else {

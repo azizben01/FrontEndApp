@@ -10,24 +10,26 @@ function VerifyCodeScreen () {
 
     const handleVerifyCode = async () => {
         try {
-            const response = await fetch('http://192.168.1.2:1010/ResetCode', {
+            // const response = await fetch('http://192.168.1.2:1010/ResetCode', {
+            const response = await fetch('http://192.168.1.87:1010/ResetCode', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code }),
+                body: JSON.stringify({ code }), 
             });
 
             const data = await response.json();
             if (response.ok) {
-                // Navigate to reset password screen, passing the email
-                // navigation.navigate('ResetPassword', { email: data.email });
-                Alert.alert('The code you entered is correct')
+               //  navigation.navigate('') // , { email: data.email });
+                Alert.alert('The provided code is correct!')
+                 navigation.navigate("UpdatePassword");
             } else {
                 alert(data.error || 'Invalid code');
             }
         } catch (error) {
-            alert('Error verifying code');
+            console.error('Navigation error:', error);
+            alert('An error occurred during navigation.');
             console.error(error);
         }
     };
@@ -64,6 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
+        marginTop: 150,
         padding: 10
     },
     button: {

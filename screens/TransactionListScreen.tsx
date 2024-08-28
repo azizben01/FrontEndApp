@@ -32,8 +32,8 @@ function TransactionListScreen() {
   // Function to fetch transactions from the backend
   const handleTransaction = async () => {
     try {
-      const response = await fetch("http://192.168.1.2:1010/transactions", {
-        // const response = await fetch("http://192.168.1.87:1010/transactions", {
+     // const response = await fetch("http://192.168.1.2:1010/transactions", {
+      const response = await fetch("http://192.168.1.87:1010/transactions", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
