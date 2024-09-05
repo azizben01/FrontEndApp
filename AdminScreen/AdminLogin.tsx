@@ -1,43 +1,39 @@
-import React, { useEffect, useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  SafeAreaView,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Alert } from "react-native";
+import React, { useState } from "react";
 
-// icons
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function LoginScreen() {
+function AdminLogin() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = () => {
-    navigation.navigate("Signup");
+  const toggleShowingPassword = () => {
+    setShowPassword(!showPassword);
   };
+
   const handleForgotPassword = () => {
     navigation.navigate("RequestPasswordReset");
   };
 
-  const handleAdminLogin = () => {
-    navigation.navigate("AdminFlow"); // This navigates to the Admin section
-  };
-
-  const handleLogin = async () => {
+  const handleAdminLogin = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/login", {
-        // const response = await fetch("http://192.168.1.87:1010/login", {
+      const response = await fetch("http://192.168.1.87:1010/adminLogin", {
+        // const response = await fetch("http://192.168.1.87:1010/adminLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,12 +45,12 @@ function LoginScreen() {
       console.log("Login response:", result);
       if (response.ok) {
         // Store user data in AsyncStorage
-        await AsyncStorage.setItem("userData", JSON.stringify(result));
-        console.log("User data saved to AsyncStorage", result);
+        await AsyncStorage.setItem("AdminData", JSON.stringify(result));
+        console.log("Admin data saved to AsyncStorage", result);
         Alert.alert("Success", "Logged in successfully!");
         setEmail("");
         setPassword("");
-        navigation.navigate("tabs");
+        navigation.navigate("admintabs");
       } else {
         Alert.alert("Error", result.error || "Invalid email or password");
       }
@@ -63,13 +59,9 @@ function LoginScreen() {
       Alert.alert("Error", "Failed to log in. Please try again later.");
     }
   };
-  const toggleShowingPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.topsentence}>Log in to Your Account</Text>
+      <Text style={styles.topsentence}>Administrator Log in</Text>
 
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer1}>
@@ -110,7 +102,7 @@ function LoginScreen() {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.Logbutton, styles.buttonShadow]}
-          onPress={handleLogin}
+          onPress={handleAdminLogin}
         >
           <Text style={styles.LogButtonText}>Login</Text>
         </TouchableOpacity>
@@ -124,31 +116,19 @@ function LoginScreen() {
           <Text style={styles.passwordRecover}>Forgot your Password ?</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.text2}>
-        <Text style={styles.accountSentence}> Don't have an account? </Text>
-        <TouchableOpacity style={styles.signButton} onPress={handleSignup}>
-          <Text style={styles.signButtonText}>Sign up.</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.adminView}>
-        <TouchableOpacity style={styles.adminButton} onPress={handleAdminLogin}>
-          <Text style={styles.adminText}>Are you and Admin?</Text>
-        </TouchableOpacity>
-      </View>
     </KeyboardAvoidingView>
   );
 }
 
-export default LoginScreen;
+export default AdminLogin;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#cfcece4a",
+    backgroundColor: "#003554",
+    // backgroundColor: '#cfcece4a'
   },
 
   iconContainer1: {
@@ -160,7 +140,8 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     fontSize: 22,
     fontWeight: "700",
-    color: "#3a5e7a",
+    color: "white",
+    // color: '#3a5e7a',
     fontFamily: "NotoMusic-Regular",
   },
 
@@ -178,7 +159,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 5,
     borderRadius: 25,
-    backgroundColor: "#cfcece4a",
+    backgroundColor: "white",
+    // backgroundColor: '#cfcece4a',
     height: 45,
   },
   input: {
@@ -200,7 +182,8 @@ const styles = StyleSheet.create({
   },
 
   Logbutton: {
-    backgroundColor: "#3a5e7a",
+    backgroundColor: "#638ecb",
+    // backgroundColor: '#3a5e7a',
     width: "130%",
     padding: 15,
     borderRadius: 25,
@@ -237,7 +220,8 @@ const styles = StyleSheet.create({
   },
 
   passwordRecover: {
-    color: "#3a5e7a",
+    color: "white",
+    // color: '#3a5e7a',
     fontFamily: "NotoMusic-Regular",
     fontSize: 13,
   },

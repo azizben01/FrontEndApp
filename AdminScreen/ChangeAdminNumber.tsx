@@ -13,7 +13,7 @@ import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ChangeNumber = () => {
+function ChangeAdminNumber() {
   const [oldPhoneNumber, setOldPhoneNumber] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -81,9 +81,9 @@ const ChangeNumber = () => {
       </TouchableOpacity>
     </SafeAreaView>
   );
-};
+}
 
-export default ChangeNumber;
+export default ChangeAdminNumber;
 
 const styles = StyleSheet.create({
   topsentence: {

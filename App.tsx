@@ -3,7 +3,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './Navigation/StackNavigation';
 import { useFonts } from 'expo-font';
-import LaunchScreen from './screens/LaunchScreen';
+import AppNavigator from './AppNavigator';
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -11,14 +11,13 @@ function App() {
   });
 
   if (!fontsLoaded) {
-    console.log('fontsLoaded not loaded')
+    console.log('fontsLoaded not loaded');
     return null;
   }
 
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
-  )
+       <AppNavigator />
+  );
 }
+
 export default App;

@@ -13,13 +13,9 @@ import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const RequestReset = () => {
+const AdminRequestReset = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [email, setEmail] = useState("");
-
-  const GotoVerifyCode = () => {
-    navigation.navigate("VerifyCode");
-  };
 
   const handleRequestReset = async () => {
     try {
@@ -80,7 +76,7 @@ const RequestReset = () => {
   );
 };
 
-export default RequestReset;
+export default AdminRequestReset;
 
 const styles = StyleSheet.create({
   safeView: {

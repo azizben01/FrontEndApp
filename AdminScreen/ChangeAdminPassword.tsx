@@ -15,7 +15,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const ChangePassword = () => {
+function ChangeAdminPassword() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [showPassword, setShowPassword] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
@@ -144,9 +144,9 @@ const ChangePassword = () => {
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
-};
+}
 
-export default ChangePassword;
+export default ChangeAdminPassword;
 
 const styles = StyleSheet.create({
   safeView: {

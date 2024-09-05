@@ -13,7 +13,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
-const DeleteAccount = () => {
+
+function DeleteAdminAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -119,9 +120,9 @@ const DeleteAccount = () => {
       </TouchableOpacity>
     </SafeAreaView>
   );
-};
+}
 
-export default DeleteAccount;
+export default DeleteAdminAccount;
 
 const styles = StyleSheet.create({
   safeView: {

@@ -1,59 +1,69 @@
 import {
-  Alert,
-  KeyboardAvoidingView,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
 } from "react-native";
-import React, { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const ChangePassword = () => {
+const ResetAdminPassword = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [username, setUsername] = useState("");
-
-  const handleForgotPassword = () => {
-    navigation.navigate("RequestPasswordReset");
-  };
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const toggleShowingPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleUpdate = async () => {
+  // withdraw the email from the asyncStorage
+  useEffect(() => {
+    const getEmail = async () => {
+      const storedEmail = await AsyncStorage.getItem("resetEmail");
+      if (storedEmail) {
+        setEmail(storedEmail);
+      }
+    };
+    getEmail();
+  }, []);
+
+  const handleResetPassword = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords don't match");
+      return;
+    }
+
     try {
-      const response = await fetch("http://192.168.1.3:1010/changePassword", {
+      const response = await fetch("http://192.168.1.3:1010/ResetPassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, oldPassword, newPassword }),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
 
       const data = await response.json();
-
       if (response.ok) {
-        // Ensure that 'data' contains updated user data
-        await AsyncStorage.setItem("userData", JSON.stringify(data));
-        console.log("Updated userData:", data);
-
-        Alert.alert("Success", "Password updated successfully.");
-        navigation.navigate("Login"); // Navigate back to the profile screen
+        alert("Password reset successfully!");
+        navigation.navigate("SuccessReset"); // Redirect to login page
       } else {
-        Alert.alert("Error", data.error || "Failed to update password");
+        alert(data.error || "Failed to reset password");
       }
     } catch (error) {
-      Alert.alert("Error", "An error occurred. Please try again later.");
+      alert("Error resetting password");
+      console.error(error);
     }
   };
 
@@ -61,36 +71,21 @@ const ChangePassword = () => {
     <KeyboardAvoidingView style={styles.safeView} behavior="padding">
       <View style={styles.topSentenceView}>
         <Text style={styles.topSentence}>
-          To set a new password, please insert your current password first.
+          Update your password by providing a new one !
         </Text>
       </View>
 
       <View style={styles.inputView}>
         <View style={styles.labelView}>
-          <Text style={styles.labelText}>Enter user name</Text>
+          <Text style={styles.labelText}>Enter your password</Text>
         </View>
         <View style={styles.passwordContainer}>
           <TextInput
-            placeholder="User name"
-            style={styles.InputValue}
-            value={username}
-            onChangeText={setUsername}
-            keyboardType="default"
-          />
-        </View>
-      </View>
-
-      <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your current password</Text>
-        </View>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            placeholder="old password"
+            placeholder="New password"
             style={styles.InputValue}
             secureTextEntry={!showPassword}
-            value={oldPassword}
-            onChangeText={setOldPassword}
+            value={password}
+            onChangeText={setPassword}
             keyboardType="default"
           />
           <TouchableOpacity
@@ -108,15 +103,15 @@ const ChangePassword = () => {
 
       <View style={styles.inputView}>
         <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your new password</Text>
+          <Text style={styles.labelText}>Confirm your password</Text>
         </View>
         <View style={styles.passwordContainer}>
           <TextInput
-            placeholder="new password"
+            placeholder="confirm new password"
             style={styles.InputValue}
             secureTextEntry={!showPassword}
-            value={newPassword}
-            onChangeText={setNewPassword}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
             keyboardType="default"
           />
           <TouchableOpacity
@@ -132,21 +127,14 @@ const ChangePassword = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleUpdate}>
+      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
         <Text style={styles.buttonText}>Update</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.recoverButton}
-        onPress={handleForgotPassword}
-      >
-        <Text style={styles.passwordRecover}>Forgot your Password?</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
 
-export default ChangePassword;
+export default ResetAdminPassword;
 
 const styles = StyleSheet.create({
   safeView: {
@@ -159,10 +147,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     color: "#3a5e7a",
-    fontWeight: "500",
   },
   topSentenceView: {
-    padding: 10,
+    padding: 20,
   },
   labelView: {
     marginBottom: 10,

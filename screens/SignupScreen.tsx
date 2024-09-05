@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
@@ -7,16 +14,18 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 //icons
 
-import Feather from '@expo/vector-icons/Feather';
-import Fontisto from '@expo/vector-icons/Fontisto';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from "@expo/vector-icons/Feather";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 function SignupScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [userName, setuserName] = useState("");
+  const [employeefullname, setemployeefullname] = useState("");
   const [email, setEmail] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
   const [password, setPassword] = useState("");
+  const [position, setPosition] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -31,13 +40,15 @@ function SignupScreen() {
     }
     const userData = {
       userName,
+      employeefullname,
       email,
+      position,
       phonenumber,
       password,
     };
     try {
-       const response = await fetch("http://192.168.1.87:1010/user", {
-      // const response = await fetch("http://192.168.1.2:1010/user", {
+      const response = await fetch("http://192.168.1.87:1010/user", {
+        // const response = await fetch("http://192.168.1.2:1010/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // tells the server that the data being sent in the request body is in JSON format
@@ -63,7 +74,7 @@ function SignupScreen() {
   };
 
   const toggleShowingPassword = () => {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -75,10 +86,32 @@ function SignupScreen() {
           <Feather name="user" size={17} color="#3a5e7a" />
         </View>
         <TextInput
+          placeholder="Your full Name"
+          style={styles.input}
+          value={employeefullname}
+          onChangeText={setemployeefullname} //whenever the text changes, the setName function is called and updates the name to that new input
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.iconContainer1}>
+          <Feather name="user" size={17} color="#3a5e7a" />
+        </View>
+        <TextInput
           placeholder="User Name"
           style={styles.input}
           value={userName}
           onChangeText={setuserName} //whenever the text changes, the setName function is called and updates the name to that new input
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.iconContainer1}>
+          <Ionicons name="briefcase-outline" size={17} color="#3a5e7a" />
+        </View>
+        <TextInput
+          placeholder="Position"
+          style={styles.input}
+          value={position}
+          onChangeText={setPosition} //whenever the text changes, the setName function is called and updates the name to that new input
         />
       </View>
 
@@ -91,7 +124,7 @@ function SignupScreen() {
           style={styles.input}
           value={email}
           onChangeText={setEmail}
-          keyboardType='email-address'
+          keyboardType="email-address"
         />
       </View>
 
@@ -119,8 +152,15 @@ function SignupScreen() {
           onChangeText={setPassword}
           secureTextEntry={!showPassword}
         />
-        <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
-          <Ionicons name={showPassword ? "eye-off-outline" : 'eye-outline'} size={19} color="#3a5e7a" />
+        <TouchableOpacity
+          style={styles.eyebutton}
+          onPress={toggleShowingPassword}
+        >
+          <Ionicons
+            name={showPassword ? "eye-off-outline" : "eye-outline"}
+            size={19}
+            color="#3a5e7a"
+          />
         </TouchableOpacity>
       </View>
 
@@ -135,12 +175,22 @@ function SignupScreen() {
           onChangeText={setConfirmPassword}
           secureTextEntry={!showPassword}
         />
-        <TouchableOpacity style={styles.eyebutton} onPress={toggleShowingPassword}>
-          <Ionicons name={showPassword ? "eye-off-outline" : 'eye-outline'} size={19} color="#3a5e7a" />
+        <TouchableOpacity
+          style={styles.eyebutton}
+          onPress={toggleShowingPassword}
+        >
+          <Ionicons
+            name={showPassword ? "eye-off-outline" : "eye-outline"}
+            size={19}
+            color="#3a5e7a"
+          />
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={[styles.buttonContainer, styles.buttonShadow]} onPress={handleSignup}>
+      <TouchableOpacity
+        style={[styles.buttonContainer, styles.buttonShadow]}
+        onPress={handleSignup}
+      >
         <Text style={styles.Signbutton}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -159,14 +209,14 @@ export default SignupScreen;
 const styles = StyleSheet.create({
   iconContainer1: {
     marginLeft: 8,
-    paddingTop: 5
+    paddingTop: 5,
   },
   topsentence: {
     paddingBottom: 50,
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#3a5e7a',
-    fontFamily: 'NotoMusic-Regular'
+    fontWeight: "bold",
+    color: "#3a5e7a",
+    fontFamily: "NotoMusic-Regular",
   },
 
   loginButton: {
@@ -199,14 +249,14 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     paddingVertical: 10,
     paddingHorizontal: 10,
     marginTop: 8,
     borderRadius: 10,
-    fontWeight: '400',
+    fontWeight: "400",
     height: 50,
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   buttonContainer: {
     backgroundColor: "#3a5e7a",
@@ -220,13 +270,13 @@ const styles = StyleSheet.create({
   Signbutton: {
     color: "white",
     fontSize: 13,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
 
   accountSentence: {
     color: "black",
     marginTop: 5,
-    fontSize: 13
+    fontSize: 13,
   },
   LogButtonText: {
     color: "#3a5e7a",
@@ -234,10 +284,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   eyebutton: {
-    padding: 10
+    padding: 10,
   },
   buttonShadow: {
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
     shadowRadius: 5,

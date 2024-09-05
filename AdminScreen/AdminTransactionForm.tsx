@@ -1,30 +1,29 @@
-import React, { useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
   Alert,
   SafeAreaView,
-  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const currencies = ["RWF"]; // List of currencies
+const currencies = ["RWF"];
 
-function TransactionFormScreen() {
+const AdminTransactionForm = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const [Amount, setAmount] = useState("");
   const [Currency, setCurrency] = useState("");
-  const [Senderphone, setSenderhone] = useState("");
+  const [AdminPhone, setAdminphone] = useState("");
+  const [Adminname, setAdminname] = useState("");
   const [Username, setUsername] = useState("");
-  const [Recipientname, setRecipientname] = useState("");
-  const [Recipientphone, setRecipientPhone] = useState("");
+  const [EmployeePhone, setEmployeephone] = useState("");
   const [Transactiontype, setTransactiontype] = useState("");
 
   // currency handlers
@@ -47,30 +46,33 @@ function TransactionFormScreen() {
         onPress: () => console.log("Transaction cancelled"),
         style: "cancel",
       },
-      { text: "Yes", onPress: handleTransaction },
+      { text: "Yes", onPress: handleAdminTransaction },
     ]);
   };
 
-  const handleTransaction = async () => {
+  const handleAdminTransaction = async () => {
     const transactionInput = {
-      UserName: String(Username),
+      Username,
       Amount: Number(Amount),
       Currency: String(Currency),
-      Senderphone,
-      Recipientphone,
-      Recipientname,
+      EmployeePhone,
+      AdminPhone,
+      Adminname,
       Transactiontype,
     };
 
     try {
-      //  const response = await fetch("http://192.168.1.3:1010/transaction", {
-      const response = await fetch("http://192.168.1.87:1010/usertransaction", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(transactionInput),
-      });
+      const response = await fetch(
+        "http://192.168.1.87:1010/admintransaction",
+        {
+          // const response = await fetch("http://192.168.1.87:1010/transaction", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(transactionInput),
+        }
+      );
 
       if (response.ok) {
         await AsyncStorage.setItem(
@@ -85,7 +87,7 @@ function TransactionFormScreen() {
           'See your list of transactions in "Transactions" at the bottom page'
         );
 
-        navigation.navigate("Homepage", { post: Amount });
+        navigation.navigate("AdminHome");
       } else {
         console.log("Transaction failed");
         const errorMessage = await response.text();
@@ -110,16 +112,16 @@ function TransactionFormScreen() {
       <SafeAreaView style={styles.safeview}>
         <View style={styles.topsentenceview}>
           <Text style={styles.topsentence}>
-            Fill the form below to perform a transaction
+            Fill out the form to pay an employee.
           </Text>
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="User Name"
+            placeholder="Admin Name"
             style={styles.inputText}
-            value={Username}
-            onChangeText={setUsername}
+            value={Adminname}
+            onChangeText={setAdminname}
           />
         </View>
 
@@ -133,14 +135,6 @@ function TransactionFormScreen() {
           />
         </View>
 
-        {/* <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Currency"
-            style={styles.inputText}
-            value={Currency}
-            onChangeText={setCurrency}
-          />
-        </View> */}
         <View style={styles.inputContainer}>
           <TouchableOpacity
             onPress={handleCurrencyFieldPress}
@@ -165,29 +159,29 @@ function TransactionFormScreen() {
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Sender Phone"
+            placeholder="Admin phone"
             style={styles.inputText}
-            value={Senderphone}
-            onChangeText={setSenderhone}
+            value={AdminPhone}
+            onChangeText={setAdminphone}
             keyboardType="phone-pad" // gives the numerical keyboard with the symbols
           />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Recipient Name"
+            placeholder="Username of the Employee"
             style={styles.inputText}
-            value={Recipientname}
-            onChangeText={setRecipientname}
+            value={Username}
+            onChangeText={setUsername}
           />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Recipient Phone"
+            placeholder="Employee Phone"
             style={styles.inputText}
-            value={Recipientphone}
-            onChangeText={setRecipientPhone}
+            value={EmployeePhone}
+            onChangeText={setEmployeephone}
             keyboardType="phone-pad"
           />
         </View>
@@ -207,9 +201,9 @@ function TransactionFormScreen() {
       </SafeAreaView>
     </KeyboardAwareScrollView>
   );
-}
+};
 
-export default TransactionFormScreen;
+export default AdminTransactionForm;
 
 const styles = StyleSheet.create({
   container: {

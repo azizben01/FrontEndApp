@@ -1,71 +1,79 @@
-import { ParamListBase, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  FlatList,
-  ScrollView,
   Alert,
+  FlatList,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useState } from "react";
+import {
+  useNavigation,
+  ParamListBase,
+  useFocusEffect,
+} from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-// icon
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-
-type Transactions = {
-  Username: string;
+type AdminTransactions = {
+  adminname: string;
+  adminphone: string;
+  username: string;
   amount: number;
   currency: string;
-  userid: number;
-  transactionid: number;
-  recipientname: string;
+  adminTransactionid: number;
   created: string;
-  isDeleted: boolean;
+  employeephone: string;
+  transactiontype: string;
 };
 
-function TransactionListScreen() {
+const AdminTransactionListScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   // Function to navigate to the transaction detail screen
-  const HandleTransactionDetails = (transaction: Transactions) => {
-    navigation.navigate("TransactionDetail", { transaction });
+  const HandleAdminTransactionDetails = (
+    admintransaction: AdminTransactions
+  ) => {
+    console.log("Navigating with transaction:", admintransaction);
+    navigation.navigate("adminTransactionDetail", { admintransaction });
   };
 
-  const [transactions, setTransactions] = useState<Transactions[]>([]);
+  const [adminTransactions, setAdminTransactions] = useState<
+    AdminTransactions[]
+  >([]);
 
   // Function to fetch transactions from the backend
-  const handleTransaction = async () => {
+  const handleAdminTransaction = async () => {
     try {
-      // const response = await fetch("http://192.168.1.2:1010/transactions", {
-      const response = await fetch("http://192.168.1.87:1010/transactions", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://192.168.1.87:1010/Getadmintransaction",
+        {
+          // const response = await fetch("http://192.168.1.87:1010/transactions", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.ok) {
         const data = await response.json(); // Parse the JSON response
-        setTransactions(data || []);
-        console.log("Transactions retrieved successfully:", data);
+        setAdminTransactions(data || []);
+        console.log("admin Transactions retrieved successfully:", data);
       } else {
-        console.error("Failed to retrieve transactions");
+        console.error("Failed to retrieve admin transactions");
       }
     } catch (error) {
-      console.error("Error fetching transactions:", error);
+      console.error("Error fetching admin transactions:", error);
       // Handle network errors or other unexpected errors
     }
   };
 
   // Function to soft delete a transaction (modification)
-  const deleteTransaction = async (transactionId: number) => {
+  const deleteAdminTransaction = async (adminTransactionid: number) => {
     try {
       const response = await fetch(
-        `http://192.168.1.87:1010/deletetransactions/${transactionId}`,
+        `http://192.168.1.87:1010/deleteAdmintransactions/${adminTransactionid}`,
         {
           method: "DELETE",
           headers: {
@@ -76,26 +84,27 @@ function TransactionListScreen() {
 
       if (response.ok) {
         // Remove the transaction from the frontend state after soft deletion
-        setTransactions((prevTransactions) =>
+        setAdminTransactions((prevTransactions) =>
           prevTransactions.filter(
-            (transaction) => transaction.transactionid !== transactionId
+            (transaction) =>
+              transaction.adminTransactionid !== adminTransactionid
           )
         );
-        console.log("Transaction soft deleted successfully");
+        console.log("admin Transaction soft deleted successfully");
       } else {
-        console.error("Failed to delete transaction");
+        console.error("Failed to delete admin transaction");
       }
     } catch (error) {
-      console.error("Error deleting transaction:", error);
+      console.error("Error deleting admin transaction:", error);
       // Handle network errors or other unexpected errors
     }
   };
 
   // handleLongPress function
-  const handleLongPress = (transactionId: number) => {
+  const handleLongPress = (admintransactionid: number) => {
     Alert.alert(
-      "Delete Transaction",
-      "Are you sure you want to delete this transaction?",
+      "Delete admin Transaction",
+      "Are you sure you want to delete this admin transaction?",
       [
         {
           text: "Cancel",
@@ -104,7 +113,7 @@ function TransactionListScreen() {
         {
           text: "Delete",
           style: "destructive",
-          onPress: () => deleteTransaction(transactionId),
+          onPress: () => deleteAdminTransaction(admintransactionid),
         },
       ]
     );
@@ -113,7 +122,7 @@ function TransactionListScreen() {
   useFocusEffect(
     React.useCallback(() => {
       // Run effect every time HomeScreen is focused
-      handleTransaction();
+      handleAdminTransaction();
       // Add your effect code here
       // For example, fetching data or updating state
       return () => {
@@ -126,28 +135,28 @@ function TransactionListScreen() {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <SafeAreaView style={styles.containerSafe}>
         <View style={{}}>
-          <Text style={styles.sentence1}>Your Transactions</Text>
+          <Text style={styles.sentence1}>Administrator Transactions</Text>
           <Text style={styles.sentence2}>
-            Press on any transaction to see complete informations about this
-            transaction.
+            Press on any admin transaction to see complete informations about
+            this transaction.
           </Text>
         </View>
 
         <View style={styles.ContainerView}>
-          {transactions.length > 0 ? (
+          {adminTransactions.length > 0 ? (
             <FlatList
-              data={transactions}
+              data={adminTransactions}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.touchableTransaction}
-                  onPress={() => HandleTransactionDetails(item)}
-                  onLongPress={() => handleLongPress(item.transactionid)}
+                  onPress={() => HandleAdminTransactionDetails(item)}
+                  onLongPress={() => handleLongPress(item.adminTransactionid)}
                 >
                   <Text style={styles.content}>{item.amount} </Text>
                   <Text style={styles.content}>
                     {item.currency} have been successfully transfered to{" "}
                   </Text>
-                  <Text style={styles.content}>{item.recipientname} on </Text>
+                  <Text style={styles.content}>{item.username} on </Text>
                   <Text style={styles.content}>{item.created}</Text>
                 </TouchableOpacity>
               )}
@@ -163,9 +172,9 @@ function TransactionListScreen() {
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
-}
+};
 
-export default TransactionListScreen;
+export default AdminTransactionListScreen;
 
 const styles = StyleSheet.create({
   container: {
