@@ -27,7 +27,7 @@ function AdminLogin() {
   };
 
   const handleForgotPassword = () => {
-    navigation.navigate("RequestPasswordReset");
+    navigation.navigate("Request code");
   };
 
   const handleAdminLogin = async () => {

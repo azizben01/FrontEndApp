@@ -20,7 +20,7 @@ const AdminRequestReset = () => {
   const handleRequestReset = async () => {
     try {
       //   const response = await fetch('http://192.168.1.87:1010/RequestReset', {
-      const response = await fetch("http://192.168.1.3:1010/RequestReset", {
+      const response = await fetch("http://192.168.1.87:1010/requestCode", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const AdminRequestReset = () => {
       if (response.ok) {
         await AsyncStorage.setItem("resetEmail", email); // Store email in AsyncStorage
         Alert.alert("Success", "Password reset link sent to your email.");
-        navigation.navigate("VerifyCode");
+        navigation.navigate("admin verify code");
       } else {
         Alert.alert(
           "Error",

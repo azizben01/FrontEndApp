@@ -17,14 +17,14 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 function AdminAccount() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const handleChangeNumber = () => {
-    navigation.navigate("Change number");
+    navigation.navigate("change admin number");
   };
   const handleChangePassword = () => {
-    navigation.navigate("Change password");
+    navigation.navigate("change admin password");
   };
 
   const handleDeleteAccount = () => {
-    navigation.navigate("Delete");
+    navigation.navigate("delete admin account");
   };
 
   return (

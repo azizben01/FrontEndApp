@@ -23,7 +23,7 @@ function ChangeAdminPassword() {
   const [username, setUsername] = useState("");
 
   const handleForgotPassword = () => {
-    navigation.navigate("RequestPasswordReset");
+    navigation.navigate("Request code");
   };
 
   const toggleShowingPassword = () => {

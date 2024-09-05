@@ -57,22 +57,22 @@ function AdminStackNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="admin change number"
+        name="change admin number"
         component={ChangeAdminNumber}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="admin change password"
+        name="change admin password"
         component={ChangeAdminPassword}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="admin delete account"
+        name="delete admin account"
         component={DeleteAdminAccount}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="admin reset password"
+        name="admin update password"
         component={ResetAdminPassword}
         options={{ headerShown: false }}
       />

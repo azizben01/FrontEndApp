@@ -19,7 +19,7 @@ function VerifyAdminCodeScreen() {
   const handleVerifyCode = async () => {
     try {
       // const response = await fetch('http://192.168.1.2:1010/ResetCode', {
-      const response = await fetch("http://192.168.1.87:1010/ResetCode", {
+      const response = await fetch("http://192.168.1.87:1010/VerifyAdminCode", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ function VerifyAdminCodeScreen() {
       if (response.ok) {
         //  navigation.navigate('') // , { email: data.email });
         Alert.alert("The provided code is correct!");
-        navigation.navigate("UpdatePassword");
+        navigation.navigate("admin update password");
       } else {
         alert(data.error || "Invalid code");
       }
