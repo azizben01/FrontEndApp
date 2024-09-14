@@ -14,12 +14,16 @@ import {
   useFocusEffect,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import Feather from "@expo/vector-icons/Feather";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 type Adminprofile = {
   adminname: string;
   email: string;
   status: string;
-  firstname: string;
+  fullname: string;
+  phoneNumber: string;
   // add a part for the full name
 };
 const AdminProfileScreen = () => {
@@ -57,6 +61,7 @@ const AdminProfileScreen = () => {
     try {
       const adminData = await AsyncStorage.getItem("AdminData");
       if (adminData) {
+        console.log("retrieved admin data:", adminData);
         const parsedAdminData = JSON.parse(adminData);
         setAdminProfile(parsedAdminData);
       } else {
@@ -65,10 +70,6 @@ const AdminProfileScreen = () => {
     } catch (error) {
       console.error("Error fetching user data from AsyncStorage:", error);
     }
-  };
-
-  const handleAddTransaction = () => {
-    navigation.navigate("admin transaction form");
   };
 
   useFocusEffect(
@@ -82,25 +83,47 @@ const AdminProfileScreen = () => {
       <View style={styles.header}>
         {AdminProfile && (
           <Text style={styles.AdminWelcome}>
-            Welcome {AdminProfile.firstname} !
+            Welcome
+            <View style={styles.nameview}>
+              <Text style={styles.namevalue}>{AdminProfile.fullname} !</Text>
+            </View>
           </Text>
         )}
       </View>
-      {/* <View>
-        <Text style={styles.title}>Profile</Text>
-      </View> */}
-
       {AdminProfile ? (
         <View style={styles.profileContainer}>
           <View style={styles.profileView}>
-            <Text style={styles.labelText}>Adminname: </Text>
+            <View style={styles.iconContainer1}>
+              <Feather name="user" size={18} color="#fff" />
+            </View>
+            <Text style={styles.labelText}>Admin name: </Text>
+            <Text style={styles.value}>{AdminProfile.fullname}</Text>
+          </View>
+          <View style={styles.profileView}>
+            <View style={styles.iconContainer1}>
+              <Feather name="user" size={18} color="#fff" />
+            </View>
+            <Text style={styles.labelText}>Admin username: </Text>
             <Text style={styles.value}>{AdminProfile.adminname}</Text>
           </View>
           <View style={styles.profileView}>
+            <View style={styles.iconContainer1}>
+              <Fontisto name="email" size={18} color="#fff" />
+            </View>
             <Text style={styles.labelText}>Email: </Text>
             <Text style={styles.value}>{AdminProfile.email}</Text>
           </View>
           <View style={styles.profileView}>
+            <View style={styles.iconContainer1}>
+              <Feather name="phone" size={18} color="#fff" />
+            </View>
+            <Text style={styles.labelText}>Mobile number: </Text>
+            <Text style={styles.value}>{AdminProfile.phoneNumber}</Text>
+          </View>
+          <View style={styles.profileView}>
+            <View style={styles.iconContainer1}>
+              <AntDesign name="poweroff" size={18} color="#fff" />
+            </View>
             <Text style={styles.labelText}>Status: </Text>
             <Text style={styles.value}>{AdminProfile.status}</Text>
           </View>
@@ -128,6 +151,7 @@ const AdminProfileScreen = () => {
 const styles = StyleSheet.create({
   containerSafe: {
     flex: 1,
+    justifyContent: "center",
   },
   listView: {
     flex: 1,
@@ -137,11 +161,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flexDirection: "column",
     borderRadius: 15,
-    marginTop: 80,
-    marginLeft: 20,
-    width: "87%",
-    backgroundColor: "#cfcece4a",
+    marginTop: 10,
+    width: "100%",
+    backgroundColor: "transparent",
   },
+
   content: {
     marginLeft: 10,
     paddingTop: 5,
@@ -164,57 +188,70 @@ const styles = StyleSheet.create({
     color: "#3a5e7a",
   },
   logText: {
-    color: "#B22222",
-    fontSize: 17,
+    color: "#ff6b6b",
+    fontSize: 15,
     fontFamily: "Verdana",
   },
   logButton: {
-    backgroundColor: "#f8d7da",
-    width: 100,
-    height: 40,
+    backgroundColor: "#fff",
+    width: "47%",
+    padding: 15,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 25,
     marginBottom: 10,
+    shadowColor: "#0000002c",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
   },
   editText: {
-    color: "white",
+    color: "#3a5e7a",
     fontSize: 15,
   },
   editButton: {
-    backgroundColor: "#3a5e7a",
-    width: 100,
-    height: 40,
+    backgroundColor: "#fff",
+    width: "47%",
+    padding: 15,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 25,
     marginBottom: 10,
+    shadowColor: "#0000002c",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
   },
 
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
+    marginTop: -30,
     padding: 20,
-    backgroundColor: "#f5f5f5",
   },
 
   profileView: {
     flexDirection: "row",
-    marginBottom: 16,
-    borderBottomWidth: 1,
+    marginBottom: 5,
+    backgroundColor: "#3a5e7a",
+    padding: 14,
+    paddingLeft: 15,
+    borderRadius: 27,
   },
 
   labelText: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
-    color: "#3a5e7a",
+    color: "#fff",
   },
 
   value: {
     textAlign: "center",
-    fontSize: 16,
-    paddingHorizontal: 12,
+    fontSize: 15,
+    paddingHorizontal: 5,
+    color: "#fff",
   },
 
   header: {
@@ -225,9 +262,21 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   AdminWelcome: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#3a5e7a",
+  },
+  namevalue: {
+    fontSize: 17,
+    marginLeft: 5,
+    color: "#3a5a7a",
+    fontWeight: "bold",
+  },
+  nameview: {
+    marginLeft: 10,
+  },
+  iconContainer1: {
+    marginRight: 8,
   },
 });
 export default AdminProfileScreen;

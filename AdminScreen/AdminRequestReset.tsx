@@ -19,7 +19,6 @@ const AdminRequestReset = () => {
 
   const handleRequestReset = async () => {
     try {
-      //   const response = await fetch('http://192.168.1.87:1010/RequestReset', {
       const response = await fetch("http://192.168.1.87:1010/requestCode", {
         method: "POST",
         headers: {
@@ -48,30 +47,30 @@ const AdminRequestReset = () => {
 
   return (
     <KeyboardAvoidingView style={styles.safeView} behavior="padding">
-      <View style={styles.resetView}>
-        <Text style={styles.resetTopText}>
-          Enter a valid email address below to receive a reset link to reset
-          your password.
-        </Text>
-      </View>
-      <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your email address</Text>
+      <View style={styles.containerview}>
+        <View style={styles.resetView}>
+          <Text style={styles.resetTopText}>
+            Enter a valid email address below to receive a reset link to reset
+            your password.
+          </Text>
         </View>
-        <TextInput
-          placeholder="Email"
-          style={styles.InputValue}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
+        <View style={styles.inputView}>
+          <TextInput
+            placeholder="Email"
+            style={styles.InputValue}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+        </View>
       </View>
 
-      <View style={{ padding: 10 }}>
-        <TouchableOpacity style={styles.button} onPress={handleRequestReset}>
-          <Text style={styles.buttonText}>Send Reset Link</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.touchablebutton}
+        onPress={handleRequestReset}
+      >
+        <Text style={styles.buttonText}>Send Reset Link</Text>
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
@@ -85,19 +84,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#cfcece4a",
   },
-  InputValue: {
-    paddingLeft: 15,
-    height: "20%",
-  },
-  button: {
-    backgroundColor: "#3a5e7a",
-    borderRadius: 25,
-    padding: 15,
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontWeight: "500",
-  },
 
   labelView: {
     fontSize: 25,
@@ -109,13 +95,15 @@ const styles = StyleSheet.create({
     width: "95%",
     marginHorizontal: 10,
   },
+  InputValue: {
+    fontSize: 16,
+  },
   inputView: {
     backgroundColor: "#cfcece4a",
-    width: "95%",
-    height: 100,
-    borderRadius: 10,
+    borderRadius: 30,
     fontWeight: "400",
     marginVertical: 20,
+    padding: 12,
   },
   labelText: {
     fontSize: 18,
@@ -130,5 +118,21 @@ const styles = StyleSheet.create({
     color: "#3a5e7a",
     fontSize: 18,
     textAlign: "center",
+  },
+  containerview: {},
+  touchablebutton: {
+    backgroundColor: "#3a5e7a",
+    width: "90%",
+    padding: 15,
+    borderRadius: 30,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 17,
+    fontWeight: "500",
+  },
+  buttonview: {
+    width: "100%",
   },
 });

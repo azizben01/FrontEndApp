@@ -71,9 +71,15 @@ const EmployeeDetail = () => {
   const handleAddTransaction = () => {
     navigation.navigate("admin transaction form", { employee: employeedetail });
   };
+  const handleEmployeeReport = () => {
+    navigation.navigate("employeereport", { employee: employeedetail });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={{ marginBottom: 20 }}>
+        <Text style={styles.topsentenceText}>Employee detail</Text>
+      </View>
       <View style={styles.row}>
         <Text style={styles.label}>Full Name:</Text>
         <Text style={styles.value}>{employeedetail.employeefullname}</Text>
@@ -115,6 +121,14 @@ const EmployeeDetail = () => {
           <Text style={styles.buttonText}>Add Transaction</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.generateView}>
+        <TouchableOpacity
+          style={styles.buttonGenerateReport}
+          onPress={handleEmployeeReport}
+        >
+          <Text style={styles.buttonText}>Generate report</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -129,39 +143,67 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    marginVertical: 14,
+    marginVertical: 13,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 6,
   },
   label: {
-    fontSize: 18,
-    fontWeight: "bold",
-    width: 150,
+    fontSize: 15,
     color: "#3a5e7a",
   },
   value: {
-    flex: 1,
     fontSize: 15,
-    fontWeight: "bold",
-    textAlign: "center",
+    width: "100%",
+    marginLeft: "3%",
   },
   buttonAddTransaction: {
-    padding: 10,
+    padding: 17,
     backgroundColor: "#3a5e7a",
     borderRadius: 25,
-    margin: 10,
   },
   buttonRemove: {
-    padding: 10,
+    padding: 17,
     backgroundColor: "#3a5e7a",
     borderRadius: 25,
-    margin: 10,
+    shadowColor: "#0000002c",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
   },
   buttonText: {
-    color: "white",
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 13,
   },
   buttonview: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    paddingTop: 20,
+    gap: 10,
+    marginTop: 15,
+  },
+  buttonGenerateReport: {
+    padding: 17,
+    backgroundColor: "#3a5e7a",
+    borderRadius: 25,
+    width: "45%",
+    alignItems: "center",
+    shadowColor: "#0000002c",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  generateView: {
+    alignItems: "center",
+    marginTop: 15,
+  },
+  topsentenceText: {
+    textAlign: "center",
+    marginBottom: 5,
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#3a5e7a",
   },
 });

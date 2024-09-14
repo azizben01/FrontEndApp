@@ -35,6 +35,9 @@ const AdminTransactionDetailScreen = () => {
   }
   return (
     <SafeAreaView style={styles.safeview}>
+      <View style={styles.topsentenceview}>
+        <Text style={styles.topsentencetext}>Transaction detail</Text>
+      </View>
       <View style={styles.container}>
         <View style={styles.row}>
           <Text style={styles.label}>Admin Name:</Text>
@@ -81,34 +84,44 @@ const AdminTransactionDetailScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  safeview: {
-    flex: 1,
-  },
-  row: {
-    flexDirection: "row",
-    marginVertical: 14,
-  },
-
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: "#cfcece4a",
   },
+  safeview: {
+    flex: 1,
+  },
+  row: {
+    flexDirection: "row",
+    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 6,
+  },
+
   label: {
-    fontSize: 18,
-    fontWeight: "bold",
-    width: 150,
+    fontSize: 15,
     color: "#3a5e7a",
   },
   value: {
-    flex: 1,
     fontSize: 15,
-    fontWeight: "bold",
-    textAlign: "center",
+    width: "100%",
+    marginLeft: "3%",
   },
 
   errorText: {
     fontSize: 23,
+  },
+  topsentenceview: {
+    padding: 10,
+    backgroundColor: "#cfcece4a",
+  },
+  topsentencetext: {
+    fontSize: 24,
+    color: "#3a5e7a",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

@@ -63,7 +63,6 @@ function TransactionFormScreen() {
     };
 
     try {
-      //  const response = await fetch("http://192.168.1.3:1010/transaction", {
       const response = await fetch("http://192.168.1.87:1010/usertransaction", {
         method: "POST",
         headers: {

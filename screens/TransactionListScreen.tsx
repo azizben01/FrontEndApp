@@ -1,67 +1,123 @@
-import { ParamListBase, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  FlatList,
-  ScrollView,
   Alert,
+  FlatList,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import {
+  useNavigation,
+  ParamListBase,
+  useFocusEffect,
+} from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// Assuming you have these types defined already:
 
-// icon
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+type AdminTransaction = {
+  type: string;
+  adminname: string;
+  adminphone: string;
+  username: string;
+  amount: number;
+  currency: string;
+  adminTransactionid: number;
+  created: string;
+  employeephone: string;
+  transactiontype: string;
+};
 
-type Transactions = {
-  Username: string;
+type Transaction = {
+  type: string;
+  username: string;
   amount: number;
   currency: string;
   userid: number;
   transactionid: number;
   recipientname: string;
   created: string;
-  isDeleted: boolean;
+  recipientphone: string;
+  senderphone: string;
+  transactiontype: string;
 };
 
-function TransactionListScreen() {
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+type CombinedItem = AdminTransaction | Transaction;
 
-  // Function to navigate to the transaction detail screen
-  const HandleTransactionDetails = (transaction: Transactions) => {
-    navigation.navigate("TransactionDetail", { transaction });
-  };
+// Type Guard Functions
+function isAdminTransaction(item: CombinedItem): item is AdminTransaction {
+  return item.type === "notification";
+}
 
-  const [transactions, setTransactions] = useState<Transactions[]>([]);
+function isTransaction(item: CombinedItem): item is Transaction {
+  return item.type === "transaction";
+}
 
-  // Function to fetch transactions from the backend
-  const handleTransaction = async () => {
-    try {
-      // const response = await fetch("http://192.168.1.2:1010/transactions", {
-      const response = await fetch("http://192.168.1.87:1010/transactions", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const data = await response.json(); // Parse the JSON response
-        setTransactions(data || []);
-        console.log("Transactions retrieved successfully:", data);
-      } else {
-        console.error("Failed to retrieve transactions");
+const CombinedScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const [adminTransactions, setAdminTransactions] = useState<
+    AdminTransaction[]
+  >([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("userData");
+        if (userData) {
+          const parsedUserData = JSON.parse(userData);
+          setUsername(parsedUserData.username || parsedUserData.Username);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const fetchData = async () => {
+    if (!username) return;
+
+    try {
+      const [transactionResponse, notificationResponse] = await Promise.all([
+        fetch(
+          `http://192.168.1.87:1010/Getusertransactions?username=${username}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ),
+        fetch(
+          `http://192.168.1.87:1010/GetadmintransactionForUser?username=${username}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ),
+      ]);
+
+      const [transactionData, notificationData] = await Promise.all([
+        transactionResponse.json(),
+        notificationResponse.json(),
+      ]);
+
+      setTransactions(transactionData || []);
+      setAdminTransactions(notificationData || []);
+      console.log("Data retrieved successfully");
     } catch (error) {
-      console.error("Error fetching transactions:", error);
-      // Handle network errors or other unexpected errors
+      console.error("Error fetching data:", error);
     }
   };
 
-  // Function to soft delete a transaction (modification)
   const deleteTransaction = async (transactionId: number) => {
     try {
       const response = await fetch(
@@ -75,7 +131,6 @@ function TransactionListScreen() {
       );
 
       if (response.ok) {
-        // Remove the transaction from the frontend state after soft deletion
         setTransactions((prevTransactions) =>
           prevTransactions.filter(
             (transaction) => transaction.transactionid !== transactionId
@@ -87,15 +142,44 @@ function TransactionListScreen() {
       }
     } catch (error) {
       console.error("Error deleting transaction:", error);
-      // Handle network errors or other unexpected errors
     }
   };
 
-  // handleLongPress function
-  const handleLongPress = (transactionId: number) => {
+  const deleteAdminTransaction = async (adminTransactionid: number) => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.87:1010/deleteAdmintransactions/${adminTransactionid}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        setAdminTransactions((prevTransactions) =>
+          prevTransactions.filter(
+            (transaction) =>
+              transaction.adminTransactionid !== adminTransactionid
+          )
+        );
+        console.log("Admin Transaction soft deleted successfully");
+      } else {
+        console.error("Failed to delete admin transaction");
+      }
+    } catch (error) {
+      console.error("Error deleting admin transaction:", error);
+    }
+  };
+
+  const handleLongPress = (
+    id: number,
+    type: "transaction" | "notification"
+  ) => {
     Alert.alert(
-      "Delete Transaction",
-      "Are you sure you want to delete this transaction?",
+      `Delete ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+      `Are you sure you want to delete this ${type}?`,
       [
         {
           text: "Cancel",
@@ -104,58 +188,109 @@ function TransactionListScreen() {
         {
           text: "Delete",
           style: "destructive",
-          onPress: () => deleteTransaction(transactionId),
+          onPress: () => {
+            if (type === "transaction") {
+              deleteTransaction(id);
+            } else {
+              deleteAdminTransaction(id);
+            }
+          },
         },
       ]
     );
   };
 
+  const handleDetails = (item: CombinedItem) => {
+    if (isAdminTransaction(item)) {
+      navigation.navigate("NotificationDetail", { item });
+    } else if (isTransaction(item)) {
+      navigation.navigate("TransactionDetail", { item });
+    }
+  };
+
   useFocusEffect(
     React.useCallback(() => {
-      // Run effect every time HomeScreen is focused
-      handleTransaction();
-      // Add your effect code here
-      // For example, fetching data or updating state
-      return () => {
-        // Cleanup code (optional)
-      };
-    }, [])
+      fetchData();
+      return () => {};
+    }, [username])
   );
+
+  // Combine both lists into one, marking them with a type field
+  const combinedData = [
+    ...adminTransactions.map((item) => ({ ...item, type: "notification" })),
+    ...transactions.map((item) => ({ ...item, type: "transaction" })),
+  ];
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <SafeAreaView style={styles.containerSafe}>
-        <View style={{}}>
+        <View style={styles.topsentenceview}>
           <Text style={styles.sentence1}>Your Transactions</Text>
           <Text style={styles.sentence2}>
-            Press on any transaction to see complete informations about this
-            transaction.
+            Press on any item to see complete information.
           </Text>
         </View>
 
         <View style={styles.ContainerView}>
-          {transactions.length > 0 ? (
-            <FlatList
-              data={transactions}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.touchableTransaction}
-                  onPress={() => HandleTransactionDetails(item)}
-                  onLongPress={() => handleLongPress(item.transactionid)}
-                >
-                  <Text style={styles.content}>{item.amount} </Text>
-                  <Text style={styles.content}>
-                    {item.currency} have been successfully transfered to{" "}
-                  </Text>
-                  <Text style={styles.content}>{item.recipientname} on </Text>
-                  <Text style={styles.content}>{item.created}</Text>
-                </TouchableOpacity>
-              )}
-            />
-          ) : (
+          <FlatList
+            data={combinedData}
+            keyExtractor={(item, index) => `${item.type}-${index}`}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={
+                  item.type === "notification"
+                    ? styles.notificationStyle
+                    : styles.transactionStyle
+                }
+                onPress={() => handleDetails(item)}
+                onLongPress={() => {
+                  if (isAdminTransaction(item)) {
+                    handleLongPress(item.adminTransactionid, "notification");
+                  } else if (isTransaction(item)) {
+                    handleLongPress(item.transactionid, "transaction");
+                  }
+                }}
+              >
+                <Text style={styles.content}>
+                  {isAdminTransaction(item) ? (
+                    <Text style={styles.receivedMessage}>
+                      <Text style={styles.boldText}>You have received </Text>
+                      <Text style={styles.amountText}>
+                        {item.amount} {item.currency}{" "}
+                      </Text>
+                      <Text style={styles.boldText}>
+                        from the administrator{" "}
+                      </Text>
+                      <Text style={styles.adminNameText}>
+                        {item.adminname}{" "}
+                      </Text>
+                      <Text style={styles.boldText}>on </Text>
+                      <Text style={styles.dateText}>{item.created}</Text>
+                    </Text>
+                  ) : (
+                    <Text style={styles.transferredMessage}>
+                      <Text style={styles.amountText}>
+                        {item.amount} {item.currency}{" "}
+                      </Text>
+                      <Text style={styles.boldText}>
+                        have been successfully transferred to{" "}
+                      </Text>
+                      <Text style={styles.recipientNameText}>
+                        {item.recipientname}{" "}
+                      </Text>
+                      <Text style={styles.boldText}>on </Text>
+                      <Text style={styles.dateText}>{item.created}</Text>
+                    </Text>
+                  )}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+
+          {combinedData.length === 0 && (
             <View style={styles.noTransactionsView}>
               <Text style={styles.noTransactionsText}>
-                No available transaction.
+                No available transactions or notifications.
               </Text>
             </View>
           )}
@@ -163,9 +298,9 @@ function TransactionListScreen() {
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
-}
+};
 
-export default TransactionListScreen;
+export default CombinedScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -175,16 +310,30 @@ const styles = StyleSheet.create({
   containerSafe: {
     flex: 1,
   },
-  touchableTransaction: {
+  transactionStyle: {
+    backgroundColor: "#fff", // Color for transactions
     padding: 12,
-    marginVertical: 10,
-    backgroundColor: "#3a5e7a",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    marginVertical: 3,
+    borderRadius: 8,
+    shadowColor: "#324f68",
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 4,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+  },
+  notificationStyle: {
+    backgroundColor: "#3a5e7a", // Color for notifications
+    padding: 12,
+    marginVertical: 3,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
@@ -197,12 +346,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     flexWrap: "wrap",
-    flexShrink: 1, // Allow items to shrink to avoid overflow
+    flexShrink: 1,
     color: "white",
-    marginBottom: 5, // Add some spacing between items
-    flexBasis: "auto", // Allow items to take only as much space as needed
+    marginBottom: 5,
   },
-
   sentence1: {
     marginLeft: 10,
     marginBottom: 5,
@@ -215,14 +362,26 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     marginBottom: 20,
   },
-
   noTransactionsText: {
     color: "#3a5e7a",
     fontSize: 17,
     textAlign: "center",
   },
   noTransactionsView: {
-    flex: 1, // display first in flex before justifying.
-    justifyContent: "center", // to move the whole text at the center of the page.
+    flex: 1,
+    justifyContent: "center",
+  },
+  topsentenceview: {},
+
+  // for text style
+
+  boldText: {},
+  amountText: {},
+  adminNameText: {},
+  dateText: {},
+  recipientNameText: {},
+  receivedMessage: {},
+  transferredMessage: {
+    color: "#324f68",
   },
 });

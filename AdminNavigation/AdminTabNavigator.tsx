@@ -6,7 +6,7 @@ const Tab = createBottomTabNavigator();
 import { Feather } from "@expo/vector-icons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import AdminProfileScreen from "../AdminScreen/AdminProfileScreen";
 import AdminHomeScreen from "../AdminScreen/AdminHomeScreen";
 import AdminTransactionListScreen from "../AdminScreen/AdminTransactionListScreen";
@@ -92,8 +92,8 @@ function AdminTabNavigator() {
           tabBarIcon: ({ focused }) => {
             return (
               <View style={styles.iconContainer}>
-                <FontAwesome6
-                  name="money-bill-trend-up"
+                <AntDesign
+                  name="linechart"
                   size={20}
                   color={focused ? "#3a5e7a" : "black"}
                 />

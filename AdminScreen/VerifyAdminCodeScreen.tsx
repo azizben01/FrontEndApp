@@ -18,7 +18,6 @@ function VerifyAdminCodeScreen() {
 
   const handleVerifyCode = async () => {
     try {
-      // const response = await fetch('http://192.168.1.2:1010/ResetCode', {
       const response = await fetch("http://192.168.1.87:1010/VerifyAdminCode", {
         method: "POST",
         headers: {

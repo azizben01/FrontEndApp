@@ -14,10 +14,11 @@ import {
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const ReportScreen = () => {
+const Employeereport = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [period, setPeriod] = useState("June"); // Default to Week 1
+  const [period, setPeriod] = useState("June"); // Default to June
+  const [username, setUsername] = useState(""); // New username state
   const [modalVisible, setModalVisible] = useState(false);
   const [createdby, setCreatedby] = useState("");
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -32,15 +33,16 @@ const ReportScreen = () => {
     "November",
     "December",
   ];
+
   // Validation function to check if all fields are filled
   const validateFields = () => {
-    if (!title || !description || !createdby) {
+    if (!title || !description || !createdby || !username) {
       return false;
     }
     return true;
   };
 
-  const handleGenerateReport = async () => {
+  const handleGenerateEmployeeReport = async () => {
     // Check if fields are valid before proceeding
     if (!validateFields()) {
       Alert.alert(
@@ -56,29 +58,33 @@ const ReportScreen = () => {
       return;
     }
     try {
-      const response = await fetch(`http://192.168.1.87:1010/generateReport`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          period,
-          createdby,
-        }),
-      });
+      const response = await fetch(
+        `http://192.168.1.87:1010/generateEmployeereport`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            period,
+            createdby,
+            username, // Include the username in the request body
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Report generated successfully:", data);
-        navigation.navigate("Report detail", { reportData: data });
+        console.log("User report generated successfully:", data);
+        navigation.navigate("employeereportdetail", { reportData: data });
       } else {
         const errorData = await response.json(); // Capture and log detailed error
-        console.error("Failed to generate report", errorData);
+        console.error("Failed to generate user report", errorData);
       }
     } catch (error) {
-      console.error("Error generating report:", error);
+      console.error("Error generating user report:", error);
     }
   };
 
@@ -86,7 +92,7 @@ const ReportScreen = () => {
     <KeyboardAvoidingView style={styles.safeview} behavior="padding">
       <View style={styles.container}>
         <View style={styles.topsentenceview}>
-          <Text style={styles.topsentencetext}> Make a report</Text>
+          <Text style={styles.topsentencetext}>Make an employee report</Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInput
@@ -111,6 +117,16 @@ const ReportScreen = () => {
             value={createdby}
             onChangeText={setCreatedby}
             placeholder="Who is creating this report?"
+            style={styles.input}
+          />
+        </View>
+
+        {/* New input field for username */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={username}
+            onChangeText={setUsername}
+            placeholder="Enter employee username "
             style={styles.input}
           />
         </View>
@@ -156,9 +172,9 @@ const ReportScreen = () => {
         <View style={styles.buttonview}>
           <TouchableOpacity
             style={styles.button}
-            onPress={handleGenerateReport}
+            onPress={handleGenerateEmployeeReport}
           >
-            <Text style={styles.buttonText}>Generate Report</Text>
+            <Text style={styles.buttonText}>Generate Employee Report</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -166,7 +182,7 @@ const ReportScreen = () => {
   );
 };
 
-export default ReportScreen;
+export default Employeereport;
 
 const styles = StyleSheet.create({
   safeview: {
@@ -236,7 +252,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 20,
   },
-  // for the 3 up fields
   input: {
     borderColor: "#ccc",
     borderRadius: 25,

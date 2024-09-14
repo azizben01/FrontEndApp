@@ -48,23 +48,22 @@ function SignupScreen() {
     };
     try {
       const response = await fetch("http://192.168.1.87:1010/user", {
-        // const response = await fetch("http://192.168.1.2:1010/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // tells the server that the data being sent in the request body is in JSON format
         },
         body: JSON.stringify(userData), // converts javaScript object userData into json string
       });
-
+      const result = await response.json();
+      console.log("sign up response:", result);
       if (response.ok) {
         // Signup successful, navigate to login screen and show user's details
         await AsyncStorage.setItem("userData", JSON.stringify(userData));
         console.log(userData, "created successfuly");
+        Alert.alert("New employee created successfully");
         navigation.navigate("Login");
       } else {
-        // Signup failed, handle error
-        const errorMessage = await response.text();
-        Alert.alert("Signup failed", errorMessage);
+        Alert.alert("Signup failed", result.error || "Missing fields");
       }
     } catch (error) {
       // Network error or other unexpected error

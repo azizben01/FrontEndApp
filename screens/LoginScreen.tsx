@@ -37,7 +37,6 @@ function LoginScreen() {
   const handleLogin = async () => {
     try {
       const response = await fetch("http://192.168.1.87:1010/login", {
-        // const response = await fetch("http://192.168.1.87:1010/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +114,6 @@ function LoginScreen() {
           <Text style={styles.LogButtonText}>Login</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.recoverContainer}>
         <TouchableOpacity
           style={styles.recoverButton}
@@ -134,7 +132,7 @@ function LoginScreen() {
 
       <View style={styles.adminView}>
         <TouchableOpacity style={styles.adminButton} onPress={handleAdminLogin}>
-          <Text style={styles.adminText}>Are you and Admin?</Text>
+          <Text style={styles.adminText}>Are you an Admin?</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -244,7 +242,7 @@ const styles = StyleSheet.create({
 
   recoverContainer: {},
   recoverButton: {
-    padding: 20,
+    marginTop: 20,
   },
 
   buttonShadow: {
@@ -265,5 +263,6 @@ const styles = StyleSheet.create({
     fontFamily: "NotoMusic-Regular",
     fontSize: 15,
     textDecorationLine: "underline",
+    fontWeight: "900",
   },
 });

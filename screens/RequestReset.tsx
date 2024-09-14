@@ -23,7 +23,6 @@ const RequestReset = () => {
 
   const handleRequestReset = async () => {
     try {
-      //   const response = await fetch('http://192.168.1.87:1010/RequestReset', {
       const response = await fetch("http://192.168.1.87:1010/RequestReset", {
         method: "POST",
         headers: {
@@ -59,9 +58,6 @@ const RequestReset = () => {
         </Text>
       </View>
       <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your email address</Text>
-        </View>
         <TextInput
           placeholder="Email"
           style={styles.InputValue}
@@ -71,7 +67,7 @@ const RequestReset = () => {
         />
       </View>
 
-      <View style={{ padding: 10 }}>
+      <View style={styles.buttonview}>
         <TouchableOpacity style={styles.button} onPress={handleRequestReset}>
           <Text style={styles.buttonText}>Send Reset Link</Text>
         </TouchableOpacity>
@@ -89,10 +85,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#cfcece4a",
   },
-  InputValue: {
-    paddingLeft: 15,
-    height: "20%",
-  },
   button: {
     backgroundColor: "#3a5e7a",
     borderRadius: 25,
@@ -101,6 +93,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#ffffff",
     fontWeight: "500",
+    textAlign: "center",
+  },
+  buttonview: {
+    width: "85%",
+    marginTop: -10,
   },
 
   labelView: {
@@ -115,11 +112,14 @@ const styles = StyleSheet.create({
   },
   inputView: {
     backgroundColor: "#cfcece4a",
-    width: "95%",
-    height: 100,
-    borderRadius: 10,
+    width: "85%",
+    borderRadius: 30,
     fontWeight: "400",
     marginVertical: 20,
+  },
+  InputValue: {
+    paddingLeft: 15,
+    padding: 17,
   },
   labelText: {
     fontSize: 18,
@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   resetView: {
-    padding: 10,
+    padding: 12,
+    width: "90%",
   },
   resetTopText: {
     color: "#3a5e7a",

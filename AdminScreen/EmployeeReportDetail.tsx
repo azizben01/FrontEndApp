@@ -9,7 +9,6 @@ type Report = {
   description: string;
   period: string;
   createdby: string;
-  numberofemployees: number;
   totalTransactions: number;
   highestTransaction: number;
   lowestTransaction: number;
@@ -17,24 +16,24 @@ type Report = {
   createdat: string;
 };
 type Transaction = {
-  adminTransactionid: number;
-  username: string;
+  employeeTransactionid: number;
   currency: string;
   amount: number;
-  adminname: string;
-  created: string;
+  createdat: string;
+  username: string;
+  recipientname: string;
 };
 
 type ParamList = {
-  ReportDetail: {
+  EmployeeReportDetail: {
     reportData: Report;
   };
 };
 
-const ReportDetailScreen = () => {
-  const route = useRoute<RouteProp<ParamList, "ReportDetail">>();
+const EmployeeReportDetail = () => {
+  const route = useRoute<RouteProp<ParamList, "EmployeeReportDetail">>();
   const { reportData } = route.params;
-  console.log("Report Data:", reportData);
+  console.log("Employee Report Data:", reportData);
 
   if (!reportData) {
     return (
@@ -43,27 +42,26 @@ const ReportDetailScreen = () => {
       </View>
     );
   }
+
   const report = reportData.report;
-  const transactions = reportData.transactions; // <-- Extract transactions here
+  const transactions = reportData.transactions;
 
   return (
     <SafeAreaView style={styles.safeview}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          {/* Display report details */}
+          {/* Display employee report details */}
           <View style={styles.topsentenceView}>
-            <Text style={styles.topsentenceText}>Company Report</Text>
+            <Text style={styles.topsentenceText}>Employee Report</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Title:</Text>
             <Text style={styles.value}>{report.title}</Text>
           </View>
-
           <View style={styles.row}>
             <Text style={styles.label}>Description:</Text>
             <Text style={styles.value}>{report.description}</Text>
           </View>
-
           <View style={styles.row}>
             <Text style={styles.label}>Period:</Text>
             <Text style={styles.value}>{report.period}</Text>
@@ -71,10 +69,6 @@ const ReportDetailScreen = () => {
           <View style={styles.row}>
             <Text style={styles.label}>Created By:</Text>
             <Text style={styles.value}>{report.createdby}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Number of Employees:</Text>
-            <Text style={styles.value}>{report.numberofemployees}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Total Transactions:</Text>
@@ -97,31 +91,28 @@ const ReportDetailScreen = () => {
             <Text style={styles.value}>{report.createdat}</Text>
           </View>
 
-          {/* Display transactions */}
-          <Text style={styles.transactionsTitle}>
-            Associated transactions:{" "}
-          </Text>
+          {/* Display employee-specific transactions */}
+          <Text style={styles.transactionsTitle}>Associated Transactions:</Text>
           {transactions.length > 0 ? (
             transactions.map((transaction: Transaction) => (
               <View
-                key={report.adminTransactionid}
+                key={transaction.employeeTransactionid}
                 style={styles.transactionItem}
               >
                 <Text style={styles.transactionLabel}>
-                  Amount: {transaction.amount} of
+                  Amount: {transaction.amount} {transaction.currency}
                 </Text>
                 <Text style={styles.transactionLabel}>
-                  Currency: {transaction.currency} {""} transferred to
+                  Created At: {transaction.createdat}
                 </Text>
                 <Text style={styles.transactionLabel}>
-                  Username: {transaction.username} by the administrator
-                </Text>
-
-                <Text style={styles.transactionLabel}>
-                  Admin Name: {transaction.adminname} on
+                  Username: {transaction.username}
                 </Text>
                 <Text style={styles.transactionLabel}>
-                  Created At: {transaction.created}
+                  recipientname: {transaction.recipientname}
+                </Text>
+                <Text style={styles.transactionLabel}>
+                  Currency: {transaction.currency}
                 </Text>
               </View>
             ))
@@ -195,7 +186,6 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 22,
   },
-
   noTransactionsView: {
     padding: 20,
   },
@@ -204,4 +194,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReportDetailScreen;
+export default EmployeeReportDetail;

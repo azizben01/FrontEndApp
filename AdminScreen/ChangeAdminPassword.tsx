@@ -32,7 +32,7 @@ function ChangeAdminPassword() {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch("http://192.168.1.3:1010/changePassword", {
+      const response = await fetch("http://192.168.1.87:1010/changePassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,9 +66,6 @@ function ChangeAdminPassword() {
       </View>
 
       <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Enter user name</Text>
-        </View>
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="User name"
@@ -78,12 +75,7 @@ function ChangeAdminPassword() {
             keyboardType="default"
           />
         </View>
-      </View>
 
-      <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your current password</Text>
-        </View>
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="old password"
@@ -103,12 +95,6 @@ function ChangeAdminPassword() {
               color="#3a5e7a"
             />
           </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your new password</Text>
         </View>
         <View style={styles.passwordContainer}>
           <TextInput
@@ -166,10 +152,6 @@ const styles = StyleSheet.create({
   },
   labelView: {
     marginBottom: 10,
-    borderTopWidth: 0,
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
     borderColor: "#3a5e7a",
   },
   labelText: {
@@ -178,8 +160,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   inputView: {
-    backgroundColor: "#cfcece4a",
-    width: "95%",
+    backgroundColor: "transparent",
+    width: "100%",
     borderRadius: 10,
     padding: 10,
     marginVertical: 10,
@@ -187,29 +169,27 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 5,
+    backgroundColor: "#cfcece4a",
+    padding: 12,
+    borderRadius: 30,
+    marginBottom: 10,
   },
   InputValue: {
     flex: 1,
     fontSize: 16,
   },
-  eyebutton: {
-    padding: 10,
-  },
+  eyebutton: {},
   button: {
     backgroundColor: "#3a5e7a",
+    width: "90%",
     padding: 15,
     borderRadius: 30,
-    width: "40%",
-    marginVertical: 20,
+    alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "500",
-    textAlign: "center",
   },
   passwordRecover: {
     color: "#3a5e7a",
@@ -217,6 +197,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   recoverButton: {
+    alignContent: "center",
     padding: 20,
   },
 });

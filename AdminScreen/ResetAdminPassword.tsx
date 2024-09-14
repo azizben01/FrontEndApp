@@ -43,7 +43,7 @@ const ResetAdminPassword = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.3:1010/ResetPassword", {
+      const response = await fetch("http://192.168.1.87:1010/ResetPassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const ResetAdminPassword = () => {
       const data = await response.json();
       if (response.ok) {
         alert("Password reset successfully!");
-        navigation.navigate("SuccessReset"); // Redirect to login page
+        navigation.navigate("Password updated"); // Redirect to login page
       } else {
         alert(data.error || "Failed to reset password");
       }

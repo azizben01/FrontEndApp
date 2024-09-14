@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const currencies = ["RWF"];
+const websocketURL = "http://192.168.1.87:1010/ws";
 
 const AdminTransactionForm = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -25,19 +26,41 @@ const AdminTransactionForm = () => {
   const [Username, setUsername] = useState("");
   const [EmployeePhone, setEmployeephone] = useState("");
   const [Transactiontype, setTransactiontype] = useState("");
+  // web socket
+  const [ws, setWs] = useState<WebSocket | null>(null);
 
   // currency handlers
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
-
   const handleCurrencySelect = (selectedCurrency: string) => {
     setCurrency(selectedCurrency);
     setShowCurrencyDropdown(false);
   };
-
   const handleCurrencyFieldPress = () => {
     setShowCurrencyDropdown(!showCurrencyDropdown);
   };
   //end of currency handlers
+
+  // WebSocket Connection (runs on component mount)
+  useEffect(() => {
+    const wsConnection = new WebSocket(websocketURL);
+    setWs(wsConnection);
+
+    wsConnection.onopen = () => {
+      console.log("WebSocket connectedd");
+    };
+
+    wsConnection.onmessage = (event) => {
+      console.log("Message received from WebSocket:", event.data);
+    };
+
+    wsConnection.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return () => {
+      wsConnection.close(); // Clean up WebSocket connection when component unmounts
+    };
+  }, []);
 
   const handleAlert = () => {
     Alert.alert("", "Do you wish to complete the following transaction?", [
@@ -65,7 +88,6 @@ const AdminTransactionForm = () => {
       const response = await fetch(
         "http://192.168.1.87:1010/admintransaction",
         {
-          // const response = await fetch("http://192.168.1.87:1010/transaction", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -87,6 +109,14 @@ const AdminTransactionForm = () => {
           'See your list of transactions in "Transactions" at the bottom page'
         );
 
+        // Send transaction data over WebSocket
+        if (ws) {
+          ws.send(
+            JSON.stringify({ type: "new_transaction", data: transactionInput })
+          );
+          console.log("Transaction data sent via WebSocket:", transactionInput);
+        }
+
         navigation.navigate("AdminHome");
       } else {
         console.log("Transaction failed");
@@ -106,8 +136,6 @@ const AdminTransactionForm = () => {
     <KeyboardAwareScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled={true}
     >
       <SafeAreaView style={styles.safeview}>
         <View style={styles.topsentenceview}>
@@ -131,7 +159,7 @@ const AdminTransactionForm = () => {
             style={styles.inputText}
             value={Amount}
             onChangeText={setAmount}
-            keyboardType="numeric" // gives the numerical keyboard with only dot and no symbols
+            keyboardType="numeric"
           />
         </View>
 
@@ -163,7 +191,7 @@ const AdminTransactionForm = () => {
             style={styles.inputText}
             value={AdminPhone}
             onChangeText={setAdminphone}
-            keyboardType="phone-pad" // gives the numerical keyboard with the symbols
+            keyboardType="phone-pad"
           />
         </View>
 

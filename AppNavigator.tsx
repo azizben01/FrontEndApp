@@ -14,19 +14,13 @@ function AppNavigator() {
         <RootStack.Screen
           name="AdminFlow"
           component={AdminStackNavigator}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
         <RootStack.Screen
           name="UserFlow"
           component={StackNavigator}
           options={{ headerShown: false }}
         />
-
-        {/* <RootStack.Screen
-          name="Tabflow"
-          component={AdminTabNavigator}
-          options={{ headerShown: false }}
-        /> */}
       </RootStack.Navigator>
     </NavigationContainer>
   );

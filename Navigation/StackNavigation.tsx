@@ -5,7 +5,6 @@ import SignupScreen from "../screens/SignupScreen";
 import TransactionScreen from "../screens/TransactionDetailScreen";
 import TransactionFormScreen from "../screens/TransactionFormScreen";
 import AccountScreen from "../screens/AccountScreen";
-import AccountInfoScreen from "../screens/AccountInfo";
 import LaunchScreen from "../screens/LaunchScreen";
 import ChangeNumber from "../screens/ChangeNumber";
 import ChangePassword from "../screens/ChangePassword";
@@ -80,11 +79,6 @@ function StackNavigator() {
           headerBackTitle: "Back",
           headerBackTitleVisible: false,
         }}
-      />
-      <Stack.Screen
-        name="Account Information"
-        component={AccountInfoScreen}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Change number"

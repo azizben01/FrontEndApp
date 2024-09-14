@@ -1,7 +1,7 @@
 import {
   Alert,
   ImageBackground,
-  SafeAreaView,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -20,7 +20,7 @@ const ChangeNumber = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch("http://192.168.1.3:1010/changeNumber", {
+      const response = await fetch("http://192.168.1.87:1010/changeNumber", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,40 +46,38 @@ const ChangeNumber = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeView}>
-      <Text style={styles.topsentence}>
-        Provide your old and new number to update mobile number.
-      </Text>
-      <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your old phone number:</Text>
-        </View>
-        <TextInput
-          placeholder="old phone number"
-          style={styles.InputValue}
-          value={oldPhoneNumber}
-          onChangeText={setOldPhoneNumber}
-          keyboardType="numeric"
-        />
+    <KeyboardAvoidingView style={styles.safeView} behavior="padding">
+      <View style={styles.topsentenceview}>
+        <Text style={styles.topsentence}>
+          Provide your old and new number to update mobile number.
+        </Text>
       </View>
-
-      <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your new phone number</Text>
+      <View style={styles.generalinputview}>
+        <View style={styles.inputView}>
+          <TextInput
+            placeholder="old phone number"
+            style={styles.InputValue}
+            value={oldPhoneNumber}
+            onChangeText={setOldPhoneNumber}
+            keyboardType="numeric"
+          />
         </View>
-        <TextInput
-          placeholder="new phone number"
-          style={styles.InputValue}
-          value={newPhoneNumber}
-          onChangeText={setNewPhoneNumber}
-          keyboardType="numeric"
-        />
+
+        <View style={styles.inputView}>
+          <TextInput
+            placeholder="new phone number"
+            style={styles.InputValue}
+            value={newPhoneNumber}
+            onChangeText={setNewPhoneNumber}
+            keyboardType="numeric"
+          />
+        </View>
       </View>
 
       <TouchableOpacity style={styles.button} onPress={handleUpdate}>
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -98,47 +96,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  labelView: {
-    fontSize: 25,
-    borderTopWidth: 0,
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    marginVertical: 15,
-    width: "95%",
-    marginHorizontal: 10,
-  },
-  labelText: {
-    fontSize: 18,
-    marginBottom: 7,
-    color: "#3a5e7a",
-    fontWeight: "500",
-  },
   InputValue: {
     paddingLeft: 15,
-    height: "20%",
+    backgroundColor: "#cfcece4a",
+    padding: 15,
+    borderRadius: 30,
+    width: "100%",
+    marginBottom: 10,
   },
   inputView: {
-    backgroundColor: "#cfcece4a",
+    backgroundColor: "transparent", //#cfcece4a
     width: "95%",
-    height: 100,
     borderRadius: 10,
     fontWeight: "400",
-    marginVertical: 20,
   },
 
   button: {
     backgroundColor: "#3a5e7a",
-    width: "40%",
-    padding: 18,
-    borderRadius: 25,
+    width: "90%",
+    padding: 15,
+    borderRadius: 30,
     alignItems: "center",
   },
 
   buttonText: {
     color: "white",
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "500",
+  },
+  generalinputview: {
+    paddingLeft: 18,
+    width: "100%",
+  },
+  topsentenceview: {
+    marginBottom: 20,
   },
 });

@@ -43,9 +43,6 @@ const AdminHomeScreen = () => {
       const response = await fetch(
         "http://192.168.1.87:1010/RetrieveEmployees",
         {
-          // const response = await fetch(
-          //   "http://192.168.1.87:1010/RetrieveEmployees",
-          //   {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -55,7 +52,7 @@ const AdminHomeScreen = () => {
       if (response.ok) {
         const data = await response.json(); // Parse the JSON response
         setEmployees(data || []);
-        console.log("employees retrieved successfully:", data);
+        console.log("employees retrieved successfully:");
       } else {
         console.error("Failed to retrieve employees");
       }
@@ -123,24 +120,24 @@ export default AdminHomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#cfcece4a",
+    backgroundColor: "#0000",
   },
   containerSafe: {
     flex: 1,
   },
   touchableTransaction: {
     padding: 12,
-    marginVertical: 10,
-    backgroundColor: "#3a5e7a",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 4,
+    marginVertical: 3,
+    backgroundColor: "#fff",
+    borderRadius: 5,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
+    shadowColor: "#0000002c",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
   },
   ContainerView: {
     flex: 1,
@@ -148,10 +145,9 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 15,
-    fontWeight: "bold",
     flexWrap: "wrap",
-    flexShrink: 1, // Allow items to shrink to avoid overflow
-    color: "white",
+    // flexShrink: 1, // Allow items to shrink to avoid overflow
+    color: "#3a5e7a",
     marginBottom: 5, // Add some spacing between items
     flexBasis: "auto", // Allow items to take only as much space as needed
   },
@@ -164,9 +160,10 @@ const styles = StyleSheet.create({
     color: "#3a5e7a",
   },
   sentence2: {
-    fontSize: 18,
+    fontSize: 15,
     paddingLeft: 15,
     marginBottom: 20,
+    color: "#3a5e7a",
   },
 
   noTransactionsText: {

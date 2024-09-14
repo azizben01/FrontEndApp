@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 function AdminAccount() {
@@ -29,47 +29,46 @@ function AdminAccount() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.topsentenceview}>
+        <Text style={styles.topsentencetext}>Edit your profile</Text>
+      </View>
       <TouchableOpacity style={styles.button}>
         <View style={styles.iconContainer}>
-          <Feather name="user" size={24} color="#fff" />
+          <Feather name="user" size={18} color="#fff" />
         </View>
-        <Text style={styles.text1}>Account Information</Text>
+        <Text style={styles.text1}>Change email</Text>
         <View style={styles.arrowContainer}>
-          <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+          <MaterialIcons name="arrow-forward-ios" size={18} color="white" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
         <View style={styles.iconContainer}>
-          <Ionicons name="key-outline" size={24} color="#fff" />
+          <Ionicons name="key-outline" size={18} color="#fff" />
         </View>
         <Text style={styles.Passwordtext1}>Change Password</Text>
         <View style={styles.arrowContainer}>
-          <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+          <MaterialIcons name="arrow-forward-ios" size={18} color="white" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleChangeNumber}>
         <View style={styles.iconContainer}>
-          <Feather name="smartphone" size={24} color="white" />
+          <Feather name="smartphone" size={18} color="white" />
         </View>
         <Text style={styles.text1}>Change Number</Text>
         <View style={styles.arrowContainer}>
-          <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+          <MaterialIcons name="arrow-forward-ios" size={18} color="white" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleDeleteAccount}>
         <View style={styles.iconContainer}>
-          <MaterialCommunityIcons
-            name="heart-broken-outline"
-            size={24}
-            color="#fff"
-          />
+          <EvilIcons name="trash" size={18} color="#fff" />
         </View>
         <Text style={styles.text1}>Delete My admin Account</Text>
         <View style={styles.arrowContainer}>
-          <MaterialIcons name="keyboard-arrow-right" size={24} color="white" />
+          <MaterialIcons name="keyboard-arrow-right" size={18} color="white" />
         </View>
       </TouchableOpacity>
     </SafeAreaView>
@@ -81,15 +80,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flex: 1,
     backgroundColor: "#cfcece4a",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "flex-start",
-  },
-
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginLeft: 20,
-    marginBottom: 10,
   },
 
   button: {
@@ -97,9 +89,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 30,
     marginLeft: 20,
-    marginBottom: 15,
+    marginBottom: 5,
     width: "90%",
-    borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -108,14 +99,12 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 16,
     color: "white",
-    fontWeight: "bold",
     flex: 1,
   },
 
   Passwordtext1: {
     fontSize: 16,
     color: "white",
-    fontWeight: "bold",
     flex: 1,
   },
 
@@ -125,5 +114,15 @@ const styles = StyleSheet.create({
   },
 
   arrowContainer: {},
+  topsentenceview: {
+    width: "100%",
+    padding: 15,
+  },
+  topsentencetext: {
+    fontSize: 24,
+    textAlign: "center",
+    color: "#3a5e7a",
+    fontWeight: "bold",
+  },
 });
 export default AdminAccount;

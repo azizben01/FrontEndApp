@@ -33,7 +33,6 @@ function AdminLogin() {
   const handleAdminLogin = async () => {
     try {
       const response = await fetch("http://192.168.1.87:1010/adminLogin", {
-        // const response = await fetch("http://192.168.1.87:1010/adminLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,8 +58,12 @@ function AdminLogin() {
       Alert.alert("Error", "Failed to log in. Please try again later.");
     }
   };
+
+  const HandleEmployeeLogin = () => {
+    navigation.navigate("Login");
+  };
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.topsentence}>Administrator Log in</Text>
 
       <View style={styles.inputContainer}>
@@ -116,6 +119,14 @@ function AdminLogin() {
           <Text style={styles.passwordRecover}>Forgot your Password ?</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.adminView}>
+        <TouchableOpacity
+          style={styles.adminButton}
+          onPress={HandleEmployeeLogin}
+        >
+          <Text style={styles.adminText}>Are you an Employee?</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#003554",
+    backgroundColor: "#3a5e7a", //"#003554",
     // backgroundColor: '#cfcece4a'
   },
 
@@ -182,8 +193,7 @@ const styles = StyleSheet.create({
   },
 
   Logbutton: {
-    backgroundColor: "#638ecb",
-    // backgroundColor: '#3a5e7a',
+    backgroundColor: "#141b1fda",
     width: "130%",
     padding: 15,
     borderRadius: 25,
@@ -197,31 +207,12 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
 
-  signButton: {
-    marginTop: 5,
-  },
-
-  signButtonText: {
-    color: "#3a5e7a",
-    fontSize: 13,
-    fontWeight: "500",
-    fontFamily: "NotoMusic-Regular",
-  },
-
-  accountSentence: {
-    color: "black",
-    fontSize: 13,
-    marginTop: 5,
-    fontFamily: "NotoMusic-Regular",
-  },
-
   eyebutton: {
     padding: 10,
   },
 
   passwordRecover: {
     color: "white",
-    // color: '#3a5e7a',
     fontFamily: "NotoMusic-Regular",
     fontSize: 13,
   },
@@ -233,7 +224,7 @@ const styles = StyleSheet.create({
 
   buttonShadow: {
     shadowColor: "black",
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
   },
@@ -245,7 +236,7 @@ const styles = StyleSheet.create({
   },
   adminButton: {},
   adminText: {
-    color: "#3a5e7a",
+    color: "white",
     fontFamily: "NotoMusic-Regular",
     fontSize: 15,
     textDecorationLine: "underline",

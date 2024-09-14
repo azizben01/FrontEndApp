@@ -14,6 +14,8 @@ import VerifyAdminCodeScreen from "../AdminScreen/VerifyAdminCodeScreen";
 import ReportScreen from "../AdminScreen/ReportScreen";
 import ReportDetail from "../AdminScreen/ReportDetail";
 import EmployeeDetail from "../AdminScreen/EmployeeDetail";
+import Employeereport from "../AdminScreen/Employeereport";
+import EmployeeReportDetail from "../AdminScreen/EmployeeReportDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +96,16 @@ function AdminStackNavigator() {
       <Stack.Screen
         name="employeedetails"
         component={EmployeeDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="employeereport"
+        component={Employeereport}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="employeereportdetail"
+        component={EmployeeReportDetail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -12,7 +12,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { FontAwesome } from "@expo/vector-icons";
-import { FontAwesome6 } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -67,9 +66,6 @@ const AdminSettingScreen = () => {
             <FontAwesome name="bell-o" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Notifications </Text>
-          {/* <TouchableOpacity>
-                    <FontAwesome6 name="toggle-off" size={20} color="white" />
-                </TouchableOpacity> */}
           <View style={styles.RightIcon4}>
             <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
           </View>
@@ -87,7 +83,7 @@ const styles = StyleSheet.create({
   },
   containerSafe: {
     flex: 1,
-    // justifyContent: 'flex-start',
+    justifyContent: "center",
     // alignItems: 'flex-start',
   },
   title: {
@@ -108,7 +104,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: "90%",
     flexDirection: "row",
-    borderWidth: 1,
   },
   settingText: {
     fontSize: 18,
