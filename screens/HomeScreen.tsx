@@ -14,7 +14,7 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ImageBackground } from "react-native";
-import LinearGradient from "react-native-linear-gradient"; // Import LinearGradient
+import Svg, { Rect, Defs, LinearGradient, Stop } from "react-native-svg"; // Import LinearGradient from react-native-svg
 
 type UserProfile = {
   username: string;
@@ -54,31 +54,39 @@ function HomepageScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground
-        source={require("../assets/twoHandsWallet.jpg")}
+        source={require("../assets/piggybank.jpg")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        {/* Add LinearGradient here */}
-        <LinearGradient
-          colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0)"]} // Customize gradient colors
-          style={styles.gradient}
-        >
-          <View style={styles.header}>
-            {userProfile && (
-              <Text style={styles.userName}>
-                Hello
-                <View style={styles.nameview}>
-                  <Text style={styles.nametext}> {userProfile.Fullname} !</Text>
-                </View>
-              </Text>
-            )}
+        {/* Add Svg with LinearGradient here */}
+        <Svg height="100%" width="100%" style={styles.gradientOverlay}>
+          <Defs>
+            <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+              <Stop offset="0" stopColor="rgba(0, 0, 0, 0.8)" stopOpacity="1" />
+              <Stop offset="1" stopColor="rgba(0, 0, 0, 0)" stopOpacity="0" />
+            </LinearGradient>
+          </Defs>
+          <Rect width="100%" height="100%" fill="url(#grad)" />
+        </Svg>
 
-            {/* Content for the text and button */}
-            <View style={styles.addtransactionview}>
+        <View style={styles.header}>
+          {userProfile && (
+            <Text style={styles.userName}>
+              Hello
+              <View style={styles.nameview}>
+                <Text style={styles.nametext}> {userProfile.Fullname} !</Text>
+              </View>
+            </Text>
+          )}
+
+          <View style={styles.addtransactionview}>
+            <View style={styles.transactiontextview}>
               <Text style={styles.transactiontext}>
                 Press the button below to perform {"\n"} a new transaction.👇🏾
               </Text>
+            </View>
 
+            <View style={styles.buttonview}>
               <TouchableOpacity
                 onPress={navigateToForm}
                 style={styles.addTransactionButton}
@@ -89,7 +97,7 @@ function HomepageScreen() {
               </TouchableOpacity>
             </View>
           </View>
-        </LinearGradient>
+        </View>
       </ImageBackground>
     </KeyboardAvoidingView>
   );
@@ -105,19 +113,29 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  gradient: {
-    flex: 1,
-    justifyContent: "center",
+  gradientOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   addTransactionButton: {
-    backgroundColor: "#3a5e7a",
-    width: "40%",
-    padding: 18,
-    borderRadius: 25,
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 30,
     alignItems: "center",
+    shadowColor: "#0000002c",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  buttonview: {
+    paddingTop: 10,
   },
   TransactionbuttonText: {
-    color: "white",
+    color: "#3a5e7a",
     fontSize: 15,
     fontWeight: "500",
   },
@@ -130,10 +148,11 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#ffffff", // Use white text for better contrast with background
+    color: "#ffffff", // White text for contrast
   },
   nameview: {
     marginLeft: 10,
+    marginBottom: -2,
   },
   nametext: {
     fontSize: 15,
@@ -150,5 +169,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "400",
     textAlign: "center",
+  },
+  transactiontextview: {
+    marginBottom: 10,
   },
 });
