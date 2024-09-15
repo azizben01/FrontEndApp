@@ -13,6 +13,7 @@ import RequestReset from "../screens/RequestReset";
 import VerifyCodeScreen from "../screens/VerifyCodeScreen";
 import ResetPassword from "../screens/ResetPassword";
 import ResetSuccess from "../screens/ResetSuccess";
+import ChangeEmployeeEmail from "../screens/ChangeEmployeeEmail";
 
 // interface CustomHeaderStyle extends TextStyle {
 //   color?: string; // Explicitly define the optional 'color' property
@@ -128,6 +129,15 @@ function StackNavigator() {
       <Stack.Screen
         name="UpdatePassword"
         component={ResetPassword}
+        options={{
+          ...customHeaderOptions,
+          headerBackTitle: "Back",
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="changeEmployeeEmail"
+        component={ChangeEmployeeEmail}
         options={{
           ...customHeaderOptions,
           headerBackTitle: "Back",

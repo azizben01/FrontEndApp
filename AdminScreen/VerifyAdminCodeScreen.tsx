@@ -49,9 +49,6 @@ function VerifyAdminCodeScreen() {
         </Text>
       </View>
       <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your code </Text>
-        </View>
         <TextInput
           placeholder="Enter reset code"
           style={styles.InputValue}
@@ -93,21 +90,13 @@ const styles = StyleSheet.create({
   inputView: {
     backgroundColor: "#cfcece4a",
     width: "95%",
-    height: 100,
-    borderRadius: 10,
+    borderRadius: 30,
     fontWeight: "400",
     marginVertical: 20,
   },
-
-  labelView: {
-    fontSize: 25,
-    borderTopWidth: 0,
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    marginVertical: 15,
-    width: "95%",
-    marginHorizontal: 10,
+  InputValue: {
+    paddingLeft: 15,
+    padding: 15,
   },
 
   labelText: {
@@ -117,16 +106,11 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  InputValue: {
-    paddingLeft: 15,
-    height: "20%",
-  },
-
   button: {
     backgroundColor: "#3a5e7a",
-    borderRadius: 25,
+    borderRadius: 30,
     padding: 15,
-    width: "30%",
+    width: "100%",
   },
 
   buttonText: {

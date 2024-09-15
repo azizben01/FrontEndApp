@@ -16,6 +16,7 @@ import ReportDetail from "../AdminScreen/ReportDetail";
 import EmployeeDetail from "../AdminScreen/EmployeeDetail";
 import Employeereport from "../AdminScreen/Employeereport";
 import EmployeeReportDetail from "../AdminScreen/EmployeeReportDetail";
+import ChangeAdminEmail from "../AdminScreen/ChangeAdminEmail";
 
 const Stack = createNativeStackNavigator();
 
@@ -106,6 +107,11 @@ function AdminStackNavigator() {
       <Stack.Screen
         name="employeereportdetail"
         component={EmployeeReportDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChangeAdminEmail"
+        component={ChangeAdminEmail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

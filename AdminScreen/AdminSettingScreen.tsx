@@ -1,4 +1,5 @@
 import {
+  Alert,
   KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
@@ -14,6 +15,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const AdminSettingScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -23,8 +25,8 @@ const AdminSettingScreen = () => {
     navigation.navigate("Help");
   };
 
-  const handleAccount = (): void => {
-    navigation.navigate("");
+  const handleContactSupport = (): void => {
+    Alert.alert("Contact Support", "Please email us at support@yourapp.com.");
   };
 
   return (
@@ -43,29 +45,41 @@ const AdminSettingScreen = () => {
             <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
+        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
           <View style={styles.lefticon}>
-            <FontAwesome name="language" size={18} color="white" />
+            <Feather name="shield" size={18} color="white" />
           </View>
-          <Text style={styles.settingText}> Language Preference</Text>
+          <Text style={styles.settingText}> Privacy Policy</Text>
           <View style={styles.RightIcon2}>
             <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
+        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
           <View style={styles.lefticon}>
-            <Ionicons name="invert-mode" size={18} color="white" />
+            <FontAwesome5 name="file-contract" size={18} color="white" />
           </View>
-          <Text style={styles.settingText}> App Theme</Text>
+          <Text style={styles.settingText}> Terms of Service</Text>
+          <View style={styles.RightIcon2}>
+            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+          <View style={styles.lefticon}>
+            <Ionicons name="information" size={20} color="white" />
+          </View>
+          <Text style={styles.settingText}> App Version Information </Text>
           <View style={styles.RightIcon3}>
             <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={handleAccount}>
+        <TouchableOpacity
+          style={styles.settingButton}
+          onPress={handleContactSupport}
+        >
           <View style={styles.lefticon}>
-            <FontAwesome name="bell-o" size={18} color="white" />
+            <Feather name="phone" size={18} color="white" />
           </View>
-          <Text style={styles.settingText}> Notifications </Text>
+          <Text style={styles.settingText}> Contact Support </Text>
           <View style={styles.RightIcon4}>
             <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
           </View>
@@ -84,7 +98,6 @@ const styles = StyleSheet.create({
   containerSafe: {
     flex: 1,
     justifyContent: "center",
-    // alignItems: 'flex-start',
   },
   title: {
     marginLeft: 20,

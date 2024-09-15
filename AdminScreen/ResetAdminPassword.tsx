@@ -76,9 +76,6 @@ const ResetAdminPassword = () => {
       </View>
 
       <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Enter your password</Text>
-        </View>
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="New password"
@@ -102,9 +99,6 @@ const ResetAdminPassword = () => {
       </View>
 
       <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Confirm your password</Text>
-        </View>
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="confirm new password"
@@ -151,14 +145,7 @@ const styles = StyleSheet.create({
   topSentenceView: {
     padding: 20,
   },
-  labelView: {
-    marginBottom: 10,
-    borderTopWidth: 0,
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderColor: "#3a5e7a",
-  },
+
   labelText: {
     fontSize: 18,
     color: "#3a5e7a",
@@ -189,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3a5e7a",
     padding: 15,
     borderRadius: 30,
-    width: "40%",
+    width: "95%",
     marginVertical: 20,
   },
   buttonText: {
