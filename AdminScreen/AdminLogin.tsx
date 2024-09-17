@@ -32,7 +32,7 @@ function AdminLogin() {
 
   const handleAdminLogin = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/adminLogin", {
+      const response = await fetch("http://192.168.1.74:1010/adminLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

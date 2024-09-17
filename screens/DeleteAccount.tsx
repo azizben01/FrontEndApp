@@ -25,7 +25,7 @@ const DeleteAccount = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/deleteAccount", {
+      const response = await fetch("http://192.168.1.74:1010/deleteAccount", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -20,7 +20,7 @@ function ChangeAdminPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [adminname, setAdminname] = useState("");
 
   const handleForgotPassword = () => {
     navigation.navigate("Request code");
@@ -32,13 +32,16 @@ function ChangeAdminPassword() {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/changePassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, oldPassword, newPassword }),
-      });
+      const response = await fetch(
+        "http://192.168.1.74:1010/changeadminpassword",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ adminname, oldPassword, newPassword }),
+        }
+      );
 
       const data = await response.json();
 
@@ -48,12 +51,25 @@ function ChangeAdminPassword() {
         console.log("Updated userData:", data);
 
         Alert.alert("Success", "Password updated successfully.");
-        navigation.navigate("Login"); // Navigate back to the profile screen
+        navigation.navigate("admin login"); // Navigate back to the profile screen
       } else {
-        Alert.alert("Error", data.error || "Failed to update password");
+        if (data.error === "Adminname incorrect.") {
+          Alert.alert(
+            "Error",
+            "Adminname is incorrect. Please check and try again."
+          );
+        } else if (data.error === "Current password is incorrect.") {
+          Alert.alert(
+            "Error",
+            "Current password is incorrect. Please try again."
+          );
+        } else {
+          Alert.alert("Error", data.error || "Failed to update password");
+        }
       }
     } catch (error) {
       Alert.alert("Error", "An error occurred. Please try again later.");
+      console.error("Error:", error);
     }
   };
 
@@ -68,10 +84,10 @@ function ChangeAdminPassword() {
       <View style={styles.inputView}>
         <View style={styles.passwordContainer}>
           <TextInput
-            placeholder="User name"
+            placeholder="Admin user name"
             style={styles.InputValue}
-            value={username}
-            onChangeText={setUsername}
+            value={adminname}
+            onChangeText={setAdminname}
             keyboardType="default"
           />
         </View>

@@ -2,8 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "../Navigation/TabNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
-import TransactionScreen from "../screens/TransactionDetailScreen";
-import TransactionFormScreen from "../screens/TransactionFormScreen";
+import TransactionFormScreen from "../screens/TransactionformScreen";
 import AccountScreen from "../screens/AccountScreen";
 import LaunchScreen from "../screens/LaunchScreen";
 import ChangeNumber from "../screens/ChangeNumber";
@@ -14,6 +13,8 @@ import VerifyCodeScreen from "../screens/VerifyCodeScreen";
 import ResetPassword from "../screens/ResetPassword";
 import ResetSuccess from "../screens/ResetSuccess";
 import ChangeEmployeeEmail from "../screens/ChangeEmployeeEmail";
+import TransactionDetailScreen from "../screens/TransactionDetailScreen";
+import Notification from "../screens/Notification";
 
 // interface CustomHeaderStyle extends TextStyle {
 //   color?: string; // Explicitly define the optional 'color' property
@@ -63,8 +64,8 @@ function StackNavigator() {
         }}
       />
       <Stack.Screen
-        name="TransactionDetail"
-        component={TransactionScreen}
+        name="Detail"
+        component={TransactionDetailScreen}
         options={{ ...customHeaderOptions, headerBackTitleVisible: false }}
       />
       <Stack.Screen
@@ -153,6 +154,16 @@ function StackNavigator() {
           headerBackTitleVisible: false,
           headerShown: false,
           gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="NotificationDetail"
+        component={Notification}
+        options={{
+          ...customHeaderOptions,
+          // headerBackTitle: "Back",
+          headerBackTitleVisible: false,
+          //headerShown: false,
         }}
       />
     </Stack.Navigator>

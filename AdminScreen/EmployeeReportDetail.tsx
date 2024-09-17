@@ -29,10 +29,10 @@ type ParamList = {
     reportData: Report;
   };
 };
-
 const EmployeeReportDetail = () => {
   const route = useRoute<RouteProp<ParamList, "EmployeeReportDetail">>();
   const { reportData } = route.params;
+
   console.log("Employee Report Data:", reportData);
 
   if (!reportData) {
@@ -44,7 +44,7 @@ const EmployeeReportDetail = () => {
   }
 
   const report = reportData.report;
-  const transactions = reportData.transactions;
+  const transactions = reportData.transactions || []; // Fallback to an empty array if transactions is null or undefined
 
   return (
     <SafeAreaView style={styles.safeview}>
@@ -109,7 +109,7 @@ const EmployeeReportDetail = () => {
                   Username: {transaction.username}
                 </Text>
                 <Text style={styles.transactionLabel}>
-                  recipientname: {transaction.recipientname}
+                  Recipient Name: {transaction.recipientname}
                 </Text>
                 <Text style={styles.transactionLabel}>
                   Currency: {transaction.currency}
@@ -187,7 +187,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   noTransactionsView: {
-    padding: 20,
+    // position: "absolute",
+    // left: 80,
+    // top: "80%",
+    // padding: 20,
+    paddingTop: "40%",
   },
   noTransactionsText: {
     fontSize: 22,

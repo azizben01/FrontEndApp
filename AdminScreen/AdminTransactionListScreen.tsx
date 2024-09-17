@@ -47,7 +47,7 @@ const AdminTransactionListScreen = () => {
   const handleAdminTransaction = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.87:1010/Getadmintransaction",
+        "http://192.168.1.74:1010/Getadmintransaction",
         {
           method: "GET",
           headers: {
@@ -72,7 +72,7 @@ const AdminTransactionListScreen = () => {
   const deleteAdminTransaction = async (adminTransactionid: number) => {
     try {
       const response = await fetch(
-        `http://192.168.1.87:1010/deleteAdmintransactions/${adminTransactionid}`,
+        `http://192.168.1.74:1010/deleteAdmintransactions/${adminTransactionid}`,
         {
           method: "DELETE",
           headers: {

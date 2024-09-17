@@ -56,7 +56,7 @@ const ReportScreen = () => {
       return;
     }
     try {
-      const response = await fetch(`http://192.168.1.87:1010/generateReport`, {
+      const response = await fetch(`http://192.168.1.74:1010/generateReport`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

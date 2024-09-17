@@ -14,7 +14,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const currencies = ["RWF"];
-const websocketURL = "http://192.168.1.87:1010/ws";
+const websocketURL = "http://192.168.1.74:1010/ws";
 
 const AdminTransactionForm = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -86,7 +86,7 @@ const AdminTransactionForm = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.87:1010/admintransaction",
+        "http://192.168.1.74:1010/admintransaction",
         {
           method: "POST",
           headers: {

@@ -41,7 +41,7 @@ function AdminStackNavigator() {
       <Stack.Screen
         name="Request code"
         component={AdminRequestReset}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="Password updated"

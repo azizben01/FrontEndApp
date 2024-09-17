@@ -86,7 +86,7 @@ const CombinedScreen = () => {
     try {
       const [transactionResponse, notificationResponse] = await Promise.all([
         fetch(
-          `http://192.168.1.87:1010/Getusertransactions?username=${username}`,
+          `http://192.168.1.74:1010/Getusertransactions?username=${username}`,
           {
             method: "GET",
             headers: {
@@ -95,7 +95,7 @@ const CombinedScreen = () => {
           }
         ),
         fetch(
-          `http://192.168.1.87:1010/GetadmintransactionForUser?username=${username}`,
+          `http://192.168.1.74:1010/GetadmintransactionForUser?username=${username}`,
           {
             method: "GET",
             headers: {
@@ -121,7 +121,7 @@ const CombinedScreen = () => {
   const deleteTransaction = async (transactionId: number) => {
     try {
       const response = await fetch(
-        `http://192.168.1.87:1010/deletetransactions/${transactionId}`,
+        `http://192.168.1.74:1010/deletetransactions/${transactionId}`,
         {
           method: "DELETE",
           headers: {
@@ -148,7 +148,7 @@ const CombinedScreen = () => {
   const deleteAdminTransaction = async (adminTransactionid: number) => {
     try {
       const response = await fetch(
-        `http://192.168.1.87:1010/deleteAdmintransactions/${adminTransactionid}`,
+        `http://192.168.1.74:1010/deleteAdmintransactions/${adminTransactionid}`,
         {
           method: "DELETE",
           headers: {
@@ -202,9 +202,11 @@ const CombinedScreen = () => {
 
   const handleDetails = (item: CombinedItem) => {
     if (isAdminTransaction(item)) {
-      navigation.navigate("NotificationDetail", { item });
+      // Navigate to the NotificationDetail screen with the admin transaction details
+      navigation.navigate("NotificationDetail", { notification: item });
     } else if (isTransaction(item)) {
-      navigation.navigate("TransactionDetail", { item });
+      // Navigate to the TransactionDetail screen with the transaction details
+      navigation.navigate("Detail", { transaction: item });
     }
   };
 
@@ -361,6 +363,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 15,
     marginBottom: 20,
+    color: "#3a5e7a",
   },
   noTransactionsText: {
     color: "#3a5e7a",

@@ -23,6 +23,10 @@ function AdminAccount() {
     navigation.navigate("change admin password");
   };
 
+  const handleChangeEmail = () => {
+    navigation.navigate("ChangeAdminEmail");
+  };
+
   const handleDeleteAccount = () => {
     navigation.navigate("delete admin account");
   };
@@ -32,7 +36,7 @@ function AdminAccount() {
       <View style={styles.topsentenceview}>
         <Text style={styles.topsentencetext}>Edit your profile</Text>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleChangeEmail}>
         <View style={styles.iconContainer}>
           <Feather name="user" size={18} color="#fff" />
         </View>

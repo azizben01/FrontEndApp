@@ -32,7 +32,7 @@ const ChangePassword = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/changePassword", {
+      const response = await fetch("http://192.168.1.74:1010/changePassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,10 +50,23 @@ const ChangePassword = () => {
         Alert.alert("Success", "Password updated successfully.");
         navigation.navigate("Login"); // Navigate back to the profile screen
       } else {
-        Alert.alert("Error", data.error || "Failed to update password");
+        if (data.error === "Adminname incorrect.") {
+          Alert.alert(
+            "Error",
+            "Adminname is incorrect. Please check and try again."
+          );
+        } else if (data.error === "Current password is incorrect.") {
+          Alert.alert(
+            "Error",
+            "Current password is incorrect. Please try again."
+          );
+        } else {
+          Alert.alert("Error", data.error || "Failed to update password");
+        }
       }
     } catch (error) {
       Alert.alert("Error", "An error occurred. Please try again later.");
+      console.error("Error:", error);
     }
   };
 

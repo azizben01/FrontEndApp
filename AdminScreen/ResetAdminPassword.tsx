@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -43,16 +42,19 @@ const ResetAdminPassword = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.87:1010/ResetPassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "http://192.168.1.74:1010/ResetAdminPassword",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
@@ -154,9 +156,9 @@ const styles = StyleSheet.create({
   inputView: {
     backgroundColor: "#cfcece4a",
     width: "95%",
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 10,
+    borderRadius: 30,
+    padding: 8,
+    marginVertical: 5,
   },
   passwordContainer: {
     flexDirection: "row",
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   eyebutton: {
-    padding: 10,
+    // padding: 10,
   },
   button: {
     backgroundColor: "#3a5e7a",

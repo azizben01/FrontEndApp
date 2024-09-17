@@ -19,7 +19,7 @@ const AdminRequestReset = () => {
 
   const handleRequestReset = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/requestCode", {
+      const response = await fetch("http://192.168.1.74:1010/requestCode", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
   },
   resetView: {
     padding: 10,
+    width: "90%",
   },
   resetTopText: {
     color: "#3a5e7a",

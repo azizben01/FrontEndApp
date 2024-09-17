@@ -47,7 +47,7 @@ function SignupScreen() {
       password,
     };
     try {
-      const response = await fetch("http://192.168.1.87:1010/user", {
+      const response = await fetch("http://192.168.1.74:1010/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // tells the server that the data being sent in the request body is in JSON format
@@ -132,7 +132,7 @@ function SignupScreen() {
           <Feather name="phone" size={17} color="#3a5e7a" />
         </View>
         <TextInput
-          placeholder="Phone Number"
+          placeholder="Phone Number: 07xxxxxxxx"
           style={styles.input}
           value={phonenumber}
           onChangeText={setPhonenumber}

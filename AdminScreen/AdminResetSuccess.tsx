@@ -14,7 +14,7 @@ function AdminResetSuccess() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const handleLogin = () => {
-    navigation.navigate("Login");
+    navigation.navigate("admin login");
   };
 
   return (

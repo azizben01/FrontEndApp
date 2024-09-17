@@ -8,7 +8,6 @@ import {
 } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FlipInEasyX } from "react-native-reanimated";
 
 type Employees = {
   employeefullname: string;
@@ -35,7 +34,7 @@ const EmployeeDetail = () => {
   const handleRemoveEmployee = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.87:1010/deleteemployee/${employeedetail.username}`, // Make sure your DELETE API is set up correctly
+        `http://192.168.1.74:1010/deleteemployee/${employeedetail.username}`, // Make sure your DELETE API is set up correctly
         {
           method: "DELETE",
           headers: {

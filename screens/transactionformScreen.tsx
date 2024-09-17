@@ -63,7 +63,7 @@ function TransactionFormScreen() {
     };
 
     try {
-      const response = await fetch("http://192.168.1.87:1010/usertransaction", {
+      const response = await fetch("http://192.168.1.74:1010/usertransaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,14 +132,6 @@ function TransactionFormScreen() {
           />
         </View>
 
-        {/* <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Currency"
-            style={styles.inputText}
-            value={Currency}
-            onChangeText={setCurrency}
-          />
-        </View> */}
         <View style={styles.inputContainer}>
           <TouchableOpacity
             onPress={handleCurrencyFieldPress}
@@ -164,7 +156,7 @@ function TransactionFormScreen() {
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Sender Phone"
+            placeholder="Sender Phone: 07xxxxxxxx"
             style={styles.inputText}
             value={Senderphone}
             onChangeText={setSenderhone}
@@ -183,7 +175,7 @@ function TransactionFormScreen() {
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Recipient Phone"
+            placeholder="Recipient Phone: 07xxxxxxxx"
             style={styles.inputText}
             value={Recipientphone}
             onChangeText={setRecipientPhone}

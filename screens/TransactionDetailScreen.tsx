@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Transaction = {
   username: string;
@@ -27,7 +28,11 @@ const TransactionDetailScreen = () => {
   const { transaction } = route.params;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topsentenceview}>
+        <Text style={styles.topsentencetext}>Transaction detail</Text>
+      </View>
+      {/* <View style={styles.container}> */}
       <View style={styles.row}>
         <Text style={styles.label}>User name:</Text>
         <Text style={styles.value}>{transaction.username}</Text>
@@ -64,14 +69,18 @@ const TransactionDetailScreen = () => {
         <Text style={styles.label}>Date Created:</Text>
         <Text style={styles.value}>{transaction.created}</Text>
       </View>
-    </View>
+      {/* </View> */}
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    marginVertical: 14,
+    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 6,
   },
 
   container: {
@@ -80,14 +89,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#cfcece4a",
   },
   label: {
-    fontSize: 18,
-    fontWeight: "bold",
-    width: 150,
+    fontSize: 15,
     color: "#3a5e7a",
   },
   value: {
-    flex: 1,
     fontSize: 15,
+    width: "100%",
+    marginLeft: "3%",
+  },
+  topsentenceview: {
+    padding: 10,
+    backgroundColor: "#cfcece4a",
+  },
+  topsentencetext: {
+    fontSize: 24,
+    color: "#3a5e7a",
     fontWeight: "bold",
     textAlign: "center",
   },

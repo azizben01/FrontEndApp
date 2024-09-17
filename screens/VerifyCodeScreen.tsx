@@ -22,7 +22,7 @@ function VerifyCodeScreen() {
 
   const handleVerifyCode = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/ResetCode", {
+      const response = await fetch("http://192.168.1.74:1010/ResetCode", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,9 +53,6 @@ function VerifyCodeScreen() {
         </Text>
       </View>
       <View style={styles.inputView}>
-        <View style={styles.labelView}>
-          <Text style={styles.labelText}>Your code </Text>
-        </View>
         <TextInput
           placeholder="Enter reset code"
           style={styles.InputValue}
@@ -96,22 +93,17 @@ const styles = StyleSheet.create({
 
   inputView: {
     backgroundColor: "#cfcece4a",
-    width: "95%",
-    height: 100,
-    borderRadius: 10,
+    width: "90%",
+    borderRadius: 30,
     fontWeight: "400",
     marginVertical: 20,
   },
 
   labelView: {
-    fontSize: 25,
-    borderTopWidth: 0,
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    marginVertical: 15,
-    width: "95%",
-    marginHorizontal: 10,
+    fontSize: 18,
+    marginBottom: 7,
+    color: "#3a5e7a",
+    fontWeight: "500",
   },
 
   labelText: {
@@ -123,14 +115,14 @@ const styles = StyleSheet.create({
 
   InputValue: {
     paddingLeft: 15,
-    height: "20%",
+    padding: 15,
   },
 
   button: {
     backgroundColor: "#3a5e7a",
     borderRadius: 25,
     padding: 15,
-    width: "30%",
+    width: "104%",
   },
 
   buttonText: {

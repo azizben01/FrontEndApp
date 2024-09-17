@@ -59,7 +59,7 @@ const Employeereport = () => {
     }
     try {
       const response = await fetch(
-        `http://192.168.1.87:1010/generateEmployeereport`,
+        `http://192.168.1.74:1010/generateEmployeereport`,
         {
           method: "POST",
           headers: {

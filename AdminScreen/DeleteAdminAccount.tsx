@@ -1,5 +1,6 @@
 import {
   Alert,
+  KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -17,7 +18,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 function DeleteAdminAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [adminname, setAdminname] = useState("");
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const toggleShowingPassword = () => {
@@ -26,13 +27,16 @@ function DeleteAdminAccount() {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/deleteAccount", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        "http://192.168.1.74:1010/deleteadminaccount",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ adminname, password }),
+        }
+      );
 
       const data = await response.json();
 
@@ -67,7 +71,7 @@ function DeleteAdminAccount() {
   };
 
   return (
-    <SafeAreaView style={styles.safeView}>
+    <KeyboardAvoidingView style={styles.safeView} behavior="padding">
       <View style={styles.topSentenceView}>
         <Text style={styles.topSentence}>
           To delete your account, please enter your admin username and password.
@@ -77,10 +81,10 @@ function DeleteAdminAccount() {
       <View style={styles.inputView}>
         <View style={styles.passwordContainer}>
           <TextInput
-            placeholder="Username"
+            placeholder="admin username"
             style={styles.InputValue}
-            value={username}
-            onChangeText={setUsername}
+            value={adminname}
+            onChangeText={setAdminname}
             keyboardType="default"
           />
         </View>
@@ -109,7 +113,7 @@ function DeleteAdminAccount() {
       <TouchableOpacity style={styles.button} onPress={confirmDelete}>
         <Text style={styles.buttonText}>Delete Account</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

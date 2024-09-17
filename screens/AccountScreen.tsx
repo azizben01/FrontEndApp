@@ -28,13 +28,16 @@ function AccountScreen() {
   const handleDeleteAccount = () => {
     navigation.navigate("Delete");
   };
+  const handleChangeEmail = () => {
+    navigation.navigate("changeEmployeeEmail");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topsentenceview}>
         <Text style={styles.topsentencetext}>Edit your profile</Text>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleChangeEmail}>
         <View style={styles.iconContainer}>
           <Feather name="user" size={18} color="#fff" />
         </View>

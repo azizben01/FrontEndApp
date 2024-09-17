@@ -41,7 +41,7 @@ const AdminHomeScreen = () => {
   const handleDisplayEmployee = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.87:1010/RetrieveEmployees",
+        "http://192.168.1.74:1010/RetrieveEmployees",
         {
           method: "GET",
           headers: {

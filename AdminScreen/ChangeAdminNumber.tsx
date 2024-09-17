@@ -1,6 +1,7 @@
 import {
   Alert,
   ImageBackground,
+  KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -20,13 +21,16 @@ function ChangeAdminNumber() {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch("http://192.168.1.87:1010/changeNumber", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ oldPhoneNumber, newPhoneNumber }),
-      });
+      const response = await fetch(
+        "http://192.168.1.74:1010/changeadminnumber",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ oldPhoneNumber, newPhoneNumber }),
+        }
+      );
 
       const data = await response.json();
 
@@ -46,7 +50,7 @@ function ChangeAdminNumber() {
   };
 
   return (
-    <SafeAreaView style={styles.safeView}>
+    <KeyboardAvoidingView style={styles.safeView}>
       <View style={styles.topsentenceview}>
         <Text style={styles.topsentence}>
           Provide your old and new number to update mobile number.
@@ -77,7 +81,7 @@ function ChangeAdminNumber() {
       <TouchableOpacity style={styles.button} onPress={handleUpdate}>
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -11,8 +11,6 @@ import React from "react";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -26,51 +24,42 @@ const AdminSettingScreen = () => {
   };
 
   const handleContactSupport = (): void => {
-    Alert.alert("Contact Support", "Please email us at support@yourapp.com.");
+    Alert.alert(
+      "Contact Support",
+      "Please email us at swiftpay24.dev@gmail.com"
+    );
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <SafeAreaView style={styles.containerSafe}>
-        <View style={styles.titleView}>
-          <Text style={styles.title}>Settings</Text>
-        </View>
+    <SafeAreaView style={styles.containerSafe}>
+      <View style={styles.titleView}>
+        <Text style={styles.title}>Settings</Text>
+      </View>
 
+      <View style={styles.containerview}>
         <TouchableOpacity style={styles.settingButton} onPress={handleHelp}>
           <View style={styles.lefticon}>
             <Feather name="help-circle" size={18} color="white" />
           </View>
           <Text style={styles.settingText}>Help</Text>
-          <View style={styles.RightIcon1}>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
-          </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
           <View style={styles.lefticon}>
             <Feather name="shield" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Privacy Policy</Text>
-          <View style={styles.RightIcon2}>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
-          </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
           <View style={styles.lefticon}>
             <FontAwesome5 name="file-contract" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Terms of Service</Text>
-          <View style={styles.RightIcon2}>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
-          </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
           <View style={styles.lefticon}>
             <Ionicons name="information" size={20} color="white" />
           </View>
           <Text style={styles.settingText}> App Version Information </Text>
-          <View style={styles.RightIcon3}>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
-          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.settingButton}
@@ -80,12 +69,9 @@ const AdminSettingScreen = () => {
             <Feather name="phone" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Contact Support </Text>
-          <View style={styles.RightIcon4}>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
-          </View>
         </TouchableOpacity>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -141,5 +127,9 @@ const styles = StyleSheet.create({
   },
   lefticon: {
     padding: 5,
+  },
+  containerview: {
+    justifyContent: "center",
+    marginLeft: 15,
   },
 });
