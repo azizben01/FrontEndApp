@@ -38,6 +38,27 @@ function SignupScreen() {
       Alert.alert("Passwords do not match!");
       return; // Prevent sending request if passwords don't match
     }
+
+    // Basic validation for required fields
+    if (
+      !employeefullname ||
+      !userName ||
+      !email ||
+      !position ||
+      !phonenumber ||
+      !password ||
+      !confirmPassword
+    ) {
+      Alert.alert("Error", "Please fill out all the fields!");
+      return;
+    }
+
+    // Check if password is at least 8 characters long
+    if (password.length < 8) {
+      Alert.alert("Error", "Password must be at least 8 characters long!");
+      return;
+    }
+
     const userData = {
       userName,
       employeefullname,
@@ -47,7 +68,7 @@ function SignupScreen() {
       password,
     };
     try {
-      const response = await fetch("http://192.168.1.74:1010/user", {
+      const response = await fetch("http://172.20.10.2:1010/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // tells the server that the data being sent in the request body is in JSON format

@@ -44,7 +44,7 @@ const ReportDetailScreen = () => {
     );
   }
   const report = reportData.report;
-  const transactions = reportData.transactions; // <-- Extract transactions here
+  const transactions = reportData.transactions || []; // <-- Extract transactions here
 
   return (
     <SafeAreaView style={styles.safeview}>
@@ -104,7 +104,7 @@ const ReportDetailScreen = () => {
           {transactions.length > 0 ? (
             transactions.map((transaction: Transaction) => (
               <View
-                key={report.adminTransactionid}
+                key={transaction.adminTransactionid}
                 style={styles.transactionItem}
               >
                 <Text style={styles.transactionLabel}>
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
 
   noTransactionsView: {
-    padding: 20,
+    paddingTop: "20%",
   },
   noTransactionsText: {
     fontSize: 22,

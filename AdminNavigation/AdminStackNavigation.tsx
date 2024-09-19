@@ -17,6 +17,9 @@ import EmployeeDetail from "../AdminScreen/EmployeeDetail";
 import Employeereport from "../AdminScreen/Employeereport";
 import EmployeeReportDetail from "../AdminScreen/EmployeeReportDetail";
 import ChangeAdminEmail from "../AdminScreen/ChangeAdminEmail";
+import AdminSettingHelp from "../AdminScreen/AdminSettingHelp";
+import AdminPrivacyPolicy from "../AdminScreen/AdminPrivacyPolicy";
+import AdminTermsOfServices from "../AdminScreen/AdminTermsOfServices";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +39,7 @@ function AdminStackNavigator() {
       <Stack.Screen
         name="admin account"
         component={AdminAccount}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="Request code"
@@ -46,73 +49,88 @@ function AdminStackNavigator() {
       <Stack.Screen
         name="Password updated"
         component={AdminResetSuccess}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="adminTransactionDetail"
         component={AdminTransactionDetailScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
 
       <Stack.Screen
         name="admin transaction form"
         component={AdminTransactionForm}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="change admin number"
         component={ChangeAdminNumber}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="change admin password"
         component={ChangeAdminPassword}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="delete admin account"
         component={DeleteAdminAccount}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="admin update password"
         component={ResetAdminPassword}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="admin verify code"
         component={VerifyAdminCodeScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="Report detail"
         component={ReportDetail}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="generate report"
         component={ReportScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="employeedetails"
         component={EmployeeDetail}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="employeereport"
         component={Employeereport}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="employeereportdetail"
         component={EmployeeReportDetail}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name="ChangeAdminEmail"
         component={ChangeAdminEmail}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="Help"
+        component={AdminSettingHelp}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="Privacy Policy"
+        component={AdminPrivacyPolicy}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="Terms of Services"
+        component={AdminTermsOfServices}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
       />
     </Stack.Navigator>
   );

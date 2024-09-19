@@ -6,8 +6,6 @@ import {
   StyleSheet,
   Alert,
   SafeAreaView,
-  Button,
-  KeyboardAvoidingView,
 } from "react-native";
 import { ParamListBase, useNavigation } from "@react-navigation/native"; // Navigation hook
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -20,39 +18,59 @@ import { Ionicons } from "@expo/vector-icons";
 function SettingsScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  const handleHelp = (): void => {
+  const handleHelp = () => {
     navigation.navigate("Help");
   };
 
+  const HandlePrivacyPolicy = () => {
+    navigation.navigate("Privacy policy");
+  };
+  const handletos = () => {
+    navigation.navigate("Terms of services");
+  };
+
+  const handleappversion = () => {
+    navigation.navigate("app version");
+  };
+
   const handleContactSupport = (): void => {
-    Alert.alert("Contact Support", "Please email us at swiftpay24.dev@gmail.com");
+    Alert.alert(
+      "Contact Support",
+      "Please email us at swiftpay24.dev@gmail.com"
+    );
   };
 
   return (
-      <SafeAreaView style={styles.containerSafe}>
-        <View style={styles.titleView}>
-          <Text style={styles.title}>Settings</Text>
-        </View>
-        <View style = {styles.containerview}>
+    <SafeAreaView style={styles.containerSafe}>
+      <View style={styles.titleView}>
+        <Text style={styles.title}>Settings</Text>
+      </View>
+      <View style={styles.containerview}>
         <TouchableOpacity style={styles.settingButton} onPress={handleHelp}>
           <View style={styles.lefticon}>
             <Feather name="help-circle" size={18} color="white" />
           </View>
           <Text style={styles.settingText}>Help</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.settingButton}
+          onPress={HandlePrivacyPolicy}
+        >
           <View style={styles.lefticon}>
             <Feather name="shield" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Privacy Policy</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.settingButton} onPress={handletos}>
           <View style={styles.lefticon}>
             <FontAwesome5 name="file-contract" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Terms of Service</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.settingButton}
+          onPress={handleappversion}
+        >
           <View style={styles.lefticon}>
             <Ionicons name="information" size={20} color="white" />
           </View>
@@ -67,19 +85,18 @@ function SettingsScreen() {
           </View>
           <Text style={styles.settingText}> Contact Support </Text>
         </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
- 
   containerSafe: {
     flex: 1,
     justifyContent: "center",
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 26,
     fontWeight: "700",
     color: "#3a5e7a",
@@ -120,9 +137,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   containerview: {
-    justifyContent: 'center',
-    marginLeft: 15
-  }
+    justifyContent: "center",
+    marginLeft: 15,
+  },
 });
 
 export default SettingsScreen;

@@ -34,7 +34,7 @@ const EmployeeDetail = () => {
   const handleRemoveEmployee = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.74:1010/deleteemployee/${employeedetail.username}`, // Make sure your DELETE API is set up correctly
+        `http://172.20.10.2:1010/deleteemployee/${employeedetail.username}`, // Make sure your DELETE API is set up correctly
         {
           method: "DELETE",
           headers: {

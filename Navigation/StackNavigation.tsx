@@ -15,6 +15,10 @@ import ResetSuccess from "../screens/ResetSuccess";
 import ChangeEmployeeEmail from "../screens/ChangeEmployeeEmail";
 import TransactionDetailScreen from "../screens/TransactionDetailScreen";
 import Notification from "../screens/Notification";
+import SettingScreenHelp from "../screens/SettingScreenHelp";
+import PrivacyPolicy from "../screens/PrivacyPolicy";
+import TermsOfServices from "../screens/TermsOfServices";
+import appversion from "../screens/appversion";
 
 // interface CustomHeaderStyle extends TextStyle {
 //   color?: string; // Explicitly define the optional 'color' property
@@ -161,9 +165,39 @@ function StackNavigator() {
         component={Notification}
         options={{
           ...customHeaderOptions,
-          // headerBackTitle: "Back",
           headerBackTitleVisible: false,
-          //headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Help"
+        component={SettingScreenHelp}
+        options={{
+          ...customHeaderOptions,
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="Privacy policy"
+        component={PrivacyPolicy}
+        options={{
+          ...customHeaderOptions,
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="Terms of services"
+        component={TermsOfServices}
+        options={{
+          ...customHeaderOptions,
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="app version"
+        component={appversion}
+        options={{
+          ...customHeaderOptions,
+          headerBackTitleVisible: false,
         }}
       />
     </Stack.Navigator>

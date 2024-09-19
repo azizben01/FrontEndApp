@@ -26,7 +26,7 @@ const ChangeEmployeeEmail = () => {
   const handleUpdateEmail = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.74:1010/changeEMPLOYEEemail",
+        "http://172.20.10.2:1010/changeEMPLOYEEemail",
         {
           method: "POST",
           headers: {

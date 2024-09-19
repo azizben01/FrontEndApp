@@ -18,11 +18,17 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 const AdminSettingScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  const handleHelp = (): void => {
-    console.log("Opening help...");
+  const handleHelp = () => {
     navigation.navigate("Help");
   };
 
+  const HandlePrivacyPolicy = () => {
+    navigation.navigate("Privacy Policy");
+  };
+
+  const HandleToS = () => {
+    navigation.navigate("Terms of Services");
+  };
   const handleContactSupport = (): void => {
     Alert.alert(
       "Contact Support",
@@ -43,19 +49,22 @@ const AdminSettingScreen = () => {
           </View>
           <Text style={styles.settingText}>Help</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.settingButton}
+          onPress={HandlePrivacyPolicy}
+        >
           <View style={styles.lefticon}>
             <Feather name="shield" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Privacy Policy</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.settingButton} onPress={HandleToS}>
           <View style={styles.lefticon}>
             <FontAwesome5 name="file-contract" size={18} color="white" />
           </View>
           <Text style={styles.settingText}> Terms of Service</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.settingButton} onPress={HandleToS}>
           <View style={styles.lefticon}>
             <Ionicons name="information" size={20} color="white" />
           </View>

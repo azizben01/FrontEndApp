@@ -1,8 +1,6 @@
 import {
   Alert,
-  ImageBackground,
   KeyboardAvoidingView,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -22,7 +20,7 @@ function ChangeAdminNumber() {
   const handleUpdate = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.74:1010/changeadminnumber",
+        "http://172.20.10.2:1010/changeadminnumber",
         {
           method: "POST",
           headers: {

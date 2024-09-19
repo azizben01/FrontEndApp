@@ -23,7 +23,7 @@ const RequestReset = () => {
 
   const handleRequestReset = async () => {
     try {
-      const response = await fetch("http://192.168.1.74:1010/RequestReset", {
+      const response = await fetch("http://172.20.10.2:1010/RequestReset", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

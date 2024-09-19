@@ -86,7 +86,7 @@ const CombinedScreen = () => {
     try {
       const [transactionResponse, notificationResponse] = await Promise.all([
         fetch(
-          `http://192.168.1.74:1010/Getusertransactions?username=${username}`,
+          `http://172.20.10.2:1010/Getusertransactions?username=${username}`,
           {
             method: "GET",
             headers: {
@@ -95,7 +95,7 @@ const CombinedScreen = () => {
           }
         ),
         fetch(
-          `http://192.168.1.74:1010/GetadmintransactionForUser?username=${username}`,
+          `http://172.20.10.2:1010/GetadmintransactionForUser?username=${username}`,
           {
             method: "GET",
             headers: {
@@ -121,7 +121,7 @@ const CombinedScreen = () => {
   const deleteTransaction = async (transactionId: number) => {
     try {
       const response = await fetch(
-        `http://192.168.1.74:1010/deletetransactions/${transactionId}`,
+        `http://172.20.10.2:1010/deletetransactions/${transactionId}`,
         {
           method: "DELETE",
           headers: {
@@ -148,7 +148,7 @@ const CombinedScreen = () => {
   const deleteAdminTransaction = async (adminTransactionid: number) => {
     try {
       const response = await fetch(
-        `http://192.168.1.74:1010/deleteAdmintransactions/${adminTransactionid}`,
+        `http://172.20.10.2:1010/deleteAdmintransactions/${adminTransactionid}`,
         {
           method: "DELETE",
           headers: {
